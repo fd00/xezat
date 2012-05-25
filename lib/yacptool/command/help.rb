@@ -1,5 +1,6 @@
 
 require 'optparse'
+
 require 'yacptool/yacptool'
 require 'yacptool/commands'
 
