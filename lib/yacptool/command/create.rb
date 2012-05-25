@@ -1,6 +1,4 @@
 
-require 'optparse'
-
 require 'yacptool/yacptool'
 require 'yacptool/commands'
 require 'yacptool/cygclasses'
@@ -8,7 +6,7 @@ require 'yacptool/cygclasses'
 module Yacptool
 
   # cygport の骨組みを生成するコマンド
-  class Create
+  class Create < Command
 
     Commands.register(:create, self)
 
@@ -36,6 +34,7 @@ module Yacptool
     attr_writer :cygclass_manager
 
     def initialize
+      super
       @help = false
       @variables = {
         :DESCRIPTION => '',
@@ -46,11 +45,6 @@ module Yacptool
       @cygclass_manager = CygclassManager.new
       @ignored = nil
 
-      @op = OptionParser.new
-      @op.banner = 'Usage: yacptool create [option...]'
-      @op.on('-?', '--help', 'Show help message', TrueClass) { |v|
-        @help = true
-      }
       @op.on('-i', '--inherit=VAL', 'Select cygclasses to inherit', Array) { |v|
         @cygclasses = v.map! { |cygclass|
           cygclass.intern
@@ -155,10 +149,6 @@ module Yacptool
     # 渡された引数を解析する
     def parse(argv)
       @op.order!(argv)
-    end
-    
-    def help
-      @op.help
     end
 
   end

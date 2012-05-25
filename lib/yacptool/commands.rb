@@ -1,8 +1,28 @@
 
+require 'optparse'
+
 require 'yacptool/yacptool'
 
 module Yacptool
 
+  # コマンドの基底クラス
+  class Command
+
+    def initialize
+      @op = OptionParser.new
+      @op.banner = 'Usage: yacptool check [option...]'
+      @op.on('-?', '--help', 'Show help message', TrueClass) { |v|
+        @help = true
+      }
+    end
+
+    def help
+      @op.help
+    end
+
+  end
+
+  # コマンドのインスタンスを管理する
   class CommandManager
 
     def initialize
@@ -17,7 +37,7 @@ module Yacptool
     end
 
     def instance(command)
-      if @commands[command] == nil
+      unless @commands.has_key?(command)
         raise NoSuchCommandDefinitionException, "#{command}: command not defined"
       end
       @commands[command].new

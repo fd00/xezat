@@ -1,5 +1,4 @@
 
-require 'optparse'
 require 'zlib'
 
 require 'yacptool/yacptool'
@@ -7,16 +6,13 @@ require 'yacptool/commands'
 
 module Yacptool
 
-  class Check
+  # パッケージ間のファイルの衝突を調べるコマンド
+  class Check < Command
 
     Commands.register(:check, self)
 
     def initialize
-      @op = OptionParser.new
-      @op.banner = 'Usage: yacptool check [option...]'
-      @op.on('-?', '--help', 'Show help message', TrueClass) { |v|
-        @help = true
-      }
+      super
     end
 
     def run(argv)
@@ -54,10 +50,6 @@ module Yacptool
         }
       }
       file2pkg
-    end
-
-    def help
-      @op.help
     end
 
   end

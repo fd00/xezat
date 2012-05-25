@@ -1,24 +1,17 @@
 
-require 'optparse'
-
 require 'yacptool/yacptool'
 require 'yacptool/commands'
 
 module Yacptool
 
   # ヘルプを表示させるコマンド
-  class Help
+  class Help < Command
 
     Commands.register(:help, self)
 
     def initialize
+      super
       @help = false
-
-      @op = OptionParser.new
-      @op.banner = 'Usage: yacptool help [option...]'
-      @op.on('-?', '--help', 'Show help message', TrueClass) { |v|
-        @help = true
-      }
     end
 
     def run(argv)
@@ -29,6 +22,7 @@ module Yacptool
       print
     end
 
+    # すべてのコマンドのヘルプを集めて文字列として返す
     def aggregate(command_path = File.dirname(__FILE__))
       helps = []
       Dir.glob(command_path + '/*.rb') { |rb|
@@ -46,10 +40,6 @@ module Yacptool
       aggregate.each { |line|
         puts line
       }
-    end
-
-    def help
-      @op.help
     end
 
   end
