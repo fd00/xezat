@@ -11,3 +11,4 @@ require 'yacptool/test_variables'
 
 require 'yacptool/command/test_check'
 require 'yacptool/command/test_create'
+require 'yacptool/command/test_patches'

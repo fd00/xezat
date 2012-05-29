@@ -12,7 +12,7 @@ module Yacptool
     Commands.register(:check, self)
 
     def initialize
-      super
+      super(:check)
     end
 
     def run(argv)
@@ -21,7 +21,7 @@ module Yacptool
         raise IllegalArgumentOfCommandException, 'help specified'
       end
 
-      aggregate('/etc/setup').each { |key, value|
+      aggregate.each { |key, value|
         if value.length > 1
           puts "#{key} is contained by multiple packages"
           value.each { |pkg|
@@ -31,7 +31,7 @@ module Yacptool
       }
     end
 
-    def aggregate(path)
+    def aggregate(path = '/etc/setup')
       file2pkg = {}
       Dir.glob(path + '/*.lst.gz') { |lst|
         pkg = File.basename(lst, '.lst.gz').intern

@@ -1,0 +1,45 @@
+<%= variables[:PN] %>
+------------------------------------------
+
+
+Runtime requirements:
+
+Build requirements:
+(besides corresponding -devel packages)
+
+Canonical website:
+  <%= variables[:HOMEPAGE] %>
+
+Canonical download:
+  <%= src_uri %>
+
+-------------------------------------------
+
+Build instructions:
+  unpack <%= variables[:P] -%>-X-src.tar.bz2
+    if you use setup to install this src package, it will be
+         unpacked under /usr/src automatically
+  cd /usr/src
+  cygport ./<%= variables[:P] -%>-X.cygport all
+
+This will create:
+  /usr/src/<%= variables[:P] %>-X-src.tar.bz2
+<% pkg_names.each { |pkg_name| -%>
+  /usr/src/<%= pkg_name + '-' + variables[:PVR].sub('-' + variables[:PR], '') %>-X.tar.bz2
+<% } -%>
+
+-------------------------------------------
+
+Files included in the binary package:
+
+<% pkg_names.each { |pkg_name| -%>
+(<%= pkg_name %>)
+
+<% } -%>
+
+------------------
+
+Port Notes:
+
+----- version <%= variables[:PF] -%> -----
+Initial release for Cygwin-1.7 by fd0 <http://d.hatena.ne.jp/fd0>

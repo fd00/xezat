@@ -15,6 +15,7 @@ module Yacptool
       :cvs, :svn, :git, :bzr, :hg, :mtn, :fossil,
     ]
 
+    # TODO yaml か何かで設定ファイルから読み込むようにしたい
     TEMPLATE_MAP = {
       :sourceforge => {
         :HOMEPAGE => 'http://${PN}.sf.net/',
@@ -34,7 +35,7 @@ module Yacptool
     attr_writer :cygclass_manager
 
     def initialize
-      super
+      super(:create, 'PKG-VAR-REL.cygport')
       @help = false
       @variables = {
         :DESCRIPTION => '',
@@ -78,12 +79,12 @@ module Yacptool
       if argv.length == 0
         raise IllegalArgumentOfCommandException, 'cygport not specified'
       end
-      @cygport = argv.shift
-      @ignored = argv
+      cygport = argv.shift
+      ignored = argv # TODO 捨てたことがわかるようにしたい
 
       begin
-        generate(@cygport, @overwrite, @variables, @cygclasses)
-      rescue UnoverwritableCygportException,
+        generate(cygport, @overwrite, @variables, @cygclasses)
+      rescue UnoverwritableConfigurationException,
              NoSuchCygclassException,
              CygclassConflictException => e
         puts "yacptool-create: " + e.to_s
@@ -96,11 +97,13 @@ module Yacptool
       fetcher_class = nil
       cygclasses.each { |cygclass|
         unless @cygclass_manager.exists?(cygclass)
-          raise NoSuchCygclassException, "cannot inherit #{cygclass}: No such cygclass"
+          raise NoSuchCygclassException,
+            "cannot inherit #{cygclass}: No such cygclass"
         end
         if EXTENDED_FETCHER_CLASSES.include?(cygclass)
           if fetcher_class
-            raise CygclassConflictException, "cannot inherit #{cygclass}: #{cygclass} conflict with #{fetcher_class}"
+            raise CygclassConflictException,
+              "cannot inherit #{cygclass}: #{cygclass} conflict with #{fetcher_class}"
           else
             variables.delete(:SRC_URI)
             variables[(cygclass.to_s.upcase + '_URI').intern] = ''
@@ -137,7 +140,8 @@ module Yacptool
     def generate(cygport, overwrite, variables, cygclasses)
       if File.exist?(cygport)
         unless overwrite
-          raise UnoverwritableCygportException, "#{cygport} already exists"
+          raise UnoverwritableConfigurationException,
+            "#{cygport} already exists"
         end
       end
       resolve(cygclasses, variables)

@@ -10,7 +10,7 @@ module Yacptool
     Commands.register(:help, self)
 
     def initialize
-      super
+      super(:help)
       @help = false
     end
 

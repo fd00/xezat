@@ -6,8 +6,7 @@ class VariableManagerTest < Test::Unit::TestCase
   include Yacptool
 
   def test_parsing
-    variables = VariableManager.new
-    variables.parse(<<EOL)
+    variables = VariableManager.new(<<EOL)
 E=F
 G='Single Quoted'
 H=([0]="0" [1]="1")

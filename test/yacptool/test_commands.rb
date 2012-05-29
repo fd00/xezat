@@ -4,7 +4,8 @@ require 'yacptool/commands'
 class CommandManagerTest < Test::Unit::TestCase
   
   include Yacptool
-  
+
+  # 同じコマンドが定義された場合に例外を投げるか
   def test_multiple_command_definition_exception
     commands = CommandManager.new
     commands.register(:foo, self)
@@ -12,7 +13,8 @@ class CommandManagerTest < Test::Unit::TestCase
       commands.register(:foo, self)
     }
   end
-  
+
+  # 定義されているコマンドが取得できるか
   def test_getting_defined_command
     commands = CommandManager.new
     commands.register(:foo, Object)
@@ -21,6 +23,7 @@ class CommandManagerTest < Test::Unit::TestCase
     }
   end
 
+  # 定義されていないコマンドが取得された場合に例外を投げるか
   def test_getting_undefined_command
     commands = CommandManager.new
     commands.register(:foo, Object)

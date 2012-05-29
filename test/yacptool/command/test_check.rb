@@ -5,6 +5,7 @@ class CheckTest < Test::Unit::TestCase
 
   include Yacptool
 
+  # ファイルの衝突を検出できているか
   def test_aggregate
     check = Check.new
     file2pkg = check.aggregate(File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'etc', 'setup')))

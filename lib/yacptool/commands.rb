@@ -8,9 +8,9 @@ module Yacptool
   # コマンドの基底クラス
   class Command
 
-    def initialize
+    def initialize(command, extra = '')
       @op = OptionParser.new
-      @op.banner = 'Usage: yacptool check [option...]'
+      @op.banner = "Usage: yacptool #{command} [option...] #{extra}"
       @op.on('-?', '--help', 'Show help message', TrueClass) { |v|
         @help = true
       }

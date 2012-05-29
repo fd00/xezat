@@ -1,6 +1,24 @@
 
 module Yacptool
 
+  # yacptool のルートパス
+  ROOT_DIR = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
+
+  # yacptool のデータパス
+  DATA_DIR = File.expand_path(File.join(ROOT_DIR, 'share', 'yacptool'))
+
+  # patches のテンプレートパス
+  PATCHES_TEMPLATE_DIR = File.expand_path(File.join(DATA_DIR, 'template', 'patches'))
+
+  class IllegalArgumentException < Exception
+    # メソッドへの引数が不正であった場合に投げられる
+  end
+
+  class IllegalStateException < Exception
+    # 必要な cygport のコマンドが完了していない場合に投げられる
+    # 例: cygport prep の前に yacptool patches を起動した
+  end
+
   class IllegalArgumentOfMainException < Exception
     # シェル引数が不正であった場合に投げられる
   end
@@ -9,7 +27,7 @@ module Yacptool
     # コマンド引数が不正であった場合に投げられる
   end
   
-  class UnoverwritableCygportException < Exception
+  class UnoverwritableConfigurationException < Exception
     # cygport が上書きオプションなしに上書きされそうな場合に投げられる
   end
   
@@ -31,6 +49,10 @@ module Yacptool
   
   class CygclassConflictException < Exception
     # 複数の vcs cygclass が指定された場合に投げられる
+  end
+
+  class CygportProcessException < Exception
+    # 外部 cygport プロセスがエラーの場合に投げられる
   end
 
 end

@@ -4,18 +4,15 @@ module Yacptool
   # cygport 変数を管理するクラス
   class VariableManager
 
-    def initialize()
+    # declare で出力した変数一覧を解析して Hash にする
+    def initialize(str)
       @variables = {}
-    end
-
-    def parse(str)
       str.lines { |line|
-        break unless matches = /^(?<key>\w+)=(?<value>.*)$/.match(line)
-        value = matches[:value].strip
-        if value[0] == "'" && value[-1] == "'"
-          value = value[1..-2]  # strip single quoted value
+        unless matches = /^(?<key>\w+)=(?<value>.*)$/.match(line)
+          break
         end
-        @variables[matches[:key].strip.intern] = value.strip
+        @variables[matches[:key].strip.intern] =
+          matches[:value].strip.gsub(/^'/, '').gsub(/'$/, '').strip
       }
     end
 
@@ -23,8 +20,16 @@ module Yacptool
       @variables[key]
     end
 
-  end
+    def exists?(key)
+      @variables.has_key?(key)
+    end
 
-  Variables = VariableManager.new
+    def each(&block)
+      @variables.each { |key, value|
+        block.call(key, value)
+      }
+    end
+
+  end
 
 end
