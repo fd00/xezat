@@ -1,4 +1,6 @@
 
+require 'open3'
+
 module Yacptool
   
   # cygport 変数を管理するクラス
@@ -28,6 +30,16 @@ module Yacptool
       @variables.each { |key, value|
         block.call(key, value)
       }
+    end
+
+    def self.get_default_variables(cygport)
+      command = File.expand_path(File.join(DATA_DIR, 'show_cygport_variable.sh')) + ' ' + cygport
+      result, error, status = Open3.capture3(command)
+      unless status.success?
+        raise CygportProcessException, error
+      end
+      # TODO error はどうする？
+      self.new(result)
     end
 
   end

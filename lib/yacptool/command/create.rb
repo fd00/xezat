@@ -117,10 +117,7 @@ module Yacptool
     def create(variables, cygclasses)
       buf = []
       variables.each { |k, v|
-        if v.length > 0
-          v = '"' + v + '"'
-        end
-        buf << k.to_s + '=' + v
+        buf << k.to_s + '="' + v + '"'
       }
       buf << ''
       cygclasses.each { |cygclass|

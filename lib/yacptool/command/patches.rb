@@ -1,6 +1,5 @@
 
 require 'erb'
-require 'open3'
 
 require 'yacptool/yacptool'
 require 'yacptool/commands'
@@ -30,10 +29,8 @@ module Yacptool
       cygport = argv.shift
       ignored = argv # TODO 捨てたことがわかるようにしたい
 
-      command = File.expand_path(File.join(DATA_DIR, 'show_cygport_variable.sh')) + ' ' + cygport
-
       # PKG_NAMES から hint を抽出する
-      variables = VariableManager.new(get_raw_variables(command))
+      variables = VariableManager.get_default_variables
       if variables.exists?(:PKG_NAMES)
         pkg_names = extract_hints(variables[:PKG_NAMES])
       else
@@ -57,16 +54,6 @@ module Yacptool
 
       # CYGWIN-PATCHES にファイルを生成する
       generate(bodies, @overwrite)
-    end
-
-    # 指定された cygport に基づき宣言されているシェル変数のダンプを生成する
-    def get_raw_variables(command)
-      result, error, status = Open3.capture3(command)
-      unless status.success?
-        raise CygportProcessException, error
-      end
-      # TODO error はどうする？
-      result
     end
 
     # ダンプした変数文字列から空白文字区切りの配列を抽出する
@@ -110,6 +97,16 @@ module Yacptool
           fp.puts body
         }
       }
+    end
+
+    # 複数行からなる src_uri を分割して先頭のみを取り出す
+    def split(value)
+      if value.match(/^\$/)
+        values = value.split(/\s+/)
+        values[1]
+      else
+        value
+      end
     end
 
   end

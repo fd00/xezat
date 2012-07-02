@@ -25,6 +25,7 @@ Build instructions:
 This will create:
   /usr/src/<%= variables[:P] %>-X-src.tar.bz2
 <% pkg_names.each { |pkg_name| -%>
+<% pkg_name = variables[:PN] if pkg_name == 'setup' -%>
   /usr/src/<%= pkg_name + '-' + variables[:PVR].sub('-' + variables[:PR], '') %>-X.tar.bz2
 <% } -%>
 
@@ -33,6 +34,7 @@ This will create:
 Files included in the binary package:
 
 <% pkg_names.each { |pkg_name| -%>
+<% pkg_name = variables[:PN] if pkg_name == 'setup' -%>
 (<%= pkg_name %>)
 
 <% } -%>
@@ -41,5 +43,6 @@ Files included in the binary package:
 
 Port Notes:
 
------ version <%= variables[:PF] -%> -----
+----- version <%= variables[:PVR] -%> -----
 Initial release for Cygwin-1.7 by fd0 <http://d.hatena.ne.jp/fd0>
+

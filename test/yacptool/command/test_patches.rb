@@ -7,22 +7,6 @@ class PatchesTest < Test::Unit::TestCase
 
   include Yacptool
 
-  # 外部コマンドが正常終了する場合は正常終了する
-  def test_get_raw_variables
-    patches = Patches.new
-    actual = patches.get_raw_variables('echo -n foo')
-    assert_equal('foo', actual)
-  end
-
-  # 外部コマンドが異常終了する場合は例外が投げられる
-  def test_get_raw_variables_with_error
-    patches = Patches.new
-    assert_raise(CygportProcessException) {
-      patches.get_raw_variables('false')
-    }
-  end
-
-
   # 一行で書かれている場合
   def test_extract_hints_1line
     patches = Patches.new
@@ -67,4 +51,11 @@ class PatchesTest < Test::Unit::TestCase
     assert_equal('bar', actual)
   end
 
+
+  # src_uri がリストだった場合は先頭の URI のみを返す
+  def test_split_multiple_values
+    patches = Patches.new
+    actual = patches.split("$'\n\thttp://download.gnome.org\n\thttp://ftp.gnome.org/pub/gnome\nftp://ftp.gnome.org/pub/gnome\n'")
+    assert_equal('http://download.gnome.org', actual)
+  end
 end

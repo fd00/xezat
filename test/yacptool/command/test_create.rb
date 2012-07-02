@@ -29,9 +29,9 @@ class CreateTest < Test::Unit::TestCase
     cygport.open
     lines = cygport.readlines
     assert_equal(4, lines.length)
-    assert_equal('DESCRIPTION=', lines[0].strip)
-    assert_equal('HOMEPAGE=', lines[1].strip)
-    assert_equal('SRC_URI=', lines[2].strip)
+    assert_equal('DESCRIPTION=""', lines[0].strip)
+    assert_equal('HOMEPAGE=""', lines[1].strip)
+    assert_equal('SRC_URI=""', lines[2].strip)
     cygport.close(true)
   end
 
@@ -72,7 +72,7 @@ class CreateTest < Test::Unit::TestCase
     cygport.open
     lines = cygport.readlines
     assert_equal(4, lines.length)
-    assert_equal('DESCRIPTION=', lines[0].strip)
+    assert_equal('DESCRIPTION=""', lines[0].strip)
     assert_equal('HOMEPAGE="http://${PN}.sf.net/"', lines[1].strip)
     assert_equal('SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"', lines[2].strip)
     cygport.close(true)
