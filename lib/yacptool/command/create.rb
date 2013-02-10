@@ -22,8 +22,8 @@ module Yacptool
         :SRC_URI  => 'mirror://sourceforge/${PN}/${P}.tar.gz',
       },
       :google => {
-        :HOMEPAGE => 'http://code.google.com/p/${PN}/',
-        :SRC_URI  => 'http://${PN}.googlecode.com/files/${P}.tar.gz',
+        :HOMEPAGE => 'https://code.google.com/p/${PN}/',
+        :SRC_URI  => 'https://${PN}.googlecode.com/files/${P}.tar.gz',
       },
     }
     TEMPLATE_MAP.default = {

@@ -51,6 +51,12 @@ class PatchesTest < Test::Unit::TestCase
     assert_equal('bar', actual)
   end
 
+  # PATCH_URI が存在する場合は無視する
+  def test_get_src_uri_not_overwrite
+    patches = Patches.new
+    actual = patches.get_src_uri({:SRC_URI => 'foo', :PATCH_URI => 'bar', :DESCRIPTION => 'baz'})
+    assert_equal('foo', actual)
+  end
 
   # src_uri がリストだった場合は先頭の URI のみを返す
   def test_split_multiple_values

@@ -30,7 +30,7 @@ module Yacptool
       ignored = argv # TODO 捨てたことがわかるようにしたい
 
       # PKG_NAMES から hint を抽出する
-      variables = VariableManager.get_default_variables
+      variables = VariableManager.get_default_variables(cygport)
       if variables.exists?(:PKG_NAMES)
         pkg_names = extract_hints(variables[:PKG_NAMES])
       else
@@ -70,7 +70,7 @@ module Yacptool
       end
       variables.each { |key, value|
         if key.to_s.match(/^\w+_URI$/)
-          unless key == :SRC_URI
+          unless (key == :SRC_URI || key == :PATCH_URI)
             src_uri = value
             break # TODO 複数ある場合を考慮してないけどいいか？
           end

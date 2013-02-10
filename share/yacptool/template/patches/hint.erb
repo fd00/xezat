@@ -1,7 +1,9 @@
 category: 
 requires: cygwin
 <% unless file_name == variables[:PN] + '.hint' -%>
+<% unless file_name == 'setup.hint' -%>
 external-source: <%= variables[:PN] %>
+<% end -%>
 <% end -%>
 sdesc: "<%= variables[:DESCRIPTION] %>"
 ldesc: ""
