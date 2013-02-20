@@ -25,6 +25,10 @@ module Yacptool
         :HOMEPAGE => 'https://code.google.com/p/${PN}/',
         :SRC_URI  => 'https://${PN}.googlecode.com/files/${P}.tar.gz',
       },
+      :berlios => {
+        :HOMEPAGE => 'http://${PN}.berlios.de/',
+        :SRC_URI  => 'mirror://berlios/${PN}/${P}.tar.gz',
+      },
     }
     TEMPLATE_MAP.default = {
       :HOMEPAGE => '',
