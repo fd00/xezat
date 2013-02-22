@@ -45,6 +45,10 @@ module Yacptool
         bodies[File.expand_path(File.join(variables[:C], file_name)).intern] =
           ERB.new(IO.readlines(hint_erb).join(nil), nil, '%-').result(binding)
       }
+      
+      # README に埋め込む変数を取得する
+      runtimes = get_runtimes(cygport)
+      builds = []
 
       # ${PN}.README を生成する
       src_uri = get_src_uri(variables)
@@ -55,7 +59,17 @@ module Yacptool
       # CYGWIN-PATCHES にファイルを生成する
       generate(bodies, @overwrite)
     end
-
+    
+    # runtime requirements を抽出する
+    def get_runtimes(cygport)
+      command = File.expand_path(File.join(DATA_DIR, 'invoke_cygport_dep.sh')) + ' ' + cygport
+      result, error, status = Open3.capture3(command)
+      unless status.success?
+        raise CygportProcessException, error
+      end
+      result.split(/\n/).map! { |runtime| runtime.lstrip }
+    end
+    
     # ダンプした変数文字列から空白文字区切りの配列を抽出する
     # 内部に制御文字を含んでいる場合は $ が先頭にある (っぽい)
     def extract_hints(str)
