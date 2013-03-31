@@ -42,6 +42,10 @@ module Yacptool
   class NoSuchCommandDefinitionException < Exception
     # 存在しないコマンドが指定された場合に投げられる
   end
+  
+  class MultipleDetectorDefinitionException < Exception
+    # 検出器が多重定義された場合に投げられる
+  end
 
   class NoSuchCygclassException < Exception
     # .cygclass が存在しない場合に投げられる

@@ -9,6 +9,9 @@ Runtime requirements:
 
 Build requirements:
 (besides corresponding -devel packages)
+<% builds.each { |build| -%>
+  <%= build %>
+<% } -%>
 
 Canonical website:
   <%= variables[:HOMEPAGE] %>

@@ -1,6 +1,5 @@
 
 require 'zlib'
-
 require 'yacptool/yacptool'
 require 'yacptool/commands'
 

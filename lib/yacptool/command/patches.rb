@@ -1,8 +1,9 @@
 
 require 'erb'
-
 require 'yacptool/yacptool'
 require 'yacptool/commands'
+require 'yacptool/detectors'
+require 'yacptool/packages'
 require 'yacptool/variables'
 
 module Yacptool
@@ -48,7 +49,7 @@ module Yacptool
       
       # README に埋め込む変数を取得する
       runtimes = get_runtimes(cygport)
-      builds = []
+      builds = get_builds(variables[:S], PackageManager.get_default_packages)
 
       # ${PN}.README を生成する
       src_uri = get_src_uri(variables)
@@ -68,6 +69,13 @@ module Yacptool
         raise CygportProcessException, error
       end
       result.split(/\n/).map! { |runtime| runtime.lstrip }
+    end
+    
+    # build requirements を抽出する
+    def get_builds(root, package_manager)
+      Detectors.get_components(root).map! { |detector|
+        package_manager[detector]
+      }
     end
     
     # ダンプした変数文字列から空白文字区切りの配列を抽出する
