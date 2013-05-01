@@ -9,7 +9,9 @@ module Yacptool
     
     def get_components(root)
       Find.find(root) { |file|
-        return ['gcc4-core', 'binutils'] if /.+\.c$/ =~ File.basename(file)
+        if /.+\.(c|h)$/ =~ File.basename(file)
+          return ['gcc4-core', 'binutils']
+        end
       }
       []
     end

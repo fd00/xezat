@@ -3,14 +3,14 @@ require 'yacptool/detectors'
 
 module Yacptool
   
-  class Binutils < Detector
+  class Tcl < Detector
     
-    Detectors.register('binutils', self)
+    Detectors.register('tcl', self)
     
     def get_components(root)
       Find.find(root) { |file|
-        if /.+\.[sS]$/ =~ File.basename(file)
-          return ['binutils']
+        if /.+\.tcl$/ =~ File.basename(file)
+          return ['tcl']
         end
       }
       []

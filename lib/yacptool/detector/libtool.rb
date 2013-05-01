@@ -10,7 +10,9 @@ module Yacptool
     
     def get_components(root)
       Find.find(root) { |file|
-        return ['libtool'] if /^ltmain\.sh$/ =~ File.basename(file)
+        if /^ltmain\.sh$/ =~ File.basename(file)
+          return ['libtool']
+        end
       }
       []
     end

@@ -10,7 +10,9 @@ module Yacptool
     
     def get_components(root)
       Find.find(root) { |file|
-        return ['cmake', 'make'] if /^CMakeLists\.txt$/ =~ File.basename(file)
+        if /^CMakeLists\.txt$/ =~ File.basename(file)
+          return ['cmake', 'make']
+        end
       }
       []
     end
