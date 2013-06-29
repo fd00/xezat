@@ -1,5 +1,5 @@
 
-require 'yacptool/detector/gcc4-gpp'
+require 'yacptool/detector/gcc4-g++'
 
 class Gcc4GppTest < Test::Unit::TestCase
 
@@ -16,8 +16,8 @@ class Gcc4GppTest < Test::Unit::TestCase
     assert_equal(['gcc4-g++', 'gcc4-core', 'binutils'], detector.get_components(root_ok_cpp))
     root_ok_cxx = File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'gcc4-g++', 'ok_cxx'))
     assert_equal(['gcc4-g++', 'gcc4-core', 'binutils'], detector.get_components(root_ok_cxx))
-    root_ok_hc = File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'gcc4-g++', 'ok_hc'))
-    assert_equal(['gcc4-g++', 'gcc4-core', 'binutils'], detector.get_components(root_ok_hc))
+    root_ok_hh = File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'gcc4-g++', 'ok_hh'))
+    assert_equal(['gcc4-g++', 'gcc4-core', 'binutils'], detector.get_components(root_ok_hh))
     root_ok_H = File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'gcc4-g++', 'ok_H'))
     assert_equal(['gcc4-g++', 'gcc4-core', 'binutils'], detector.get_components(root_ok_H))
     root_ok_hpp = File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'gcc4-g++', 'ok_hpp'))
