@@ -3,14 +3,14 @@ require 'yacptool/detectors'
 
 module Yacptool
   
-  class Gcc4Gpp < Detector
+  class GccGpp < Detector
     
-    Detectors.register('gcc4-g++', self)
+    Detectors.register('gcc-g++', self)
     
     def get_components(root)
       Find.find(root) { |file|
         if /.+\.(cc|C|cpp|cxx|hh|H|hpp|hxx)$/ =~ File.basename(file)
-          return ['gcc4-g++', 'gcc4-core', 'binutils']
+          return ['gcc-g++', 'gcc-core', 'binutils']
         end
       }
       []
