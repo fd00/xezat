@@ -1,15 +1,15 @@
 <%= variables[:PN] %>
 ------------------------------------------
-
+<%= variables[:DESCRIPTION].join($/) %>
 
 Runtime requirements:
-<% runtimes.each { |runtime| -%>
+<% info[:runtimes].each { |runtime| -%>
   <%= runtime %>
 <% } -%>
 
 Build requirements:
 (besides corresponding -devel packages)
-<% builds.each { |build| -%>
+<% info[:builds].each { |build| -%>
   <%= build %>
 <% } -%>
 
@@ -17,7 +17,7 @@ Canonical website:
   <%= variables[:HOMEPAGE] %>
 
 Canonical download:
-  <%= src_uri %>
+  <%= info[:src_uri] %>
 
 -------------------------------------------
 
@@ -30,8 +30,7 @@ Build instructions:
 
 This will create:
   /usr/src/<%= variables[:P] %>-X-src.tar.bz2
-<% pkg_names.each { |pkg_name| -%>
-<% pkg_name = variables[:PN] if pkg_name == 'setup' -%>
+<% variables[:pkg_name].each { |pkg_name| -%>
   /usr/src/<%= pkg_name + '-' + variables[:PVR].sub('-' + variables[:PR], '') %>-X.tar.bz2
 <% } -%>
 
@@ -39,16 +38,19 @@ This will create:
 
 Files included in the binary package:
 
-<% pkg_names.each { |pkg_name| -%>
-<% pkg_name = variables[:PN] if pkg_name == 'setup' -%>
+<% variables[:pkg_name].each { |pkg_name| -%>
 (<%= pkg_name %>)
-
+<% files[pkg_name.intern].each { |file| -%>
+  <%= file -%>
 <% } -%>
 
+<% } -%>
 ------------------
 
 Port Notes:
 
------ version <%= variables[:PVR] -%> -----
-Initial release for Cygwin-1.7 by fd0 <http://fd0.hatenablog.jp/>
+<% info[:changelog].each { |version, log| -%>
+----- version <%= version -%> -----
+<%= log %>
 
+<% } -%>

@@ -8,7 +8,10 @@ module Xezat
   DATA_DIR = File.expand_path(File.join(ROOT_DIR, 'share', 'xezat'))
 
   # patches のテンプレートパス
-  PATCHES_TEMPLATE_DIR = File.expand_path(File.join(DATA_DIR, 'template', 'patches'))
+  PATCHES_TEMPLATE_DIR = File.expand_path(File.join(DATA_DIR, 'template'))
+
+  # initial release のメッセージ
+  INITIAL_RELEASE_MESSAGE = 'Initial release by fd0 <https://github.com/fd00/>'
 
   class IllegalArgumentException < Exception
     # メソッドへの引数が不正であった場合に投げられる
@@ -59,4 +62,11 @@ module Xezat
     # 外部 cygport プロセスがエラーの場合に投げられる
   end
 
+  class ReadmeSyntaxException < Exception
+    # 元々存在する README のフォーマットが不正である場合に投げられる
+  end
+
+  class FilePermissionException < Exception
+    # ファイルへのアクセス権限がない場合に投げられる
+  end
 end

@@ -1,5 +1,6 @@
 
 require 'open3'
+require 'uri'
 
 module Xezat
   
@@ -9,12 +10,49 @@ module Xezat
     # declare で出力した変数一覧を解析して Hash にする
     def initialize(str)
       @variables = {}
-      str.lines { |line|
+      str.each_line { |line|
         unless matches = /^(?<key>\w+)=(?<value>.*)$/.match(line)
           break
         end
-        @variables[matches[:key].strip.intern] =
-          matches[:value].strip.gsub(/^'/, '').gsub(/'$/, '').strip
+        key = matches[:key].strip.intern
+        value = matches[:value].strip.gsub(/^'/, '').gsub(/'$/, '').strip
+        case value[0]
+        when '(' # 配列の場合は ruby array に変換する
+          values = []
+          s = StringScanner.new(value)
+          while true
+            case
+            when s.scan_until(/\[(\d+)\]="([A-Za-z0-9-]+)"/)
+              values << s[2]
+            else
+              break
+            end
+          end
+          value = values
+        when '$' # 改行を含む文字列の場合は ruby array に変換する
+          values = []
+          s = StringScanner.new(value.gsub(/^\$'(\\n|\\t)*/, ''))
+          while true
+            if key == :DESCRIPTION
+              case
+              when s.scan_until(/([^\\]*)(\\n|\\t)+/)
+                values << s[1]
+              else
+                values << s.rest
+                break
+              end
+            else
+              case
+              when s.scan_until(/(#{URI.regexp})(\\n|\\t)+/)
+                values << s[1]
+              else
+                break
+              end
+            end
+          end
+          value = values
+        end
+        @variables[key] = value
       }
     end
 

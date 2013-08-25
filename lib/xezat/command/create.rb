@@ -39,7 +39,7 @@ module Xezat
     attr_writer :cygclass_manager
 
     def initialize
-      super(:create, 'PKG-VAR-REL.cygport')
+      super(:create, 'PKG-VER-REL.cygport')
       @help = false
       @variables = {
         :DESCRIPTION => '',

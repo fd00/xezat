@@ -5,13 +5,13 @@ require 'xezat/commands'
 
 module Xezat
 
-  # パッケージ間のファイルの衝突を調べるコマンド
-  class Check < Command
+  # インストールツリーの異常を調べるコマンド
+  class Doctor < Command
 
-    Commands.register(:check, self)
+    Commands.register(:doctor, self)
 
     def initialize
-      super(:check)
+      super(:doctor)
     end
 
     def run(argv)
@@ -35,7 +35,7 @@ module Xezat
       Dir.glob(path + '/*.lst.gz') { |lst|
         pkg = File.basename(lst, '.lst.gz').intern
         Zlib::GzipReader.open(lst) { |gz|
-          gz.lines { |line|
+          gz.each_line { |line|
             line.strip!
             unless line.end_with?('/')
               path = line.intern
