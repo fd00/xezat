@@ -1,14 +1,14 @@
 
-require 'xezat/command/check'
+require 'xezat/command/doctor'
 
-class CheckTest < Test::Unit::TestCase
+class DoctorTest < Test::Unit::TestCase
 
   include Xezat
 
   # ファイルの衝突を検出できているか
   def test_aggregate
-    check = Check.new
-    file2pkg = check.aggregate(File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'etc', 'setup')))
+    doctor = Doctor.new
+    file2pkg = doctor.aggregate(File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'etc', 'setup')))
     etc_dir = file2pkg['etc/dir/'.intern]
     assert_nil(etc_dir)
     usr_bin_conflict = file2pkg['usr/bin/conflict'.intern]

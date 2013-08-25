@@ -42,6 +42,8 @@ module Xezat
       super(:create, 'PKG-VER-REL.cygport')
       @help = false
       @variables = {
+        :CATEGORY => '',
+        :SUMMARY => '',
         :DESCRIPTION => '',
       }
       @variables.merge!(TEMPLATE_MAP.default)
@@ -50,6 +52,11 @@ module Xezat
       @cygclass_manager = CygclassManager.new
       @ignored = nil
 
+      @op.on('-c', '--category=VAL', 'Select category', Array) { |v|
+        @variables[:CATEGORY] = v.map! { |category|
+          category.intern
+        }.uniq.join(' ')
+      }
       @op.on('-i', '--inherit=VAL', 'Select cygclasses to inherit', Array) { |v|
         @cygclasses = v.map! { |cygclass|
           cygclass.intern
