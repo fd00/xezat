@@ -16,7 +16,8 @@ end
 begin
   command = Commands.instance(args.command)
   command.run(args.args)
-rescue IllegalArgumentOfCommandException
+rescue IllegalArgumentOfCommandException => e
+  puts e
   puts command.help
   exit
 end

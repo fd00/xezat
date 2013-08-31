@@ -8,7 +8,7 @@ module Xezat
     def initialize(command_path = '/usr/share/cygport/cygclass')
       @cygclasses = []
       if Dir.exists?(command_path)
-        Dir.glob(command_path + '/*.cygclass') { |filename|
+        Dir.glob(File.join(command_path, '*.cygclass')) { |filename|
           @cygclasses << File.basename(filename, '.cygclass').intern
         }
       end

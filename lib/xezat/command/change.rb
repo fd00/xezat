@@ -65,12 +65,14 @@ module Xezat
       info[:src_uri] = get_src_uri(variables)
       info[:changelog] = readme
       files = get_files(variables)
-      content = get_readme(variables, info, files)
+      contents = get_readme(variables, info, files)
       tmp_file = File.expand_path(File.join(Dir.tmpdir(), SecureRandom.uuid))
-      
-      fd = open(tmp_file, 'w')
-      fd.write(content)
-      fd.close
+      Signal.trap(:INT) {
+        FileUtils.remove(tmp_file)
+      }
+      File.open(tmp_file, 'w') { |f|
+        f << contents
+      }
       FileUtils.move(tmp_file, readme_file)
     end
     
@@ -111,7 +113,7 @@ module Xezat
         lst_file = File.expand_path(File.join(dir, '.' + pkg_name + '.lst'))
         if FileTest.readable?(lst_file)
           lines = File.readlines(lst_file)
-          lines.reject! { |path| path.strip[-1] == '/' }.map! { |path| '/' + path }
+          lines.delete_if { |path| path.strip[-1] == '/' }.map! { |path| '/' + path }
           files[pkg_name.intern] = lines
         else
           files[pkg_name.intern] = []

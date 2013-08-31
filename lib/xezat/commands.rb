@@ -9,6 +9,7 @@ module Xezat
   class Command
 
     def initialize(command, extra = '')
+      @help = false
       @op = OptionParser.new
       @op.banner = "Usage: xezat #{command} [option...] #{extra}"
       @op.on('-?', '--help', 'Show help message', TrueClass) { |v|
@@ -44,14 +45,15 @@ module Xezat
     end
     
     def load_commands(path)
-      Dir.glob(path + '/*.rb') { |rb|
+      Dir.glob(File.join(path, '*.rb')) { |rb|
         require rb
       }
     end
 
   end
 
-  Commands = CommandManager.new
-  Commands.load_commands(File.dirname(__FILE__) + '/command')
-
+  unless defined?(Commands)
+    Commands = CommandManager.new
+    Commands.load_commands(File.join(File.dirname(__FILE__), 'command'))
+  end
 end

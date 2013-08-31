@@ -37,7 +37,7 @@ module Xezat
     end
     
     def load_detectors(path)
-      Dir.glob(path + '/*.rb') { |rb|
+      Dir.glob(File.join(path, '*.rb')) { |rb|
         require rb
       }
     end
@@ -45,6 +45,6 @@ module Xezat
   end
   
   Detectors = DetectorManager.new
-  Detectors.load_detectors(File.dirname(__FILE__) + '/detector')
+  Detectors.load_detectors(File.join(File.dirname(__FILE__), 'detector'))
 
 end

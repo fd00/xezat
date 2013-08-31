@@ -7,7 +7,7 @@ class CygclassesTest < Test::Unit::TestCase
 
   def setup
     here = File.dirname(__FILE__)
-    @cygclasses = CygclassManager.new(File.join(here, '/fixture/cygclass'))
+    @cygclasses = CygclassManager.new(File.join(here, 'fixture', 'cygclasses'))
   end
 
   # 存在している cygclass

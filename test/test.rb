@@ -4,4 +4,4 @@ $:.unshift File.expand_path(File.join(here, '..', 'lib'))
 $:.unshift File.expand_path(File.join(here))
 
 require 'test/unit'
-Test::Unit::AutoRunner.run(true, './xezat')
+Test::Unit::AutoRunner.run(true, File.join(here, 'xezat'))

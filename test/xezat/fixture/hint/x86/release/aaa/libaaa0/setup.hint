@@ -1,0 +1,5 @@
+sdesc: "aaa (runtime)"
+ldesc: "aaaaaa"
+category: Libs
+requires: cygwin
+external-source: aaa

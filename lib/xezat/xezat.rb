@@ -12,7 +12,7 @@ module Xezat
 
   # initial release のメッセージ
   INITIAL_RELEASE_MESSAGE = 'Initial release by fd0 <https://github.com/fd00/>'
-
+  
   class IllegalArgumentException < Exception
     # メソッドへの引数が不正であった場合に投げられる
   end
@@ -68,5 +68,9 @@ module Xezat
 
   class FilePermissionException < Exception
     # ファイルへのアクセス権限がない場合に投げられる
+  end
+  
+  class UnsupportedMachineException < Exception
+    # x86 or x86_64 以外のマシンで実行している場合に投げられる
   end
 end

@@ -9,7 +9,7 @@ class CreateTest < Test::Unit::TestCase
   
   def setup
     @cygclass_manager =
-      CygclassManager.new(File.expand_path(File.join(File.dirname(__FILE__), '..', 'fixture', 'cygclass')))
+      CygclassManager.new(File.expand_path(File.join(File.dirname(__FILE__), '..', 'fixture', 'cygclasses')))
   end
 
   # 引数がない場合は生成する cygport のファイルパスが不明なため例外が投げられる
