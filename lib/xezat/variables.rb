@@ -30,25 +30,13 @@ module Xezat
           end
           value = values
         when '$' # 改行を含む文字列の場合は ruby array に変換する
-          values = []
-          s = StringScanner.new(value.gsub(/^\$'(\\n|\\t)*/, ''))
-          while true
-            if key == :DESCRIPTION
-              case
-              when s.scan_until(/([^\\]*)(\\n|\\t)+/)
-                values << s[1]
-              else
-                values << s.rest
-                break
-              end
-            else
-              case
-              when s.scan_until(/(#{URI.regexp})(\\n|\\t)+/)
-                values << s[1]
-              else
-                break
-              end
-            end
+          values = value.gsub(/^\$'/, '').gsub(/'$/, '').split(/\\n/).collect { |line|
+            line.gsub(/\\t/, '').gsub(/\\'/, "'")
+          }
+          unless key == :DESCRIPTION
+            values = values.delete_if { |x|
+              x.empty?
+            }
           end
           value = values
         end

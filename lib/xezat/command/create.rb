@@ -134,14 +134,12 @@ module Xezat
       cygclasses.each { |cygclass|
         buf << 'inherit ' + cygclass.to_s
       }
-      buf
+      buf << ''
     end
 
     # buf の内容を cygport に書き出す
     def write(fp, buf)
-      buf.each { |line|
-        fp.puts line
-      }
+      fp.write(buf.join($/))
     end
 
     # cygport ファイルを生成する

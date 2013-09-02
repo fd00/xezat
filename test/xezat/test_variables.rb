@@ -7,6 +7,7 @@ class VariableManagerTest < Test::Unit::TestCase
 
   def test_parsing
     variables = VariableManager.new(<<EOL)
+DESCRIPTION=$'\\nThat\\'s good\\n\\nxxx\\tyyy\\tzzz'
 E=F
 G='Single Quoted'
 H=([0]="aaa" [1]="bbb")
@@ -17,6 +18,7 @@ myfunc()
 }
 A=B
 EOL
+    assert_equal(['', "That's good", '', 'xxxyyyzzz'], variables[:DESCRIPTION])
     assert_equal('F', variables[:E])
     assert_equal('Single Quoted', variables[:G])
     assert_equal(['aaa', 'bbb'], variables[:H])
