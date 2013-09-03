@@ -16,7 +16,7 @@ module Xezat
       @args = nil
 
       @op = OptionParser.new
-      @op.version = '0'
+      @op.version = VERSION
       @op.banner = 'Usage: xezat [option...] <command> [command_option...]'
       @op.on('-?', '--help', 'Show help message', TrueClass) { |v|
         @help = true

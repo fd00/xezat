@@ -17,9 +17,9 @@ class CommandManagerTest < Test::Unit::TestCase
   # 定義されているコマンドが取得できるか
   def test_getting_defined_command
     commands = CommandManager.new
-    commands.register(:foo, Object)
+    commands.register(:foo, Array)
     assert_nothing_thrown() {
-      commands.instance(:foo)
+      assert_instance_of(Array, commands.instance(:foo))
     }
   end
 

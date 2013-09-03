@@ -44,7 +44,9 @@ module Xezat
   
   end
   
-  Detectors = DetectorManager.new
-  Detectors.load_detectors(File.join(File.dirname(__FILE__), 'detector'))
-
+  unless defined?(Detectors)
+    Detectors = DetectorManager.new
+    Detectors.load_detectors(File.join(File.dirname(__FILE__), 'detector'))
+  end
+  
 end

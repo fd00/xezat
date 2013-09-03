@@ -1,0 +1,19 @@
+_xezat()
+{
+    local commands cur prev
+    commands="change create dist doctor help showvars"
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+ 
+    case "${prev}" in
+        change|create|dist|showvars)
+            COMPREPLY=( $( compgen -f ${cur} ) )
+            return 0
+            ;;
+        help)
+            COMPREPLY=( $( compgen -W "${commands}" -- ${cur} ) )
+    esac
+    
+    COMPREPLY=( $( compgen -W "${commands}" ${cur} ) )
+}
+complete -F _xezat xezat

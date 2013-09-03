@@ -1,5 +1,7 @@
 
 module Xezat
+  
+  VERSION = '0'
 
   # このツールのルートディレクトリ
   ROOT_DIR = File.expand_path(File.join(File.dirname(__FILE__), '..', '..'))
