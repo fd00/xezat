@@ -20,14 +20,14 @@ module Xezat
         when '(' # 配列の場合は ruby array に変換する
           values = []
           s = StringScanner.new(value)
-          while true
+          loop {
             case
             when s.scan_until(/\[(\d+)\]="([A-Za-z0-9-]+)"/)
               values << s[2]
             else
               break
             end
-          end
+          }
           value = values
         when '$' # 改行を含む文字列の場合は ruby array に変換する
           values = value.gsub(/^\$'/, '').gsub(/'$/, '').split(/\\n/).collect { |line|

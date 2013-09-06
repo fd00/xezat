@@ -109,7 +109,7 @@ module Xezat
     def get_files(variables)
       files = {}
       dir = variables[:T]
-      variables[:pkg_name].each { |pkg_name|
+      variables[:PKG_NAMES].each { |pkg_name|
         lst_file = File.expand_path(File.join(dir, '.' + pkg_name + '.lst'))
         if FileTest.readable?(lst_file)
           lines = File.readlines(lst_file)

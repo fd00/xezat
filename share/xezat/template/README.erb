@@ -30,7 +30,7 @@ Build instructions:
 
 This will create:
   /usr/src/<%= variables[:P] %>-X-src.tar.bz2
-<% variables[:pkg_name].each { |pkg_name| -%>
+<% variables[:PKG_NAMES].each { |pkg_name| -%>
   /usr/src/<%= pkg_name + '-' + variables[:PVR].sub('-' + variables[:PR], '') %>-X.tar.bz2
 <% } -%>
 
@@ -38,7 +38,7 @@ This will create:
 
 Files included in the binary package:
 
-<% variables[:pkg_name].each { |pkg_name| -%>
+<% variables[:PKG_NAMES].each { |pkg_name| -%>
 (<%= pkg_name %>)
 <% files[pkg_name.intern].each { |file| -%>
   <%= file -%>
