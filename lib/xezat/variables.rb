@@ -45,6 +45,11 @@ module Xezat
     end
 
     def [](key)
+      if key == :PKG_NAMES
+        unless @variables[key]
+          key = :pkg_name
+        end
+      end
       @variables[key]
     end
 

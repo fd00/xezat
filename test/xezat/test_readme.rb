@@ -47,4 +47,12 @@ EOL
     }
   end
 
+  def test_compare
+    readme = Readme.new('')
+    assert_equal(1, readme.compare('1.9.0-1bl1', '1.10.0-1bl1'))
+    assert_equal(-1, readme.compare('1.10.0-1bl1', '1.9.0-1bl1'))
+    assert_equal(-1, readme.compare('1.10.0-1bl1', '1.9.0+svn100-1bl1'))
+    assert_equal(-1, readme.compare('1.10.0-1bl2', '1.10.0-1bl1'))
+  end
+  
 end
