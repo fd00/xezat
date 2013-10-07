@@ -17,20 +17,24 @@ Canonical website:
   <%= variables[:HOMEPAGE] %>
 
 Canonical download:
-  <%= info[:src_uri] %>
+<% if info[:SRC_URI].is_a?(Array) -%>
+  <%= info[:SRC_URI][0] %>
+<% else -%>
+  <%= info[:SRC_URI] %>
+<% end -%>
 
 -------------------------------------------
 
 Build instructions:
   unpack <%= variables[:P] -%>-X-src.tar.xz
     if you use setup to install this src package, it will be
-         unpacked under /usr/src automatically
+        unpacked under /usr/src automatically
   cd /usr/src
   cygport ./<%= variables[:P] -%>-X.cygport all
 
 This will create:
   /usr/src/<%= variables[:P] %>-X-src.tar.xz
-<% variables[:PKG_NAMES].each { |pkg_name| -%>
+<% variables[:pkg_name].each { |pkg_name| -%>
   /usr/src/<%= pkg_name + '-' + variables[:PVR].sub('-' + variables[:PR], '') %>-X.tar.xz
 <% } -%>
 
@@ -38,11 +42,11 @@ This will create:
 
 Files included in the binary package:
 
-<% variables[:PKG_NAMES].each { |pkg_name| -%>
+<% variables[:pkg_name].each { |pkg_name| -%>
 (<%= pkg_name %>)
-<% files[pkg_name.intern].each { |file| -%>
+<%   files[pkg_name.intern].each { |file| -%>
   <%= file -%>
-<% } -%>
+<%   } -%>
 
 <% } -%>
 ------------------

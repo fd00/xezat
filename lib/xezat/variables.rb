@@ -39,17 +39,16 @@ module Xezat
             }
           end
           value = values
+        else
+          if key == :DESCRIPTION
+            value = [value]
+          end
         end
         @variables[key] = value
       }
     end
 
     def [](key)
-      if key == :PKG_NAMES
-        unless @variables[key]
-          key = :pkg_name
-        end
-      end
       @variables[key]
     end
 
