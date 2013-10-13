@@ -80,7 +80,11 @@ module Xezat
         b_ver = b_ver_tag[0]
       end
       if (Gem::Version.correct?(a_ver) && Gem::Version.correct?(b_ver))
-        return -(Gem::Version.create(a_ver) <=> Gem::Version.create(b_ver))
+        order = -(Gem::Version.create(a_ver) <=> Gem::Version.create(b_ver))
+        unless order == 0
+          return order
+        end
+        return -(a_ver_tag[1] <=> b_ver_tag[1])
       end
       raise ArgumentError
     end
