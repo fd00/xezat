@@ -7,7 +7,7 @@ module Xezat
     
     Detectors.register('cygport', self)
     
-    def get_components(root)
+    def get_components(variables)
       ['cygport']
     end
 

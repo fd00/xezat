@@ -8,12 +8,12 @@ module Xezat
     
     Detectors.register('gobject-introspection', self)
     
-    def get_components(root)
-      Find.find(root) { |file|
+    def get_components(variables)
+      Find.find(variables[:S]) { |file|
         if /^configure\.(ac|in)$/ =~ File.basename(file)
           File.foreach(file) { |line|
             if /^GOBJECT_INTROSPECTION_CHECK/ =~ line
-              return ['gobject-introspection', 'automake', 'autoconf', 'make']
+              return ['gobject-introspection']
             end
           }
         end

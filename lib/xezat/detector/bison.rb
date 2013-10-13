@@ -8,8 +8,8 @@ module Xezat
     
     Detectors.register('bison', self)
     
-    def get_components(root)
-      Find.find(root) { |file|
+    def get_components(variables)
+      Find.find(variables[:S]) { |file|
         if /.+\.(y|ypp)$/ =~ File.basename(file)
           return ['bison']
         end

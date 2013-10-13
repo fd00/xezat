@@ -7,8 +7,8 @@ module Xezat
     
     Detectors.register('tcl', self)
     
-    def get_components(root)
-      Find.find(root) { |file|
+    def get_components(variables)
+      Find.find(variables[:S]) { |file|
         if /.+\.tcl$/ =~ File.basename(file)
           return ['tcl']
         end

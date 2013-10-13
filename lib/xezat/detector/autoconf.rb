@@ -8,10 +8,10 @@ module Xezat
     
     Detectors.register('autoconf', self)
     
-    def get_components(root)
-      Find.find(root) { |file|
+    def get_components(variables)
+      Find.find(variables[:S]) { |file|
         if /^configure\.(ac|in)$/ =~ File.basename(file)
-          return ['autoconf', 'make']
+          return ['autoconf']
         end
       }
       []

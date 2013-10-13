@@ -7,7 +7,7 @@ module Xezat
   class Detector
 
     # ソースツリーが条件を満たしているコンポーネント名の配列を返す
-    def get_components(root)
+    def get_components(variables)
       []
     end
 

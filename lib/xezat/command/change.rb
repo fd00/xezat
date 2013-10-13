@@ -61,7 +61,7 @@ module Xezat
             
       info = {}
       info[:runtimes] = get_runtimes(cygport)
-      info[:builds] = get_builds(variables[:S], PackageManager.get_default_packages)
+      info[:builds] = get_builds(variables, PackageManager.get_default_packages)
       info[:src_uri] = get_src_uri(variables)
       info[:changelog] = readme
       files = get_files(variables)
@@ -85,8 +85,8 @@ module Xezat
       result.split(/\n/).map! { |runtime| runtime.lstrip }
     end
     
-    def get_builds(root, package_manager)
-      Detectors.get_components(root).map! { |detector|
+    def get_builds(variables, package_manager)
+      Detectors.get_components(variables).map! { |detector|
         package_manager[detector]
       }
     end
@@ -109,7 +109,7 @@ module Xezat
     def get_files(variables)
       files = {}
       dir = variables[:T]
-      variables[:PKG_NAMES].each { |pkg_name|
+      variables[:pkg_name].each { |pkg_name|
         lst_file = File.expand_path(File.join(dir, '.' + pkg_name + '.lst'))
         if FileTest.readable?(lst_file)
           lines = File.readlines(lst_file)

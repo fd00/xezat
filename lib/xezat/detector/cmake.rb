@@ -8,10 +8,10 @@ module Xezat
     
     Detectors.register('cmake', self)
     
-    def get_components(root)
-      Find.find(root) { |file|
+    def get_components(variables)
+      Find.find(variables[:S]) { |file|
         if /^CMakeLists\.txt$/ =~ File.basename(file)
-          return ['cmake', 'make']
+          return ['cmake']
         end
       }
       []

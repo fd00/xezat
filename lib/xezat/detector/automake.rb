@@ -8,10 +8,10 @@ module Xezat
     
     Detectors.register('automake', self)
     
-    def get_components(root)
-      Find.find(root) { |file|
+    def get_components(variables)
+      Find.find(variables[:S]) { |file|
         if /^Makefile\.am$/ =~ File.basename(file)
-          return ['automake', 'autoconf', 'make']
+          return ['automake']
         end
       }
       []

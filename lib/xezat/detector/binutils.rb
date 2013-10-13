@@ -7,8 +7,8 @@ module Xezat
     
     Detectors.register('binutils', self)
     
-    def get_components(root)
-      Find.find(root) { |file|
+    def get_components(variables)
+      Find.find(variables[:S]) { |file|
         if /.+\.[sS]$/ =~ File.basename(file)
           return ['binutils']
         end

@@ -7,8 +7,8 @@ module Xezat
     
     Detectors.register('make', self)
     
-    def get_components(root)
-      Find.find(root) { |file|
+    def get_components(variables)
+      Find.find(variables[:B]) { |file|
         if /^[Mm]akefile/ =~ File.basename(file)
           return ['make']
         end

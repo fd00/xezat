@@ -8,8 +8,8 @@ module Xezat
     
     Detectors.register('libtool', self)
     
-    def get_components(root)
-      Find.find(root) { |file|
+    def get_components(variables)
+      Find.find(variables[:S]) { |file|
         if /^ltmain\.sh$/ =~ File.basename(file)
           return ['libtool']
         end

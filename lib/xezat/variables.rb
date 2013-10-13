@@ -22,7 +22,7 @@ module Xezat
           s = StringScanner.new(value)
           loop {
             case
-            when s.scan_until(/\[(\d+)\]="([A-Za-z0-9-]+)"/)
+            when s.scan_until(/\[(\d+)\]="([[:graph:]]+)"/)
               values << s[2]
             else
               break

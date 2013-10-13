@@ -17,10 +17,10 @@ Canonical website:
   <%= variables[:HOMEPAGE] %>
 
 Canonical download:
-<% if info[:SRC_URI].is_a?(Array) -%>
-  <%= info[:SRC_URI][0] %>
+<% if info[:src_uri].is_a?(Array) -%>
+  <%= info[:src_uri][0] %>
 <% else -%>
-  <%= info[:SRC_URI] %>
+  <%= info[:src_uri] %>
 <% end -%>
 
 -------------------------------------------
