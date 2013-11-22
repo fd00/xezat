@@ -14,6 +14,8 @@ class GccFortranTest < Test::Unit::TestCase
     assert_equal(['gcc-fortran', 'gcc-core', 'binutils'], detector.get_components(root_ok_f77))
     root_ok_f90 = {:S => File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'gcc-fortran', 'ok_f90'))}
     assert_equal(['gcc-fortran', 'gcc-core', 'binutils'], detector.get_components(root_ok_f90))
+    root_ok_f95 = {:S => File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'gcc-fortran', 'ok_f95'))}
+    assert_equal(['gcc-fortran', 'gcc-core', 'binutils'], detector.get_components(root_ok_f95))
     root_ng = {:S => File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'gcc-fortran', 'ng'))}
     assert_equal([], detector.get_components(root_ng))
   end

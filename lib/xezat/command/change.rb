@@ -116,7 +116,7 @@ module Xezat
           lines.delete_if { |path| path.strip[-1] == '/' }.map! { |path| '/' + path }
           files[pkg_name.intern] = lines
         else
-          files[pkg_name.intern] = []
+          raise
         end
       }
       files

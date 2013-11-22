@@ -84,7 +84,11 @@ module Xezat
         unless order == 0
           return order
         end
-        return -(a_ver_tag[1] <=> b_ver_tag[1])
+        order = -(a_ver_tag[1] <=> b_ver_tag[1])
+        unless order == 0
+          return order
+        end
+        return -(a_ver_rel[1] <=> b_ver_rel[1])
       end
       raise ArgumentError
     end

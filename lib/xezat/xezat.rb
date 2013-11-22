@@ -47,9 +47,13 @@ module Xezat
   class NoSuchCommandDefinitionException < Exception
     # 存在しないコマンドが指定された場合に投げられる
   end
-  
+
   class MultipleDetectorDefinitionException < Exception
     # 検出器が多重定義された場合に投げられる
+  end
+
+  class MultipleValidatorDefinitionException < Exception
+    # 検証器が多重定義された場合に投げられる
   end
 
   class NoSuchCygclassException < Exception
