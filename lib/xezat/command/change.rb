@@ -99,6 +99,7 @@ module Xezat
         if key.to_s.match(/^[A-Z]+_URI$/)
           unless (key == :SRC_URI || key == :PATCH_URI)
             src_uri = value
+            # TODO inherited で実際に使っている fetch 手段を確定する必要がある
             break # TODO 複数ある場合を考慮してないけどいいか？
           end
         end
@@ -106,6 +107,7 @@ module Xezat
       src_uri
     end
     
+    # package で作成されるチェック用の lst から README に埋め込むファイルリストを取得する
     def get_files(variables)
       files = {}
       dir = variables[:T]
@@ -113,10 +115,16 @@ module Xezat
         lst_file = File.expand_path(File.join(dir, '.' + pkg_name + '.lst'))
         if FileTest.readable?(lst_file)
           lines = File.readlines(lst_file)
-          lines.delete_if { |path| path.strip[-1] == '/' }.map! { |path| '/' + path }
-          files[pkg_name.intern] = lines
+          lines.delete_if { |path| path.strip[-1] == File::SEPARATOR }.map! { |path| File::SEPARATOR + path.strip }
+          if variables[:PN] == pkg_name
+            readme = File::SEPARATOR + File.join('usr', 'share', 'doc', 'Cygwin', pkg_name + '.README') + $/
+            unless lines.include?(readme)
+              lines << readme.strip
+            end
+          end
+          files[pkg_name.intern] = lines.sort
         else
-          raise
+          raise IllegalStateException, '*.lst not found (created by cygport-pack)'
         end
       }
       files

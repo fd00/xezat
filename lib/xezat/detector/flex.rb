@@ -10,8 +10,10 @@ module Xezat
     
     def get_components(variables)
       Find.find(variables[:S]) { |file|
-        if /.+\.l$/ =~ File.basename(file)
-          return ['flex']
+        if file.encoding == Encoding:: UTF_8 or file.encoding == Encoding::US_ASCII
+          if /.+\.l$/ =~ File.basename(file)
+            return ['flex']
+          end
         end
       }
       []

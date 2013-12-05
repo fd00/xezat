@@ -29,6 +29,10 @@ module Xezat
         :HOMEPAGE => 'http://${PN}.berlios.de/',
         :SRC_URI  => 'mirror://berlios/${PN}/${P}.tar.gz',
       },
+      :github => {
+        :HOMEPAGE => 'https://github.com/${PN}/${PN}',
+        :SRC_URI => 'https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz',
+      },
     }
     TEMPLATE_MAP.default = {
       :HOMEPAGE => '',

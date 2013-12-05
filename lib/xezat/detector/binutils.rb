@@ -9,8 +9,10 @@ module Xezat
     
     def get_components(variables)
       Find.find(variables[:S]) { |file|
-        if /.+\.[sS]$/ =~ File.basename(file)
-          return ['binutils']
+        if file.encoding == Encoding:: UTF_8 or file.encoding == Encoding::US_ASCII
+          if /.+\.[sS]$/ =~ File.basename(file)
+            return ['binutils']
+          end
         end
       }
       []

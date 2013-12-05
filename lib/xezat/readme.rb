@@ -90,7 +90,7 @@ module Xezat
         end
         return -(a_ver_rel[1] <=> b_ver_rel[1])
       end
-      raise ArgumentError
+      -(a <=> b)
     end
     
   end
