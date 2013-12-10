@@ -13,7 +13,7 @@ module Xezat
         if file.encoding == Encoding:: UTF_8 or file.encoding == Encoding::US_ASCII
           if /^configure\.(ac|in)$/ =~ File.basename(file)
             File.foreach(file) { |line|
-              if /^GOBJECT_INTROSPECTION_CHECK/ =~ line
+              if line.start_with?('GOBJECT_INTROSPECTION_CHECK')
                 return ['gobject-introspection']
               end
             }

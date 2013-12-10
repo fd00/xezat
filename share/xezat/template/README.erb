@@ -45,7 +45,7 @@ Files included in the binary package:
 <% variables[:pkg_name].each { |pkg_name| -%>
 (<%= pkg_name %>)
 <%   files[pkg_name.intern].each { |file| -%>
-  <%= file -%>
+  <%= file %>
 <%   } -%>
 
 <% } -%>

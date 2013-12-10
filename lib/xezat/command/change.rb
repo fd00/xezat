@@ -117,7 +117,7 @@ module Xezat
           lines = File.readlines(lst_file)
           lines.delete_if { |path| path.strip[-1] == File::SEPARATOR }.map! { |path| File::SEPARATOR + path.strip }
           if variables[:PN] == pkg_name
-            readme = File::SEPARATOR + File.join('usr', 'share', 'doc', 'Cygwin', pkg_name + '.README') + $/
+            readme = File::SEPARATOR + File.join('usr', 'share', 'doc', 'Cygwin', pkg_name + '.README')
             unless lines.include?(readme)
               lines << readme.strip
             end
