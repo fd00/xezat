@@ -10,10 +10,8 @@ module Xezat
     
     def get_components(variables)
       Find.find(variables[:S]) { |file|
-        if file.encoding == Encoding:: UTF_8 or file.encoding == Encoding::US_ASCII
-          if /^Makefile\.am$/ =~ File.basename(file)
-            return ['automake']
-          end
+        if file.end_with?(File::SEPARATOR + 'Makefile.am')
+          return ['automake']
         end
       }
       []

@@ -14,6 +14,8 @@ class AutoconfTest < Test::Unit::TestCase
     assert_equal(['autoconf'], detector.get_components(root_ok_in))
     root_ng = {:S => File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'autoconf', 'ng'))}
     assert_equal([], detector.get_components(root_ng))
+    root_ng_no_ascii = {:S => File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'autoconf', 'ng_no_ascii'))}
+    assert_equal([], detector.get_components(root_ng_no_ascii))
   end
 
 end

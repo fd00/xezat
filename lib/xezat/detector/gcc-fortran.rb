@@ -9,10 +9,9 @@ module Xezat
     
     def get_components(variables)
       Find.find(variables[:S]) { |file|
-        if file.encoding == Encoding:: UTF_8 or file.encoding == Encoding::US_ASCII
-          if /.+\.(f|F|f77|F77|f90|F90|f95|F95)$/ =~ File.basename(file)
-            return ['gcc-fortran', 'gcc-core', 'binutils']
-          end
+        if file.end_with?('.f') || file.end_with?('.F') || file.end_with?('.f77') || file.end_with?('.F77') ||
+           file.end_with?('.f90') || file.end_with?('.F90') || file.end_with?('.f95') || file.end_with?('.F95')
+          return ['gcc-fortran', 'gcc-core', 'binutils']
         end
       }
       []

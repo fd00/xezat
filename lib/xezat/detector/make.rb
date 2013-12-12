@@ -9,10 +9,8 @@ module Xezat
     
     def get_components(variables)
       Find.find(variables[:B]) { |file|
-        if file.encoding == Encoding:: UTF_8 or file.encoding == Encoding::US_ASCII
-          if /^[Mm]akefile/ =~ File.basename(file).encode('ASCII')
-            return ['make']
-          end
+        if file.end_with?(File::SEPARATOR + 'Makefile') || file.end_with?(File::SEPARATOR + 'makefile')
+          return ['make']
         end
       }
       []
