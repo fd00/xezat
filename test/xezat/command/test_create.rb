@@ -63,13 +63,14 @@ class CreateTest < Test::Unit::TestCase
       :HOMEPAGE => 'homepage',
       :GIT_URI => 'gituri',
     }
+    category = 'Utils'
     cygclasses = [:git, :cmake]
-    actual = create.get_cygport(template_variables, cygclasses)
+    actual = create.get_cygport(template_variables, category, cygclasses)
     expected = <<"EOS"
 HOMEPAGE="homepage"
 GIT_URI="gituri"
 
-CATEGORY=""
+CATEGORY="Utils"
 SUMMARY=""
 DESCRIPTION=""
 
@@ -79,4 +80,24 @@ EOS
     assert_equal(expected, actual)
   end
   
+  def test_get_cygport_no_category_and_inheritance()
+    create = Create.new
+    template_variables = {
+      :HOMEPAGE => 'homepage',
+      :SRC_URI => 'srcuri',
+      :GIT_URI => 'gituri',
+    }
+    category = ''
+    cygclasses = []
+    actual = create.get_cygport(template_variables, category, cygclasses)
+    expected = <<"EOS"
+HOMEPAGE="homepage"
+SRC_URI="srcuri"
+
+CATEGORY=""
+SUMMARY=""
+DESCRIPTION=""
+
+EOS
+  end
 end

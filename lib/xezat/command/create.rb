@@ -11,12 +11,7 @@ module Xezat
   class Create < Command
 
     Commands.register(:create, self)
-    
-    # SRC_URI 以外でファイル取得プロトコルを定義するクラス
-    EXTENDED_FETCHER_CLASSES = [
-      :cvs, :svn, :git, :bzr, :hg, :mtn, :fossil,
-    ]
-    
+
     # for test
     attr_writer :cygclass_manager, :template_variables
     
@@ -28,9 +23,10 @@ module Xezat
       @cygclass_manager = CygclassManager.new
       @ignored = nil
       @template_variables = {}
+      @category = ''
 
       @op.on('-c', '--category=VAL', 'Select category', Array) { |v|
-        @variables[:CATEGORY] = v.map! { |category|
+        @category = v.map! { |category|
           category.intern
         }.uniq.join(' ')
       }
@@ -67,7 +63,7 @@ module Xezat
       end
       
       template_variables = get_template_variables(@cygclasses)
-      contents = get_cygport(template_variables, @cygclasses)
+      contents = get_cygport(template_variables, @category, @cygclasses)
       tmp_file = File.expand_path(File.join(Dir.tmpdir(), SecureRandom.uuid))
       Signal.trap(:INT) {
         FileUtils.remove(tmp_file)
@@ -106,7 +102,7 @@ module Xezat
       }
     end
     
-    def get_cygport(template_variables, cygclasses)
+    def get_cygport(template_variables, category, cygclasses)
       readme_erb = File.expand_path(File.join(PATCHES_TEMPLATE_DIR, 'cygport.erb'))
       ERB.new(File.readlines(readme_erb).join(nil), nil, '%-').result(binding)
     end
