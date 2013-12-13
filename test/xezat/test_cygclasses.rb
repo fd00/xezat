@@ -19,5 +19,15 @@ class CygclassesTest < Test::Unit::TestCase
   def test_nonexistent_cygclass
     assert_equal(false, @cygclasses.exists?(:nonexistent))
   end
+  
+  # fetcher である cygclass
+  def test_fetcher_cygclass
+    assert_equal(true, @cygclasses.fetcher?(:hg))
+  end
+  
+  # 存在しているが fetcher ではない cygclass
+  def test_nonfetcher_cygclass
+    assert_equal(false, @cygclasses.fetcher?(:cmake))
+  end
 
 end

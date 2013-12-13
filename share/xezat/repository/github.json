@@ -1,0 +1,5 @@
+{
+    "HOMEPAGE": "https://github.com/github/${PN}",
+    "SRC_URI": "https://github.com/github/${PN}/archive/v${PV}.tar.gz",
+    "GIT_URI": "https://github.com/github/${PN}.git"
+}

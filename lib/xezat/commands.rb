@@ -20,6 +20,13 @@ module Xezat
     def help
       @op.help
     end
+    
+    def comp(cygport)
+      unless cygport.end_with?('.cygport')
+        cygport << '.cygport'
+      end
+      cygport
+    end
 
   end
 

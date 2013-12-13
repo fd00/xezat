@@ -24,7 +24,8 @@ module Xezat
       if argv.length == 0
         raise IllegalArgumentOfCommandException, 'cygport not specified'
       end
-      cygport = argv.shift
+      
+      cygport = comp(argv.shift)
       ignored = argv # TODO 捨てたことがわかるようにしたい
       
       variables = VariableManager.get_default_variables(cygport)

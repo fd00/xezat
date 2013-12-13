@@ -22,7 +22,7 @@ module Xezat
         raise IllegalArgumentOfCommandException, 'help specified'
       end
       
-      cygport = argv.shift
+      cygport = comp(argv.shift)
       ignored = argv # TODO 捨てたことがわかるようにしたい
       
       variables = VariableManager.get_default_variables(cygport)

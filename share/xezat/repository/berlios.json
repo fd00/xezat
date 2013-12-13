@@ -1,0 +1,6 @@
+{
+    "HOMEPAGE": "http://${PN}.berlios.de/",
+    "SRC_URI": "mirror://berlios/${PN}/${P}.tar.gz",
+    "SVN_URI": "svn://svn.berlios.de/${PN}/trunk",
+    "GIT_URI": "git://git.berlios.de/${PN}"
+}

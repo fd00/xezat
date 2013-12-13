@@ -1,0 +1,11 @@
+<% template_variables.each { |key, value| -%>
+<%= key -%>="<%= value %>"
+<% } -%>
+
+CATEGORY=""
+SUMMARY=""
+DESCRIPTION=""
+
+<% cygclasses.each { |cygclass| -%>
+inherit <%= cygclass %>
+<% } -%>

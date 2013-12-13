@@ -31,5 +31,11 @@ class CommandManagerTest < Test::Unit::TestCase
       commands.instance(:bar)
     }
   end
+  
+  def test_comp
+    command = Command.new('')
+    assert_equal('aaa.cygport', command.comp('aaa'))
+    assert_equal('aaa.cygport', command.comp('aaa.cygport'))
+  end
 
 end

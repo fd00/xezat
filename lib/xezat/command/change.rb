@@ -32,14 +32,14 @@ module Xezat
         raise IllegalArgumentOfCommandException, 'help specified'
       end
       
-      cygport = argv.shift
+      cygport = comp(argv.shift)
       ignored = argv # TODO 捨てたことがわかるようにしたい
 
       variables = VariableManager.get_default_variables(cygport)
       readme_file = File.expand_path(File.join(variables[:C], 'README'))
       if FileTest.exists?(readme_file)
         if FileTest.readable?(readme_file)
-          readme = Readme.new(File.read(readme_file))
+          readme = Readme.new(File::read(readme_file))
           version = variables[:PVR].intern
           unless readme.exists?(version)
             readme[version] = @message

@@ -1,60 +1,33 @@
 
+require 'json'
+
 require 'xezat/xezat'
 require 'xezat/commands'
 require 'xezat/cygclasses'
 
 module Xezat
 
-  # cygport の骨組みを生成するコマンド
+  # create *.cygport from templates
   class Create < Command
 
     Commands.register(:create, self)
-
-    # SRC_URI を内部で書き換える cygclass
+    
+    # SRC_URI 以外でファイル取得プロトコルを定義するクラス
     EXTENDED_FETCHER_CLASSES = [
       :cvs, :svn, :git, :bzr, :hg, :mtn, :fossil,
     ]
-
-    # TODO yaml か何かで設定ファイルから読み込むようにしたい
-    TEMPLATE_MAP = {
-      :sourceforge => {
-        :HOMEPAGE => 'http://${PN}.sf.net/',
-        :SRC_URI  => 'mirror://sourceforge/${PN}/${P}.tar.gz',
-      },
-      :google => {
-        :HOMEPAGE => 'https://code.google.com/p/${PN}/',
-        :SRC_URI  => 'https://${PN}.googlecode.com/files/${P}.tar.gz',
-      },
-      :berlios => {
-        :HOMEPAGE => 'http://${PN}.berlios.de/',
-        :SRC_URI  => 'mirror://berlios/${PN}/${P}.tar.gz',
-      },
-      :github => {
-        :HOMEPAGE => 'https://github.com/${PN}/${PN}',
-        :SRC_URI => 'https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz',
-      },
-    }
-    TEMPLATE_MAP.default = {
-      :HOMEPAGE => '',
-      :SRC_URI  => '',
-    }
-
+    
     # for test
-    attr_writer :cygclass_manager
-
+    attr_writer :cygclass_manager, :template_variables
+    
     def initialize
       super(:create, 'PKG-VER-REL.cygport')
       @help = false
-      @variables = {
-        :CATEGORY => '',
-        :SUMMARY => '',
-        :DESCRIPTION => '',
-      }
-      @variables.merge!(TEMPLATE_MAP.default)
       @cygclasses = []
       @overwrite = false
       @cygclass_manager = CygclassManager.new
       @ignored = nil
+      @template_variables = {}
 
       @op.on('-c', '--category=VAL', 'Select category', Array) { |v|
         @variables[:CATEGORY] = v.map! { |category|
@@ -69,102 +42,75 @@ module Xezat
       @op.on('-o', '--overwrite', 'Overwrite cygport file', TrueClass) { |v|
         @overwrite = true
       }
-      @op.on('-t', '--template=VAL', 'Select template (sourceforge/google)') { |v|
-        vi = v.intern
-        if TEMPLATE_MAP.has_key?(vi)
-          @variables.merge!(TEMPLATE_MAP[vi])
+      @op.on('-t', '--template=VAL', 'Select template (berlios/github/google/sourceforge)') { |v|
+        template_file = File.expand_path(File.join(DATA_DIR, 'repository', v + '.json'))
+        if FileTest::exists?(template_file) && FileTest::readable?(template_file)
+          @template_variables = JSON.parse(File::read(template_file), {:symbolize_names => true})
         else
           raise NoSuchTemplateException, "cannot use #{v}: No such template"
         end
       }
     end
-
+    
     def run(argv)
-      begin
-        parse(argv)
-      rescue NoSuchTemplateException => e
-        puts 'xezat-create: ' + e.to_s
-        return
-      end
-
+      @op.order!(argv)
       if @help
         raise IllegalArgumentOfCommandException, 'help specified'
       end
 
-      if argv.length == 0
-        raise IllegalArgumentOfCommandException, 'cygport not specified'
-      end
-      cygport = argv.shift
+      cygport = comp(argv.shift)
       ignored = argv # TODO 捨てたことがわかるようにしたい
-
-      begin
-        generate(cygport, @overwrite, @variables, @cygclasses)
-      rescue UnoverwritableConfigurationException,
-             NoSuchCygclassException,
-             CygclassConflictException => e
-        puts "xezat-create: " + e.to_s
-        return
+      
+      if File::exist?(cygport) && !@overwrite
+        raise UnoverwritableConfigurationException,
+          "#{cygport} already exists"
       end
+      
+      template_variables = get_template_variables(@cygclasses)
+      contents = get_cygport(template_variables, @cygclasses)
+      tmp_file = File.expand_path(File.join(Dir.tmpdir(), SecureRandom.uuid))
+      Signal.trap(:INT) {
+        FileUtils.remove(tmp_file)
+      }
+      File.open(tmp_file, 'w') { |f|
+        f << contents
+      }
+      FileUtils.move(tmp_file, cygport)
     end
-
-    # SRC_URI を必要に応じて vcs cygclass の値に書き換える
-    def resolve(cygclasses, variables)
+    
+    # テンプレートに基づく変数を決定する
+    def get_template_variables(cygclasses)
       fetcher_class = nil
+      fetcher_prefix = 'SRC'
       cygclasses.each { |cygclass|
         unless @cygclass_manager.exists?(cygclass)
           raise NoSuchCygclassException,
             "cannot inherit #{cygclass}: No such cygclass"
         end
-        if EXTENDED_FETCHER_CLASSES.include?(cygclass)
+        if @cygclass_manager.fetcher?(cygclass)
           if fetcher_class
             raise CygclassConflictException,
               "cannot inherit #{cygclass}: #{cygclass} conflict with #{fetcher_class}"
           else
-            variables.delete(:SRC_URI)
-            variables[(cygclass.to_s.upcase + '_URI').intern] = ''
             fetcher_class = cygclass
           end
         end
       }
-    end
-
-    # variables と cygclasses を buf に整形する
-    def create(variables, cygclasses)
-      buf = []
-      variables.each { |k, v|
-        buf << k.to_s + '="' + v + '"'
-      }
-      buf << ''
-      cygclasses.each { |cygclass|
-        buf << 'inherit ' + cygclass.to_s
-      }
-      buf << ''
-    end
-
-    # buf の内容を cygport に書き出す
-    def write(fp, buf)
-      fp.write(buf.join($/))
-    end
-
-    # cygport ファイルを生成する
-    def generate(cygport, overwrite, variables, cygclasses)
-      if File.exist?(cygport)
-        unless overwrite
-          raise UnoverwritableConfigurationException,
-            "#{cygport} already exists"
-        end
+      if fetcher_class
+        fetcher_prefix = fetcher_class.to_s.upcase
       end
-      resolve(cygclasses, variables)
-      File.open(cygport, 'w') { |fp|
-        write(fp, create(variables, cygclasses))
+      key = (fetcher_prefix + '_URI').intern
+      {
+        :HOMEPAGE => @template_variables[:HOMEPAGE],
+        key => @template_variables[key],
       }
     end
-
-    # 渡された引数を解析する
-    def parse(argv)
-      @op.order!(argv)
+    
+    def get_cygport(template_variables, cygclasses)
+      readme_erb = File.expand_path(File.join(PATCHES_TEMPLATE_DIR, 'cygport.erb'))
+      ERB.new(File.readlines(readme_erb).join(nil), nil, '%-').result(binding)
     end
-
+    
   end
 
 end
