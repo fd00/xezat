@@ -22,14 +22,15 @@ module Xezat
         }
       end
     end
-    
+
     def exists?(cygclass)
       @cygclasses.include?(cygclass)
     end
-    
+
     def fetcher?(cygclass)
       @fetcher_cygclassess.include?(cygclass)
     end
+
   end
 
 end

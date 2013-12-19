@@ -5,6 +5,11 @@ class ChangeTest < Test::Unit::TestCase
 
   include Xezat
   
+  def setup
+    @cygclass_manager =
+      CygclassManager.new(File.expand_path(File.join(File.dirname(__FILE__), '..', 'fixture', 'cygclasses')))
+  end
+  
   # SRC_URI がある場合は正常終了する
   def test_get_src_uri
     change = Change.new
@@ -20,18 +25,18 @@ class ChangeTest < Test::Unit::TestCase
     }
   end
   
-  # 他の VCS が存在する場合はそちらを優先する
-  def test_get_src_uri_overwrite
+  # 他の VCS が存在しても fetch がなければ SRC_URI を使用する
+  def test_get_src_uri_defined_only
     change = Change.new
-    actual = change.get_src_uri({:SRC_URI => 'foo', :SVN_URI => 'bar', :DESCRIPTION => 'baz'})
-    assert_equal('bar', actual)
+    actual = change.get_src_uri({:SRC_URI => 'srcuri', :SVN_URI => 'svnuri'}, @cygclass_manager)
+    assert_equal('srcuri', actual)
   end
 
-  # PATCH_URI が存在する場合は無視する
-  def test_get_src_uri_not_overwrite
+  # fetch が存在する場合は XXX_URI を使用する
+  def test_get_src_uri_with_definition
     change = Change.new
-    actual = change.get_src_uri({:SRC_URI => 'foo', :PATCH_URI => 'bar', :DESCRIPTION => 'baz'})
-    assert_equal('foo', actual)
+    actual = change.get_src_uri({:_svn_CYGCLASS_ => '1', :SRC_URI => 'srcuri', :SVN_URI => 'svnuri'}, @cygclass_manager)
+    assert_equal('svnuri', actual)
   end
   
   def test_get_files

@@ -22,12 +22,9 @@ module Xezat
     end
     
     def comp(cygport)
-      unless cygport.end_with?('.cygport')
-        cygport << '.cygport'
-      end
-      cygport
+      cygport + (cygport.end_with?('.cygport') ? '' : '.cygport')
     end
-
+    
   end
 
   # コマンドのインスタンスを管理する

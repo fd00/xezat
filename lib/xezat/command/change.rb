@@ -91,20 +91,33 @@ module Xezat
       }
     end
     
-    def get_src_uri(variables)
+    def get_src_uri(variables, cygclass_manager = CygclassManager.new)
       unless src_uri = variables[:SRC_URI]
         raise IllegalArgumentException, ':SRC_URI not defined'
       end
+      
+      if fetcher = get_fetcher(variables, cygclass_manager)
+        key = (fetcher.to_s.upcase + '_URI').intern
+        if variables.key?(key)
+          src_uri = variables[key]
+        else
+          raise IllegalArgumentException, ':' + key.to_s + ' not defined'
+        end
+      end
+
+      src_uri
+    end
+    
+    def get_fetcher(variables, cygclass_manager = CygclassManager.new)
       variables.each { |key, value|
-        if key.to_s.match(/^[A-Z]+_URI$/)
-          unless (key == :SRC_URI || key == :PATCH_URI)
-            src_uri = value
-            # TODO inherited で実際に使っている fetch 手段を確定する必要がある
-            break # TODO 複数ある場合を考慮してないけどいいか？
+        if matches = key.to_s.match(/^_(?<cygclass>.*)_CYGCLASS_$/)
+          fetcher = matches[:cygclass].intern
+          if cygclass_manager.fetcher?(fetcher)
+            return fetcher
           end
         end
       }
-      src_uri
+      nil
     end
     
     # package で作成されるチェック用の lst から README に埋め込むファイルリストを取得する
