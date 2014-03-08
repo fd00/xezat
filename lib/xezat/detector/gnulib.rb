@@ -10,7 +10,7 @@ module Xezat
     def get_components(variables)
       cygport = File.join(variables[:top], variables[:cygportfile])
       File.foreach(cygport) { |line|
-        if /gnulib-tool/ =~ line
+        if line.index('gnulib-tool')
           return ['gnulib']
         end
       }

@@ -98,7 +98,7 @@ module Xezat
       
       if fetcher = get_fetcher(variables, cygclass_manager)
         key = (fetcher.to_s.upcase + '_URI').intern
-        if variables.key?(key)
+        if variables.exists?(key)
           src_uri = variables[key]
         else
           raise IllegalArgumentException, ':' + key.to_s + ' not defined'

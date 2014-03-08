@@ -11,7 +11,7 @@ module Xezat
     def get_components(variables)
       cygport = File.join(variables[:top], variables[:cygportfile])
       File.foreach(cygport) { |line|
-        if /gyp/ =~ line
+        if line.index('gyp')
           return ['python-gyp']
         end
       }
