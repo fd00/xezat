@@ -13,7 +13,7 @@ module Xezat
       if Dir.exists?(pcdir)
         Find.find(pcdir) { |file|
           if file.end_with?('.pc')
-            print "validate #{file.basename}... "
+            print "validate #{File.basename(file)}..."
             File.foreach(file) { |line|
               if line.index('@')
                 puts 'NG'
