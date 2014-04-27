@@ -1,0 +1,6 @@
+src_compile()
+{
+        cd ${B}
+        lndirs
+        scons
+}
