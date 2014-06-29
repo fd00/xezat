@@ -11,7 +11,7 @@ module Xezat
     def get_components(variables)
       Find.find(variables[:S]) { |file|
         if file.end_with?(File::SEPARATOR + 'CMakeLists.txt')
-          return ['cmake']
+          return ['cmake', 'make']
         end
       }
       []

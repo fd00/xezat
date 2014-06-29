@@ -52,7 +52,7 @@ module Xezat
       @variables[key]
     end
 
-    def exists?(key)
+    def has_key?(key)
       @variables.has_key?(key)
     end
 

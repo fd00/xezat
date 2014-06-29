@@ -13,6 +13,12 @@ module Xezat
           return ['make']
         end
       }
+      cygport = File.join(variables[:top], variables[:cygportfile])
+      File.foreach(cygport) { |line|
+        if line.index('cygmake')
+          return ['make']
+        end
+      }
       []
     end
 
