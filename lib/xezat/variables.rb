@@ -1,77 +1,48 @@
-
 require 'open3'
 require 'uri'
+require 'yaml'
+require 'xezat'
 
 module Xezat
-  
+  # cygport 外部プロセスが異常終了した場合に投げられる例外
+  class CygportProcessError < StandardError
+  end
+
   # cygport 変数を管理するクラス
   class VariableManager
-
-    # declare で出力した変数一覧を解析して Hash にする
-    def initialize(str)
-      @variables = {}
-      str.each_line { |line|
-        unless matches = /^(?<key>\w+)=(?<value>.*)$/.match(line)
-          break
-        end
-        key = matches[:key].strip.intern
-        value = matches[:value].strip.gsub(/^'/, '').gsub(/'$/, '').strip
-        case value[0]
-        when '(' # 配列の場合は ruby array に変換する
-          values = []
-          s = StringScanner.new(value)
-          loop {
-            case
-            when s.scan_until(/\[(\d+)\]="([[:graph:]]+)"/)
-              values << s[2]
-            else
-              break
-            end
-          }
-          value = values
-        when '$' # 改行を含む文字列の場合は ruby array に変換する
-          values = value.gsub(/^\$'/, '').gsub(/'$/, '').split(/\\n/).collect { |line|
-            line.gsub(/\\t/, '').gsub(/\\'/, "'")
-          }
-          unless key == :DESCRIPTION
-            values = values.delete_if { |x|
-              x.empty?
-            }
-          end
-          value = values
-        else
-          if key == :DESCRIPTION
-            value = [value]
-          end
-        end
-        @variables[key] = value
-      }
+    def initialize(str, description = nil)
+      @variables = YAML.load(str).each_value do |v|
+        v.strip! if v.respond_to?(:strip)
+      end
+      @variables[:DESCRIPTION] = description unless description.nil?
     end
 
     def [](key)
       @variables[key]
     end
 
-    def has_key?(key)
-      @variables.has_key?(key)
+    def key?(key)
+      @variables.key?(key)
     end
 
     def each(&block)
-      @variables.each { |key, value|
+      @variables.each do |key, value|
         block.call(key, value)
-      }
-    end
-
-    def self.get_default_variables(cygport)
-      command = File.expand_path(File.join(DATA_DIR, 'show_cygport_variable.sh')) + ' ' + cygport
-      result, error, status = Open3.capture3(command)
-      unless status.success?
-        raise CygportProcessException, error
       end
-      # TODO error はどうする？
-      self.new(result)
     end
 
-  end
+    # 指定された cygport に基づいたシェル変数群を取得する
+    def self.get_default_variables(cygport)
+      command = ['bash', File.expand_path(File.join(DATA_DIR, 'show_cygport_variable.sh')), cygport]
+      result, error, status = Open3.capture3(command.join(' '))
+      raise CygportProcessError, error unless status.success?
 
+      # DESCRIPTION だけ改行を保持したまま取り込みたい
+      command = ['bash', File.expand_path(File.join(DATA_DIR, 'show_cygport_description.sh')), cygport]
+      description, error, status = Open3.capture3(command.join(' '))
+      raise CygportProcessError, error unless status.success?
+
+      self.new(result, description)
+    end
+  end
 end

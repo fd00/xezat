@@ -1,27 +1,19 @@
-
+require 'find'
 require 'xezat/detectors'
 
 module Xezat
-  
-  class Make < Detector
-    
-    Detectors.register('make', self)
-    
-    def get_components(variables)
-      Find.find(variables[:B]) { |file|
-        if file.end_with?(File::SEPARATOR + 'Makefile') || file.end_with?(File::SEPARATOR + 'makefile')
-          return ['make']
+  module Detector
+    class Make
+      DetectorManager::register(:make, self)
+      def detect(variables)
+        Find::find(variables[:B]) do |file|
+          return true if file.end_with?(File::SEPARATOR + 'Makefile')
         end
-      }
-      cygport = File.join(variables[:top], variables[:cygportfile])
-      File.foreach(cygport) { |line|
-        if line.index('cygmake')
-          return ['make']
+        File::foreach(File::join(variables[:top], variables[:cygportfile])) do |line|
+          return true if line.index('cygmake')
         end
-      }
-      []
+        false
+      end
     end
-
   end
-  
 end

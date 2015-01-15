@@ -1,103 +1,47 @@
-
-require 'tempfile'
-
 require 'xezat/command/create'
 
-class CreateTest < Test::Unit::TestCase
+module Xezat::Test::Command
+  class CreateTest < Test::Unit::TestCase
+    include Xezat::Command
+    include Xezat
+    def setup
+      @command = CommandManager[:create]
+      @cygclass_manager = CygclassManager.new(File.join(File.dirname(__FILE__), '..', '..', 'cygport', 'cygclass'))
+      @repository_variables = {
+        :HOMEPAGE => 'homepage',
+        :SRC_URI => 'src_uri'
+      }
+    end
 
-  include Xezat
-  
-  def setup
-    @cygclass_manager =
-      CygclassManager.new(File.expand_path(File.join(File.dirname(__FILE__), '..', 'fixture', 'cygclasses')))
-    @template_variables = {
-      :HOMEPAGE => 'homepage',
-      :SRC_URI => 'srcuri',
-      :GIT_URI => 'gituri',
-    }
-  end
-  
-  def test_get_template_variables()
-    create = Create.new
-    create.cygclass_manager = @cygclass_manager
-    create.template_variables = @template_variables
-    actual = create.get_template_variables([])
-    assert_equal({
-      :HOMEPAGE => 'homepage',
-      :SRC_URI => 'srcuri',
-    }, actual)
-  end
-  
-  def test_get_template_variables_with_cygclass()
-    create = Create.new
-    create.cygclass_manager = @cygclass_manager
-    create.template_variables = @template_variables
-    actual = create.get_template_variables([:git])
-    assert_equal({
-      :HOMEPAGE => 'homepage',
-      :GIT_URI => 'gituri',
-    }, actual)
-  end
-  
-  def test_get_template_variables_with_invalid_cygclass()
-    create = Create.new
-    create.cygclass_manager = @cygclass_manager
-    create.template_variables = @template_variables
-    assert_raise(NoSuchCygclassException) {
-      create.get_template_variables([:notcygclass])
-    }
-  end
-  
-  def test_get_template_variables_with_cygclasses_conflict()
-    create = Create.new
-    create.cygclass_manager = @cygclass_manager
-    create.template_variables = @template_variables
-    assert_raise(CygclassConflictException) {
-      create.get_template_variables([:git, :hg])
-    }
-  end
-  
-  def test_get_cygport()
-    create = Create.new
-    template_variables = {
-      :HOMEPAGE => 'homepage',
-      :GIT_URI => 'gituri',
-    }
-    category = 'Utils'
-    cygclasses = [:git, :cmake]
-    actual = create.get_cygport(template_variables, category, cygclasses)
-    expected = <<"EOS"
-HOMEPAGE="homepage"
-GIT_URI="gituri"
+    # repository のシェル変数群から template のシェル変数群に変換する
+    def test_get_template_variables
+      expected = @repository_variables
+      template_variables = @command.get_template_variables(@repository_variables, @cygclass_manager, [])
+      assert_equal(@repository_variables, template_variables)
+    end
 
-CATEGORY="Utils"
-SUMMARY=""
-DESCRIPTION=""
+    # cygclass ありの template のシェル変数群に変換する
+    def test_get_template_variables_inherit
+      expected = {
+        :HOMEPAGE => 'homepage',
+        :GIT_URI => nil
+      }
+      template_variables = @command.get_template_variables(@repository_variables, @cygclass_manager, [:git])
+      assert_equal(expected, template_variables)
+    end
 
-inherit git
-inherit cmake
-EOS
-    assert_equal(expected, actual)
-  end
-  
-  def test_get_cygport_no_category_and_inheritance()
-    create = Create.new
-    template_variables = {
-      :HOMEPAGE => 'homepage',
-      :SRC_URI => 'srcuri',
-      :GIT_URI => 'gituri',
-    }
-    category = ''
-    cygclasses = []
-    actual = create.get_cygport(template_variables, category, cygclasses)
-    expected = <<"EOS"
-HOMEPAGE="homepage"
-SRC_URI="srcuri"
+    # 存在しない cygclass が指定された場合は例外を投げる
+    def test_get_template_variables_raise_no_such_cygclass_error
+      assert_raise(NoSuchCygclassError) do
+        @command.get_template_variables(@repository_variables, @cygclass_manager, [:nonexistent])
+      end
+    end
 
-CATEGORY=""
-SUMMARY=""
-DESCRIPTION=""
-
-EOS
+    # vcs が複数指定された場合は例外を投げる
+    def test_get_template_variables_raise_cygclass_conflict_error
+      assert_raise(CygclassConflictError) do
+        @command.get_template_variables(@repository_variables, @cygclass_manager, [:git, :svn])
+      end
+    end
   end
 end

@@ -1,11 +1,19 @@
-<% template_variables.each { |key, value| -%>
+<% template_variables.each do |key, value| -%>
 <%= key -%>="<%= value %>"
-<% } -%>
+<% end -%>
 
 CATEGORY="<%= category %>"
-SUMMARY=""
-DESCRIPTION=""
+SUMMARY="<%= summary %>"
+DESCRIPTION="<%= description %>"
 
-<% cygclasses.each { |cygclass| -%>
+<% cygclasses.each do |cygclass| -%>
 inherit <%= cygclass %>
-<% } -%>
+<% end -%>
+
+PKG_NAMES="
+	${PN}
+<% unless apponly then -%>
+	lib${PN}0
+	lib${PN}-devel
+<% end -%>
+"

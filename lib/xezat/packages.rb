@@ -1,30 +1,21 @@
-
-require 'xezat/xezat'
-
 module Xezat
-
   class PackageManager
-    
     # install.db を解析して Hash にする
     def initialize(str)
       @packages = {}
-      str.lines { |line|
+      str.lines do |line|
         record = line.split(/\s+/)
-        unless record.size == 3 # /^hoge hoge-ver-rel.tar.bz2 0$/
-          next
-        end
-        @packages[record[0]] = record[1].gsub(/\.tar\.bz2$/, '')
-      }
+        next unless record.size == 3 # /^hoge hoge-ver-rel.tar.bz2 0$/
+        @packages[record[0].intern] = record[1].gsub(/\.tar\.bz2$/, '')
+      end
     end
-    
+
     def [](key)
       @packages[key]
     end
 
-    def self.get_default_packages(db_path = '/etc/setup/installed.db')
-      self.new(IO.read(db_path))
+    def self.get_installed_packages(db_path = '/etc/setup/installed.db')
+      self.new(File::read(db_path))
     end
-    
   end
-
 end

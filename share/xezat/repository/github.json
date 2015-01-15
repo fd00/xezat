@@ -1,5 +1,5 @@
 {
-    "HOMEPAGE": "https://github.com/github/${PN}",
-    "SRC_URI": "https://github.com/github/${PN}/archive/v${PV}.tar.gz",
-    "GIT_URI": "https://github.com/github/${PN}.git"
+    "HOMEPAGE": "https://github.com/fd00/${PN}",
+    "SRC_URI": "https://github.com/fd00/${PN}/archive/v${PV}.tar.gz",
+    "GIT_URI": "https://github.com/fd00/${PN}.git"
 }

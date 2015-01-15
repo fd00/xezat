@@ -1,22 +1,16 @@
-
 require 'xezat/command/doctor'
+require 'zlib'
 
-class DoctorTest < Test::Unit::TestCase
+module Xezat::Test::Command
+  class DoctorTest < Test::Unit::TestCase
+    include Xezat::Command
+    include Xezat
+    def setup
+      @command = CommandManager[:doctor]
+    end
 
-  include Xezat
-
-  # ファイルの衝突を検出できているか
-  def test_aggregate
-    doctor = Doctor.new
-    file2pkg = doctor.aggregate(File.expand_path(File.join(File.dirname(__FILE__), 'fixture', 'etc', 'setup')))
-    etc_dir = file2pkg['etc/dir/'.intern]
-    assert_nil(etc_dir)
-    usr_bin_conflict = file2pkg['usr/bin/conflict'.intern]
-    assert_equal([:a, :b], usr_bin_conflict)
-    usr_share_a_uniq = file2pkg['usr/share/a/uniq'.intern]
-    assert_equal([:a], usr_share_a_uniq)
-    usr_share_b_uniq = file2pkg['usr/share/b/uniq'.intern]
-    assert_equal([:b], usr_share_b_uniq)
+    def test_get_contents_uniqueness
+      assert_equal({:"usr/bin/aaa"=>[:a], :"usr/bin/bbb"=>[:b1, :b2], :"usr/bin/ccc"=>[:b2]}, @command.get_contents_uniqueness(File::join(File.dirname(__FILE__), 'fixture', 'doctor')))
+    end
   end
-
 end

@@ -1,0 +1,3 @@
+[submodule "test/cygport"]
+	path = test/cygport
+	url = git://git.code.sf.net/p/cygwin-ports/cygport

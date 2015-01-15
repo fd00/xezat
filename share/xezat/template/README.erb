@@ -1,6 +1,6 @@
 <%= variables[:PN] %>
 ------------------------------------------
-<%= variables[:DESCRIPTION].join($/) %>
+<%= variables[:DESCRIPTION] -%>
 
 Runtime requirements:
 <% info[:runtimes].each { |runtime| -%>
@@ -9,8 +9,8 @@ Runtime requirements:
 
 Build requirements:
 (besides corresponding -devel packages)
-<% info[:builds].each { |build| -%>
-  <%= build %>
+<% info[:developments].each { |development| -%>
+  <%= development %>
 <% } -%>
 
 Canonical website:
@@ -26,11 +26,11 @@ Canonical download:
 -------------------------------------------
 
 Build instructions:
-  unpack <%= variables[:P] -%>-X-src.tar.xz
-    if you use setup to install this src package, it will be
-        unpacked under /usr/src automatically
-  cd /usr/src
-  cygport ./<%= variables[:P] -%>-X.cygport all
+  1. unpack <%= variables[:P] -%>-X-src.tar.xz
+  2. if you use setup to install this src package,
+     it will be unpacked under /usr/src automatically
+        % cd /usr/src
+        % cygport ./<%= variables[:P] -%>-X.cygport all
 
 This will create:
   /usr/src/<%= variables[:P] %>-X-src.tar.xz
@@ -44,7 +44,7 @@ Files included in the binary package:
 
 <% variables[:pkg_name].each { |pkg_name| -%>
 (<%= pkg_name %>)
-<%   files[pkg_name.intern].each { |file| -%>
+<%   info[:files][pkg_name.intern].each { |file| -%>
   <%= file %>
 <%   } -%>
 

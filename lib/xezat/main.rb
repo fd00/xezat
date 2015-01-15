@@ -1,23 +1,13 @@
-
-require 'xezat/arguments'
+require 'logger/colors'
+require 'mercenary'
 require 'xezat/commands'
+require 'xezat/version'
 
-include Xezat
+Mercenary.program(:xezat) do |p|
+  p.version Xezat::VERSION
+  p.description 'Xezat is the complement of cygport'
+  p.syntax 'xezat <subcommand> [options]'
 
-args = Arguments.new
-
-begin
-  args.parse(ARGV)
-rescue IllegalArgumentOfMainException
-  puts args.help
-  exit
-end
-
-begin
-  command = Commands.instance(args.command)
-  command.run(args.args)
-rescue IllegalArgumentOfCommandException => e
-  puts e
-  puts command.help
-  exit
+  Xezat::CommandManager::program = p
+  Xezat::CommandManager::load_default_commands
 end

@@ -1,22 +1,16 @@
-
 require 'find'
 require 'xezat/detectors'
 
 module Xezat
-  
-  class Gengetopt < Detector
-    
-    Detectors.register('gengetopt', self)
-    
-    def get_components(variables)
-      Find.find(variables[:S]) { |file|
-        if file.end_with?('.ggo')
-          return ['gengetopt']
+  module Detector
+    class Gengetopt
+      DetectorManager::register(:gengetopt, self)
+      def detect(variables)
+        Find::find(variables[:S]) do |file|
+          return true if file.end_with?('.ggo')
         end
-      }
-      []
+        false
+      end
     end
-
   end
-  
 end

@@ -1,23 +1,16 @@
-
 require 'find'
 require 'xezat/detectors'
 
 module Xezat
-  
-  class Autoconf < Detector
-    
-    Detectors.register('autoconf', self)
-    
-    def get_components(variables)
-      Find.find(variables[:S]) { |file|        
-        if file.end_with?(File::SEPARATOR + 'configure.ac') ||
-          file.end_with?(File::SEPARATOR + 'configure.in')
-          return ['autoconf']
+  module Detector
+    class Autoconf
+      DetectorManager::register(:autoconf, self)
+      def detect(variables)
+        Find::find(variables[:S]) do |file|
+          return true if file.end_with?(File::SEPARATOR + 'configure.ac') || file.end_with?(File::SEPARATOR + 'configure.in')
         end
-      }
-      []
+        false
+      end
     end
-
   end
-  
 end

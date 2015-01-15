@@ -1,5 +1,0 @@
-sdesc: "aaa (development)"
-ldesc: "aaaaaa"
-category: Libs
-requires: cygwin libaaa0
-external-source: aaa

@@ -1,0 +1,39 @@
+{
+	"BISON": {
+		"package": "bison"
+	},
+	"C": {
+		"package": "gcc-core",
+		"dependencies": [
+			"binutils"
+		]
+	},
+	"C++": {
+		"package": "gcc-g++",
+		"dependencies": [
+			"binutils",
+			"gcc-core"
+		]
+	},
+	"FORTRAN": {
+		"package": "gcc-fortran",
+		"dependencies": [
+			"binutils",
+			"gcc-core"
+		]
+	},
+	"Objective-C": {
+		"package": "gcc-objc",
+		"dependencies": [
+			"binutils",
+			"gcc-core"
+		]
+	},
+	"Objective-C++": {
+		"package": "gcc-objc++",
+		"dependencies": [
+			"binutils",
+			"gcc-core"
+		]
+	}
+}
