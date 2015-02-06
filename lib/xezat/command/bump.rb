@@ -110,10 +110,14 @@ module Xezat
           unless FileTest::directory?(path)
             language = Xezat::Refine::Linguist::FileBlob.new(path).language
             unless language.nil?
-              if language.name == 'Objective-C' # Objective-C は誤検知があるため suffix で再確認
+              name = language.name
+              if name == 'Objective-C' # Objective-C は誤検知があるため suffix で再確認
                 next unless path.end_with?('.m')
               end
-              languages << language.name
+              if name == 'C++' # C++ は誤検知があるため suffix で再確認
+                name = 'C' if path.end_with?('.h')
+              end
+              languages << name
             end
           end
         end
