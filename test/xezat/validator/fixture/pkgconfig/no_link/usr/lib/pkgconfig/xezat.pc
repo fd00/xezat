@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=/usr/lib
+includedir=/usr/include
+
+Name: xezat
+Description: Complement of cygport
+Version: 0.0.1
+Libs: -L${libdir}
+Cflags: -I${includedir}
+
