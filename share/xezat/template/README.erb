@@ -17,11 +17,7 @@ Canonical website:
   <%= variables[:HOMEPAGE] %>
 
 Canonical download:
-<% if info[:src_uri].is_a?(Array) -%>
   <%= info[:src_uri][0] %>
-<% else -%>
-  <%= info[:src_uri] %>
-<% end -%>
 
 -------------------------------------------
 

@@ -76,9 +76,9 @@ module Xezat
       def get_src_uri(variables, cygclass_manager = CygclassManager.new)
         cygclass_manager.vcs.each do |vcs|
           src_uri_key = "#{vcs.to_s.upcase}_URI".intern
-          return variables[src_uri_key] if variables.key?(src_uri_key)
+          return variables[src_uri_key].split if variables.key?(src_uri_key)
         end
-        variables[:SRC_URI]
+        variables[:SRC_URI].split
       end
 
       # package が依存している runtime のリストを取得する
