@@ -1,4 +1,4 @@
-require 'rubygems'
+require 'xezat/cygversion'
 
 module Xezat
   # package の changelog を管理するクラス
@@ -43,7 +43,7 @@ module Xezat
 
     def each(&block)
       @changelogs.sort do |a, b|
-        - (Gem::Version.new(a[0]) <=> Gem::Version.new(b[0]))
+        - (Cygversion.new(a[0].to_s) <=> Cygversion.new(b[0].to_s))
       end.each do |k, v|
         block.call(k, v)
       end
