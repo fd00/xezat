@@ -35,5 +35,8 @@
 			"binutils",
 			"gcc-core"
 		]
+	},
+	"Ruby": {
+		"package": "ruby"
 	}
 }
