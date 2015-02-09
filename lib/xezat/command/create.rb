@@ -30,10 +30,10 @@ module Xezat
           c.description 'create new cygport'
           c.option 'apponly', '-a', '--app-only', 'application only'
           c.option 'category', '-c', '--category category', String, 'specify category'
-          c.option 'description', '--description description', String, 'specify description'
+          c.option 'description', '-d', '--description description', String, 'specify description'
           c.option 'inherit', '-i', '--inherit cygclass', Array, 'inherit cygclasses'
           c.option 'overwrite', '-o', '--overwrite', 'overwrite cygport'
-          c.option 'repository', '--repository repository', String, 'specify repository (github, google, sourceforge)'
+          c.option 'repository', '-r', '--repository repository', String, 'specify repository (github, google, sourceforge)'
           c.option 'summary', '-s', '--summary summary', String, 'specify summary'
           c.action do |args, options|
             execute(c, args, options)
