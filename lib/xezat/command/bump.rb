@@ -114,6 +114,9 @@ module Xezat
               if name == 'Objective-C' # Objective-C は誤検知があるため suffix で再確認
                 next unless path.end_with?('.m')
               end
+              if name == 'Ruby' # Ruby は誤検知があるため suffix で再確認
+                next unless path.end_with?('.rb')
+              end
               if name == 'C++' # C++ は誤検知があるため suffix で再確認
                 name = 'C' if path.end_with?('.h')
               end
