@@ -1,4 +1,4 @@
-require 'xezat/detector/autoconf'
+require 'xezat/detectors'
 
 module Xezat::Test::Detector
   class BoostM4Test < Test::Unit::TestCase

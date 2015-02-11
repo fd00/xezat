@@ -1,4 +1,4 @@
-require 'xezat/detector/autoconf'
+require 'xezat/detectors'
 
 module Xezat::Test::Detector
   class GengetoptTest < Test::Unit::TestCase
