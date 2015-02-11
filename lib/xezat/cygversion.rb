@@ -12,12 +12,16 @@ module Xezat
       @revision = splitted.length >= 2 ? splitted[1].match(/(\d+)/)[0].to_i : Time::at(0).strftime('%Y%m%d').to_i
     end
 
+    def to_v
+      [Gem::Version.new(@version), @revision, @release]
+    end
+
     def to_a
       [@version, @revision, @release]
     end
 
     def <=>(operand)
-      to_a <=> operand.to_a
+      to_v <=> operand.to_v
     end
   end
 end
