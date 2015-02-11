@@ -27,6 +27,7 @@ module Xezat
         program.command(:bump) do |c|
           c.syntax 'bump cygport'
           c.description 'update CYGWIN-PATCHES/README'
+          c.option 'message', '-m', '--message message', String, 'specify changelog message'
           c.action do |args, options|
             execute(c, args, options)
           end
