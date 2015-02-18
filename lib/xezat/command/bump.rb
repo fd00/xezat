@@ -94,7 +94,7 @@ module Xezat
 
       # package を build するために必要な development package のリストを取得する
       def get_development_packages(variables, packages)
-        compilers = get_compilers(variables)
+        compilers = get_compilers(get_languages(variables))
         tools = get_tools(variables)
         development_packages = (compilers + tools + [:cygport]).uniq.sort
         development_packages.map! do |package|
@@ -102,10 +102,8 @@ module Xezat
         end
       end
 
-      # package を build するために必要な compiler package のリストを取得する
-      def get_compilers(variables)
-
-        # ファイルの内容からプログラミング言語を特定する
+      # source tree に存在するソースコードの言語を特定する
+      def get_languages(variables)
         languages = []
         Find::find(variables[:S]) do |path|
           unless FileTest::directory?(path)
@@ -121,12 +119,18 @@ module Xezat
               if name == 'C++' # C++ は誤検知があるため suffix で再確認
                 name = 'C' if path.end_with?('.h')
               end
+              if name == 'C' # suffix で再確認
+                name = 'C++' if path.end_with?('.C')
+              end
               languages << name
             end
           end
         end
+        languages
+      end
 
-        # 言語から対応する compiler package を取得する
+      # package を build するために必要な compiler package のリストを取得する
+      def get_compilers(languages)
         compiler_file = File.expand_path(File.join(DATA_DIR, 'compilers.json'))
         compiler_candidates = JSON.parse(File::read(compiler_file))
         compilers = []

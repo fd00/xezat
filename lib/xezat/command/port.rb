@@ -39,6 +39,7 @@ module Xezat
 
         fuo = {noop: options.key?('noop'), verbose: options.key?('noop') || options.key?('verbose')}
 
+        FileUtils::mkdir_p(d, fuo)
         FileUtils::cp(File::expand_path(File::join(variables[:top], cygport)), d, fuo)
         FileUtils::cp(File::expand_path(File::join(variables[:C], 'README')), d, fuo)
         src_patch = File::expand_path(File::join(variables[:patchdir], "#{variables[:PF]}.src.patch"))
