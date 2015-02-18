@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-    xezat 0.0.1 -- Xezat is the complement of cygport
+    xezat 0.0.2 -- Xezat is the complement of cygport
 
     Usage:
 
@@ -37,7 +37,9 @@ Or install it yourself as:
       debug                 show cygport variables
       doctor                diagnose installed packages
       generate              generate additional files
+      port                  copy cygport to git repository
       validate              validate package contents
+
 
 ### create
 
@@ -50,10 +52,10 @@ Or install it yourself as:
     Options:
             -a, --app-only     application only
             -c, --category category  specify category
-                --description description  specify description
+            -d, --description description  specify description
             -i, --inherit cygclass  inherit cygclasses
             -o, --overwrite    overwrite cygport
-                --repository repository  specify repository (github, google, sourceforge)
+            -r, --repository repository  specify repository (github, google, sourceforge)
             -s, --summary summary  specify summary
             -h, --help         Show this message
             -v, --version      Print the name and version
@@ -61,8 +63,8 @@ Or install it yourself as:
 
 Example.1
 
-    % xezat create xezat-0.0.1-1bl1.cygport
-    % cat xezat-0.0.1-1bl1.cygport
+    % xezat create xezat-0.0.2-1bl1.cygport
+    % cat xezat-0.0.2-1bl1.cygport
 
 ```bash
 HOMEPAGE=""
@@ -81,8 +83,8 @@ PKG_NAMES="
 
 Example.2 
 
-    % xezat create -a -c Libs -i git --repository=github -s 'Complement of Cygport' -o xezat-0.0.1-1bl1.cygport
-    % cat xezat-0.0.1-1bl1.cygport
+    % xezat create -a -c Libs -i git --repository=github -s 'Complement of Cygport' -o xezat-0.0.2-1bl1.cygport
+    % cat xezat-0.0.2-1bl1.cygport
 
 ```bash
 HOMEPAGE="https://github.com/fd00/${PN}"
@@ -114,13 +116,13 @@ PKG_NAMES="
 
 Example.1
 
-    % xezat debug xezat-0.0.1-1bl1.cygport
+    % xezat debug xezat-0.0.2-1bl1.cygport
     #<Xezat::VariableManager:0x000006011ba808
      @variables=
       {:AR=>"ar",
        :ARCH=>"x86_64",
        :ARCH_x86_64=>"1",
-       :B=>"/usr/src/xezat-0.0.1-1bl1.x86_64/build",
+       :B=>"/usr/src/xezat-0.0.2-1bl1.x86_64/build",
        :BASH=>"/usr/bin/bash",
     (snip)
        :mirror_apache=>"http://www.apache.org/dist",
@@ -129,10 +131,10 @@ Example.1
        :mirror_cran=>"http://cran.r-project.org",
        :mirror_ctan=>"http://mirror.ctan.org/",
     (snip)
-       :src_patchfile=>"xezat-0.0.1-1bl1.src.patch",
-       :srcdir=>"/usr/src/xezat-0.0.1-1bl1.x86_64/src",
+       :src_patchfile=>"xezat-0.0.2-1bl1.src.patch",
+       :srcdir=>"/usr/src/xezat-0.0.2-1bl1.x86_64/src",
        :top=>"/usr/src",
-       :workdir=>"/usr/src/xezat-0.0.1-1bl1.x86_64"}>
+       :workdir=>"/usr/src/xezat-0.0.2-1bl1.x86_64"}>
     %
 
 ### doctor
@@ -180,6 +182,22 @@ Example.1
             -v, --version      Print the name and version
             -t, --trace        Show the full backtrace when an error occurs
 
+Example.1
+
+    % xezat generate xezat-0.0.2-1bl1.cygport -p
+    % cat xezat-0.0.2-1bl1.x86_64/src/xezat-0.0.2/xezat.pc
+    prefix=@prefix@
+    exec_prefix=@exec_prefix@
+    libdir=@libdir@
+    includedir=@includedir@
+     
+    Name: xezat
+    Description: Complement of cygport
+    Version: @VERSION@
+    Libs: -L${libdir} -lxezat
+    Cflags: -I${includedir}
+    %
+
 ### validate
 
     xezat validate -- validate package contents
@@ -205,3 +223,30 @@ Example.1
             -h, --help         Show this message
             -v, --version      Print the name and version
             -t, --trace        Show the full backtrace when an error occurs
+
+### port
+
+    xezat port -- copy cygport to git repository
+
+    Usage:
+
+      xezat port cygport
+
+    Options:
+            -V, --verbose      print the results verbosely
+            -n, --no-operation  print the results without actually copying any files
+            -i, --inifile *.ini  specify inifile
+            -t, --target portdir  specify git repository directory
+            -h, --help         Show this message
+            -v, --version      Print the name and version
+            -t, --trace        Show the full backtrace when an error occurs
+
+Example.1
+
+    % cat ~/.xezat
+    [xezat]
+    distdir = /cygdrive/e/dist
+    portdir = /cygdrive/e/yacp
+    % xezat port xezat-0.0.2-1bl1.cygport
+    % ls /cygdrive/e/yacp/xezat
+    README xezat-0.0.2-1bl1.cygport xezat-0.0.2-1bl1.src.patch
