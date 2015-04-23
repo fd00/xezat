@@ -5,6 +5,7 @@ module Xezat
   module Detector
     class Make
       DetectorManager::register(:make, self)
+
       def detect(variables)
         Find::find(variables[:B]) do |file|
           return true if file.end_with?(File::SEPARATOR + 'Makefile')

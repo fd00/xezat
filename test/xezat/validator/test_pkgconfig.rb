@@ -3,6 +3,7 @@ require 'xezat/validator/pkgconfig'
 module Xezat::Test::Validator
   class PkgconfigTest < Test::Unit::TestCase
     include Xezat
+
     def setup
       @validator = ValidatorManager[:pkgconfig]
     end

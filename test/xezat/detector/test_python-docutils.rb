@@ -4,6 +4,7 @@ module Xezat::Test::Detector
   class PythonDocutilsTest < Test::Unit::TestCase
     include Xezat::Detector
     include Xezat
+
     def setup
       @detector = DetectorManager[:'python-docutils']
     end

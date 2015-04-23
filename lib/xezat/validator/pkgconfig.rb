@@ -3,7 +3,8 @@ require 'xezat/validators'
 module Xezat
   module Validator
     class Pkgconfig
-      ValidatorManager::register(:pkgconfig ,self)
+      ValidatorManager::register(:pkgconfig, self)
+
       def validate(variables)
         pcdir = File::join(variables[:D], 'usr', 'lib', 'pkgconfig')
         result = true

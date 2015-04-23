@@ -4,6 +4,7 @@ module Xezat::Test::Detector
   class BoostM4Test < Test::Unit::TestCase
     include Xezat::Detector
     include Xezat
+
     def setup
       @detector = DetectorManager[:'boost.m4']
     end

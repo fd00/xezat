@@ -7,6 +7,7 @@ module Xezat
     # /usr/share/aclocal/*.m4 を検証する
     class M4
       ValidatorManager::register(:m4, self)
+
       def validate(variables)
         acdir = File::join(variables[:D], 'usr', 'share', 'aclocal')
         detail = nil

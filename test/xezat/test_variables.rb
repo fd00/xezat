@@ -3,6 +3,7 @@ require 'xezat/variables'
 module Xezat::Test
   class VariableManagerTest < Test::Unit::TestCase
     include Xezat
+
     def test_variable
       variables = VariableManager.new(<<EOF
 !ruby/sym HOMEPAGE: "https://github.com/fd00/xezat"

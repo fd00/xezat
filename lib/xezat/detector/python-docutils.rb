@@ -5,6 +5,7 @@ module Xezat
   module Detector
     class PythonDocutils
       DetectorManager::register(:'python-docutils', self)
+
       def detect(variables)
         Find::find(variables[:S]) do |file|
           if file.end_with?(File::SEPARATOR + 'configure.ac') || file.end_with?(File::SEPARATOR + 'configure.in')

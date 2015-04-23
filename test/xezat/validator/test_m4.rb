@@ -4,6 +4,7 @@ module Xezat::Test::Validator
   class M4Test < Test::Unit::TestCase
     include Xezat::Validator
     include Xezat
+
     def setup
       @validator = ValidatorManager[:m4]
     end

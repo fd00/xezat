@@ -4,6 +4,7 @@ module Xezat::Test::Detector
   class AutomakeTest < Test::Unit::TestCase
     include Xezat::Detector
     include Xezat
+
     def setup
       @detector = DetectorManager[:automake]
     end

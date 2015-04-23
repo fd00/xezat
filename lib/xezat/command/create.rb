@@ -70,8 +70,8 @@ module Xezat
           end
         else
           {
-            :HOMEPAGE => '',
-            :SRC_URI => ''
+              :HOMEPAGE => '',
+              :SRC_URI => ''
           }
         end
       end
@@ -90,8 +90,8 @@ module Xezat
         vcs_prefix = vcs_class.to_s.upcase if vcs_class
         vcs_uri = "#{vcs_prefix}_URI".intern
         {
-          :HOMEPAGE => original_template_variables[:HOMEPAGE],
-          vcs_uri => original_template_variables[vcs_uri]
+            :HOMEPAGE => original_template_variables[:HOMEPAGE],
+            vcs_uri => original_template_variables[vcs_uri]
         }
       end
 

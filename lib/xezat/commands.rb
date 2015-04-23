@@ -23,7 +23,7 @@ module Xezat
     def self.program=(program)
       @@program = program
     end
-    
+
     def self.[](name)
       @@commands[name]
     end

@@ -43,7 +43,7 @@ module Xezat
 
     def each(&block)
       @changelogs.sort do |a, b|
-        - (Cygversion.new(a[0].to_s) <=> Cygversion.new(b[0].to_s))
+        -(Cygversion.new(a[0].to_s) <=> Cygversion.new(b[0].to_s))
       end.each do |k, v|
         block.call(k, v)
       end

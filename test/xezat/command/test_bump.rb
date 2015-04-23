@@ -4,6 +4,7 @@ module Xezat::Test::Command
   class BumpTest < Test::Unit::TestCase
     include Xezat::Command
     include Xezat
+
     def setup
       @command = CommandManager[:bump]
       @cygclass_manager = CygclassManager.new(File.join(File.dirname(__FILE__), '..', '..', 'cygport', 'cygclass'))

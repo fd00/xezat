@@ -4,12 +4,13 @@ module Xezat::Test::Command
   class CreateTest < Test::Unit::TestCase
     include Xezat::Command
     include Xezat
+
     def setup
       @command = CommandManager[:create]
       @cygclass_manager = CygclassManager.new(File.join(File.dirname(__FILE__), '..', '..', 'cygport', 'cygclass'))
       @repository_variables = {
-        :HOMEPAGE => 'homepage',
-        :SRC_URI => 'src_uri'
+          :HOMEPAGE => 'homepage',
+          :SRC_URI => 'src_uri'
       }
     end
 
@@ -23,8 +24,8 @@ module Xezat::Test::Command
     # cygclass ありの template のシェル変数群に変換する
     def test_get_template_variables_inherit
       expected = {
-        :HOMEPAGE => 'homepage',
-        :GIT_URI => nil
+          :HOMEPAGE => 'homepage',
+          :GIT_URI => nil
       }
       template_variables = @command.get_template_variables(@repository_variables, @cygclass_manager, [:git])
       assert_equal(expected, template_variables)

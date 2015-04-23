@@ -3,6 +3,7 @@ require 'xezat/cygclasses'
 module Xezat::Test
   class CygclassesTest < Test::Unit::TestCase
     include Xezat
+
     def setup
       @cygclass_manager = CygclassManager.new(File.join(File.dirname(__FILE__), '..', 'cygport', 'cygclass'))
     end

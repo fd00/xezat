@@ -3,6 +3,7 @@ require 'xezat/cygchangelog'
 module Xezat::Test
   class CygchangelogTest < Test::Unit::TestCase
     include Xezat
+
     def test_initialize
       changelog = Cygchangelog.new(<<EOF
 Port Notes:
