@@ -10,10 +10,24 @@ DESCRIPTION="<%= description %>"
 inherit <%= cygclass %>
 <% end -%>
 
+<% unless apponly then -%>
 PKG_NAMES="
 	${PN}
-<% unless apponly then -%>
 	lib${PN}0
 	lib${PN}-devel
-<% end -%>
 "
+export ${PN}_CONTENTS="
+	usr/bin/*.exe
+	usr/share
+"
+export lib${PN}_CONTENTS="
+	usr/bin/*.dll
+"
+export lib${PN}_devel_CONTENTS="
+	usr/include
+	usr/lib
+"
+export ${PN}_SUMMARY="${SUMMARY} (licensing & readmes)"
+export lib${PN}0_SUMMARY="${SUMMARY} (runtime)"
+export lib${PN}_devel_SUMMARY="${SUMMARY} (development)"
+<% end -%>
