@@ -7,9 +7,10 @@ show_cygport_variables()
 		[ $var = 'BASH_COMMAND' ] && continue
 		[ $var = 'COMP_WORDBREAKS' ] && continue
 		[ $var = 'HOMEPATH' ] && continue
+		[ $var = 'PERL_MB_OPT' ] && continue
 		[[ ${!var} =~ ^[A-Za-z]:.* ]] && continue
 		
-		echo -n "!ruby/sym" $var:
+		echo -n :$var:
 		if [[ `declare -p $var` =~ "declare -a" ]]
 		then
 			echo
@@ -19,7 +20,7 @@ show_cygport_variables()
 			do
 				x=`printf '${%s[%s]}' $var $key`
 				eval "value=$x"
-				echo "  -" $value
+				echo "  -" '"'$value'"'
 			done
 		else
 			echo ' "'`echo "${!var}" | sed -e "s/\\n/ /g"`'"'
