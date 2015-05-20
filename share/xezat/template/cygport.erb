@@ -9,7 +9,7 @@ DESCRIPTION="<%= description %>"
 <% cygclasses.each do |cygclass| -%>
 inherit <%= cygclass %>
 <% end -%>
-<% pkg_name = cygport.gsub(/-[0-9].*$/, '') -%>
+<% pkg_name = cygport.gsub(/-[0-9].*$/, '').gsub(/[+-\.]/, '_') -%>
 <% unless apponly then -%>
 PKG_NAMES="
 	${PN}
