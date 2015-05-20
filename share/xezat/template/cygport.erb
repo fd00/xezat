@@ -9,25 +9,25 @@ DESCRIPTION="<%= description %>"
 <% cygclasses.each do |cygclass| -%>
 inherit <%= cygclass %>
 <% end -%>
-
+<% pkg_name = cygport.gsub(/-[0-9].*$/, '') -%>
 <% unless apponly then -%>
 PKG_NAMES="
 	${PN}
 	lib${PN}0
 	lib${PN}-devel
 "
-export ${PN//[-+\.]/_}_CONTENTS="
+<%= pkg_name %>_CONTENTS="
 	usr/bin/*.exe
 	usr/share
 "
-export lib${PN//[-+\.]/_}0_CONTENTS="
+lib<%= pkg_name %>0_CONTENTS="
 	usr/bin/*.dll
 "
-export lib${PN//[-+\.]/_}_devel_CONTENTS="
+lib<%= pkg_name %>_devel_CONTENTS="
 	usr/include
 	usr/lib
 "
-export ${PN//[-+\.]/_}_SUMMARY="${SUMMARY} (licensing & readmes)"
-export lib${PN//[-+\.]/_}0_SUMMARY="${SUMMARY} (runtime)"
-export lib${PN//[-+\.]/_}_devel_SUMMARY="${SUMMARY} (development)"
+<%= pkg_name %>_SUMMARY="${SUMMARY} (licensing & readmes)"
+lib<%= pkg_name %>0_SUMMARY="${SUMMARY} (runtime)"
+lib<%= pkg_name %>_devel_SUMMARY="${SUMMARY} (development)"
 <% end -%>

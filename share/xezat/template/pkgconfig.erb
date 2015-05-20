@@ -6,5 +6,5 @@ includedir=@includedir@
 Name: <%= variables[:PN] %>
 Description: <%= variables[:SUMMARY] %>
 Version: @VERSION@
-Libs: -L${libdir}
+Libs: -L${libdir} -l<%= variables[:PN] %>
 Cflags: -I${includedir}
