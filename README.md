@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/fd00/xezat.svg?branch=master)](https://travis-ci.org/fd00/xezat)
+[![Coverage Status](https://coveralls.io/repos/fd00/xezat/badge.svg?branch=master)](https://coveralls.io/r/fd00/xezat?branch=master)
 
 # Xezat
 
