@@ -1,5 +1,4 @@
 language: ruby
-bundler_args: --deployment
 cache: bundler
 rvm: 2.2.0
 script: ./test/test.rb
