@@ -6,7 +6,6 @@ $:.unshift File::expand_path(File::join(here))
 Encoding::default_external = 'UTF-8'
 
 require 'mercenary'
-require 'pry'
 require 'test/unit'
 require 'xezat'
 require 'xezat/commands'
