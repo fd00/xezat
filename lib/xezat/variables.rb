@@ -36,11 +36,13 @@ module Xezat
       command = ['bash', File.expand_path(File.join(DATA_DIR, 'show_cygport_variable.sh')), cygport]
       result, error, status = Open3.capture3(command.join(' '))
       raise CygportProcessError, error unless status.success?
+      result.gsub!(/^.*\*\*\*.*$/, '')
 
       # DESCRIPTION だけ改行を保持したまま取り込みたい
       command = ['bash', File.expand_path(File.join(DATA_DIR, 'show_cygport_description.sh')), cygport]
       description, error, status = Open3.capture3(command.join(' '))
       raise CygportProcessError, error unless status.success?
+      description.gsub!(/^.*\*\*\*.*$/, '')
 
       self.new(result, description)
     end
