@@ -22,6 +22,9 @@
       "gcc-core"
     ]
   },
+  "Lex": {
+    "package": "flex"
+  },
   "Objective-C": {
     "package": "gcc-objc",
     "dependencies": [
@@ -38,5 +41,8 @@
   },
   "Ruby": {
     "package": "ruby"
+  },
+  "Yacc": {
+    "package": "bison"
   }
 }
