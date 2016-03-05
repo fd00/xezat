@@ -8,7 +8,7 @@ module Xezat
 
       def detect(variables)
         Find::find(variables[:S]) do |file|
-          return true if file.end_with?(File::SEPARATOR + 'Makefile.am')
+          return true if file.end_with?('.am')
         end
         false
       end
