@@ -1,5 +1,4 @@
 require 'linguist'
-require 'string/scrub' unless String::respond_to?(:scrub)
 
 module Xezat
   module Refine
