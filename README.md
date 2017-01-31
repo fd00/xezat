@@ -21,9 +21,14 @@ Or install it yourself as:
 
     $ gem install xezat
 
+## Requirement
+
+* Automake (subcommand `validate` uses `aclocal`)
+
+
 ## Usage
 
-    xezat 0.0.3 -- Xezat is the complement of cygport
+    xezat 0.0.4 -- Xezat is the complement of cygport
 
     Usage:
 
@@ -66,8 +71,8 @@ Or install it yourself as:
 
 Example.1
 
-    % xezat create xezat-0.0.3-1bl1.cygport
-    % cat xezat-0.0.3-1bl1.cygport
+    % xezat create xezat-0.0.4-1bl1.cygport
+    % cat xezat-0.0.4-1bl1.cygport
 
 ```bash
 HOMEPAGE=""
@@ -100,8 +105,8 @@ libxezat_devel_SUMMARY="${SUMMARY} (development)"
 
 Example.2 
 
-    % xezat create -a -c Libs -i git --repository=github -s 'Complement of Cygport' -o xezat-0.0.3-1bl1.cygport
-    % cat xezat-0.0.3-1bl1.cygport
+    % xezat create -a -c Libs -i git --repository=github -s 'Complement of Cygport' -o xezat-0.0.4-1bl1.cygport
+    % cat xezat-0.0.4-1bl1.cygport
 
 ```bash
 HOMEPAGE="https://github.com/fd00/${PN}"
@@ -129,13 +134,13 @@ inherit git
 
 Example.1
 
-    % xezat debug xezat-0.0.3-1bl1.cygport
+    % xezat debug xezat-0.0.4-1bl1.cygport
     #<Xezat::VariableManager:0x000006011ba808
      @variables=
       {:AR=>"ar",
        :ARCH=>"x86_64",
        :ARCH_x86_64=>"1",
-       :B=>"/usr/src/xezat-0.0.3-1bl1.x86_64/build",
+       :B=>"/usr/src/xezat-0.0.4-1bl1.x86_64/build",
        :BASH=>"/usr/bin/bash",
     (snip)
        :mirror_apache=>"http://www.apache.org/dist",
@@ -144,10 +149,10 @@ Example.1
        :mirror_cran=>"http://cran.r-project.org",
        :mirror_ctan=>"http://mirror.ctan.org/",
     (snip)
-       :src_patchfile=>"xezat-0.0.3-1bl1.src.patch",
-       :srcdir=>"/usr/src/xezat-0.0.3-1bl1.x86_64/src",
+       :src_patchfile=>"xezat-0.0.4-1bl1.src.patch",
+       :srcdir=>"/usr/src/xezat-0.0.4-1bl1.x86_64/src",
        :top=>"/usr/src",
-       :workdir=>"/usr/src/xezat-0.0.3-1bl1.x86_64"}>
+       :workdir=>"/usr/src/xezat-0.0.4-1bl1.x86_64"}>
     %
 
 ### doctor
@@ -196,8 +201,8 @@ Example.1
 
 Example.1
 
-    % xezat generate xezat-0.0.3-1bl1.cygport -p
-    % cat xezat-0.0.3-1bl1.x86_64/src/xezat-0.0.3/xezat.pc
+    % xezat generate xezat-0.0.4-1bl1.cygport -p
+    % cat xezat-0.0.4-1bl1.x86_64/src/xezat-0.0.4/xezat.pc
     prefix=@prefix@
     exec_prefix=@exec_prefix@
     libdir=@libdir@
@@ -259,6 +264,6 @@ Example.1
     [xezat]
     distdir = /cygdrive/e/dist
     portdir = /cygdrive/e/yacp
-    % xezat port xezat-0.0.3-1bl1.cygport
+    % xezat port xezat-0.0.4-1bl1.cygport
     % ls /cygdrive/e/yacp/xezat
-    README xezat-0.0.3-1bl1.cygport xezat-0.0.3-1bl1.src.patch
+    README xezat-0.0.4-1bl1.cygport xezat-0.0.4-1bl1.src.patch
