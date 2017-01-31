@@ -15,7 +15,7 @@
       "gcc-core"
     ]
   },
-  "FORTRAN": {
+  "Fortran": {
     "package": "gcc-fortran",
     "dependencies": [
       "binutils",
@@ -38,6 +38,9 @@
       "binutils",
       "gcc-core"
     ]
+  },
+  "Python": {
+    "package": "python"
   },
   "Ruby": {
     "package": "ruby"
