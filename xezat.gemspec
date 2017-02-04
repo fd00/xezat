@@ -20,13 +20,13 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.2.0'
 
   spec.add_runtime_dependency 'facets', '~> 3.1'
-  spec.add_runtime_dependency 'github-linguist', '~> 4.8', '>= 4.8.18'
+  spec.add_runtime_dependency 'github-linguist', '~> 5.0.4'
   spec.add_runtime_dependency 'inifile', '~> 3.0'
   spec.add_runtime_dependency 'logger-colors', '~> 1.0'
   spec.add_runtime_dependency 'mercenary', '~> 0.3.6'
 
-  spec.add_development_dependency 'bundler', '~> 1.7'
+  spec.add_development_dependency 'bundler', '~> 1.14.3'
   spec.add_development_dependency 'rake', '~> 12.0'
-  spec.add_development_dependency 'test-unit', '~> 3.2', '>= 3.2.3'
-  spec.add_development_dependency 'coveralls', '~> 0.8.17'
+  spec.add_development_dependency 'test-unit', '~> 3.2.3'
+  spec.add_development_dependency 'coveralls', '~> 0.8.19'
 end

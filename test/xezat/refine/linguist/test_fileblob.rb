@@ -18,7 +18,7 @@ module Xezat::Test::Refine
       def test_fortran
         file = File::join(File.dirname(__FILE__), 'fixture', 'xezat.f')
         language = Xezat::Refine::Linguist::FileBlob.new(file).language
-        assert_equal("FORTRAN", language.name)
+        assert_equal("Fortran", language.name)
       end
 
       def test_lex
