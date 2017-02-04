@@ -11,7 +11,7 @@ module Xezat
   # cygport 変数を管理するクラス
   class VariableManager
     def initialize(str, description = nil)
-      @variables = YAML.safe_load(str).each_value do |v|
+      @variables = YAML.load(str).each_value do |v|
         v.strip! if v.respond_to?(:strip)
       end
       @variables[:DESCRIPTION] = description unless description.nil?
