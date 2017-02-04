@@ -16,15 +16,15 @@ module Xezat
         end
       end
 
-      CommandManager::register(:validate, self)
+      CommandManager.register(:validate, self)
 
-      def execute(c, args, options)
+      def execute(c, args, _options)
         cygport = args.shift
         raise ArgumentError, 'wrong number of arguments (0 for 1)' unless cygport
-        c.logger.info "ignore extra arguments: #{args.to_s}" unless args.empty?
-        variables = VariableManager::get_default_variables(cygport)
-        ValidatorManager::load_default_validators
-        ValidatorManager::validate(variables).each do |name, result|
+        c.logger.info "ignore extra arguments: #{args}" unless args.empty?
+        variables = VariableManager.get_default_variables(cygport)
+        ValidatorManager.load_default_validators
+        ValidatorManager.validate(variables).each do |name, result|
           if result[:result].nil?
             c.logger.info "Validate #{name} ... skip"
           else
@@ -36,7 +36,6 @@ module Xezat
             end
           end
         end
-
       end
     end
   end

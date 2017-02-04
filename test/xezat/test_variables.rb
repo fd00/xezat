@@ -9,7 +9,7 @@ module Xezat::Test
 !ruby/sym HOMEPAGE: "https://github.com/fd00/xezat"
 !ruby/sym GIT_URI: "https://github.com/fd00/xezat.git"
 EOF
-      )
+                                     )
       assert_equal('https://github.com/fd00/xezat', variables[:HOMEPAGE])
     end
   end

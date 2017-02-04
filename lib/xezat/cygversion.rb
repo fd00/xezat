@@ -9,7 +9,7 @@ module Xezat
       @release = matched[2]
       splitted = version.split('+')
       @version = splitted[0]
-      @revision = splitted.length >= 2 ? splitted[1].match(/(\d+)/)[0].to_i : Time::at(0).strftime('%Y%m%d').to_i
+      @revision = splitted.length >= 2 ? splitted[1].match(/(\d+)/)[0].to_i : Time.at(0).strftime('%Y%m%d').to_i
     end
 
     def to_v

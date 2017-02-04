@@ -34,16 +34,16 @@ module Xezat
         end
       end
 
-      CommandManager::register(:bump, self)
+      CommandManager.register(:bump, self)
 
       def execute(c, args, options)
         cygport = args.shift
         raise ArgumentError, 'wrong number of arguments (0 for 1)' unless cygport
-        c.logger.info "ignore extra arguments: #{args.to_s}" unless args.empty?
+        c.logger.info "ignore extra arguments: #{args}" unless args.empty?
 
-        variables = VariableManager::get_default_variables(cygport)
-        packages = PackageManager::get_installed_packages()
-        readme_file = File::expand_path(File::join(variables[:C], 'README'))
+        variables = VariableManager.get_default_variables(cygport)
+        packages = PackageManager.get_installed_packages
+        readme_file = File.expand_path(File.join(variables[:C], 'README'))
 
         info = {}
         info[:src_uri] = get_src_uri(variables)
@@ -52,7 +52,7 @@ module Xezat
         info[:files] = get_files(variables)
         info[:changelog] = get_changelog(variables, options, readme_file)
 
-        File::atomic_write(readme_file) do |f|
+        File.atomic_write(readme_file) do |f|
           f.write(get_embedded_contents(variables, info))
         end
       end
@@ -60,10 +60,10 @@ module Xezat
       # changelog を取得する
       def get_changelog(variables, options, readme_file)
         current_version = variables[:PVR].intern
-        if FileTest::exist?(readme_file)
-          raise FilePermissionError, "Cannot read #{readme_file}" unless FileTest::readable?(readme_file)
-          raise FilePermissionError, "Cannot write #{readme_file}" unless FileTest::writable?(readme_file)
-          changelog = Cygchangelog.new(File::read(readme_file))
+        if FileTest.exist?(readme_file)
+          raise FilePermissionError, "Cannot read #{readme_file}" unless FileTest.readable?(readme_file)
+          raise FilePermissionError, "Cannot write #{readme_file}" unless FileTest.writable?(readme_file)
+          changelog = Cygchangelog.new(File.read(readme_file))
           options['message'] ||= 'Version bump.'
           changelog[current_version] = options['message'] unless changelog.key?(current_version)
         else
@@ -88,9 +88,7 @@ module Xezat
         result, error, status = Open3.capture3(command.join(' '))
         raise CygportProcessError, error unless status.success?
         result.gsub!(/^.*\*\*\*.*$/, '')
-        result.split($/).map! do |runtime|
-          runtime.lstrip
-        end
+        result.split($INPUT_RECORD_SEPARATOR).map!(&:lstrip)
       end
 
       # package を build するために必要な development package のリストを取得する
@@ -106,26 +104,24 @@ module Xezat
       # source tree に存在するソースコードの言語を特定する
       def get_languages(variables)
         languages = []
-        Find::find(variables[:S]) do |path|
-          unless FileTest::directory?(path)
-            language = Xezat::Refine::Linguist::FileBlob.new(path).language
-            unless language.nil?
-              name = language.name
-              if name == 'Objective-C' # Objective-C は誤検知があるため suffix で再確認
-                next unless path.end_with?('.m')
-              end
-              if name == 'Ruby' # Ruby は誤検知があるため suffix で再確認
-                next unless path.end_with?('.rb')
-              end
-              if name == 'C++' # C++ は誤検知があるため suffix で再確認
-                name = 'C' if path.end_with?('.h')
-              end
-              if name == 'C' # suffix で再確認
-                name = 'C++' if path.end_with?('.C')
-              end
-              languages << name
-            end
+        Find.find(variables[:S]) do |path|
+          next if FileTest.directory?(path)
+          language = Xezat::Refine::Linguist::FileBlob.new(path).language
+          next if language.nil?
+          name = language.name
+          if name == 'Objective-C' # Objective-C は誤検知があるため suffix で再確認
+            next unless path.end_with?('.m')
           end
+          if name == 'Ruby' # Ruby は誤検知があるため suffix で再確認
+            next unless path.end_with?('.rb')
+          end
+          if name == 'C++' # C++ は誤検知があるため suffix で再確認
+            name = 'C' if path.end_with?('.h')
+          end
+          if name == 'C' # suffix で再確認
+            name = 'C++' if path.end_with?('.C')
+          end
+          languages << name
         end
         languages
       end
@@ -133,17 +129,15 @@ module Xezat
       # package を build するために必要な compiler package のリストを取得する
       def get_compilers(languages)
         compiler_file = File.expand_path(File.join(DATA_DIR, 'compilers.json'))
-        compiler_candidates = JSON.parse(File::read(compiler_file))
+        compiler_candidates = JSON.parse(File.read(compiler_file))
         compilers = []
         languages.uniq.each do |language|
-          if compiler_candidates.key?(language)
-            compiler_candidate = compiler_candidates[language]
-            compilers << compiler_candidate['package'].intern
-            if compiler_candidate.key?('dependencies')
-              compiler_candidate['dependencies'].each do |dependency|
-                compilers << dependency.intern
-              end
-            end
+          next unless compiler_candidates.key?(language)
+          compiler_candidate = compiler_candidates[language]
+          compilers << compiler_candidate['package'].intern
+          next unless compiler_candidate.key?('dependencies')
+          compiler_candidate['dependencies'].each do |dependency|
+            compilers << dependency.intern
           end
         end
         compilers.uniq
@@ -151,17 +145,17 @@ module Xezat
 
       # packages を build するために必要な tool package のリストを取得する
       def get_tools(variables)
-        DetectorManager::load_default_detectors
-        DetectorManager::detect(variables)
+        DetectorManager.load_default_detectors
+        DetectorManager.detect(variables)
       end
 
       # package で生成されるチェック用の *.lst から README に埋め込むファイルのリストを取得する
       def get_files(variables)
         pkg2files = {}
         variables[:pkg_name].each do |pkg_name|
-          lst_file = File::expand_path(File::join(variables[:T], ".#{pkg_name}.lst"))
-          raise IllegalStateError, "No such file: #{lst_file}" unless FileTest::readable?(lst_file)
-          lines = File::readlines(lst_file)
+          lst_file = File.expand_path(File.join(variables[:T], ".#{pkg_name}.lst"))
+          raise IllegalStateError, "No such file: #{lst_file}" unless FileTest.readable?(lst_file)
+          lines = File.readlines(lst_file)
           lines.delete_if do |path|
             path.strip!
             path[-1] == File::SEPARATOR
@@ -179,8 +173,8 @@ module Xezat
 
       # テンプレートにデータを埋め込んだ結果の文字列を取得する
       def get_embedded_contents(variables, info)
-        erb = File::expand_path(File::join(TEMPLATE_DIR, 'README.erb'))
-        ERB.new(File::readlines(erb).join(nil), nil, '%-').result(binding)
+        erb = File.expand_path(File.join(TEMPLATE_DIR, 'README.erb'))
+        ERB.new(File.readlines(erb).join(nil), nil, '%-').result(binding)
       end
     end
   end

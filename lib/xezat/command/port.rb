@@ -26,30 +26,30 @@ module Xezat
         end
       end
 
-      CommandManager::register(:port, self)
+      CommandManager.register(:port, self)
 
       def execute(c, args, options)
         cygport = args.shift
         raise ArgumentError, 'wrong number of arguments (0 for 1)' unless cygport
-        c.logger.info "ignore extra arguments: #{args.to_s}" unless args.empty?
+        c.logger.info "ignore extra arguments: #{args}" unless args.empty?
 
-        variables = VariableManager::get_default_variables(cygport)
+        variables = VariableManager.get_default_variables(cygport)
 
-        d = File::expand_path(File::join(get_port_directory(options), variables[:PN]))
+        d = File.expand_path(File.join(get_port_directory(options), variables[:PN]))
 
-        fuo = {noop: options.key?('noop'), verbose: options.key?('noop') || options.key?('verbose')}
+        fuo = { noop: options.key?('noop'), verbose: options.key?('noop') || options.key?('verbose') }
 
-        FileUtils::mkdir_p(d, fuo)
-        FileUtils::cp(File::expand_path(File::join(variables[:top], cygport)), d, fuo)
-        FileUtils::cp(File::expand_path(File::join(variables[:C], 'README')), d, fuo)
-        src_patch = File::expand_path(File::join(variables[:patchdir], "#{variables[:PF]}.src.patch"))
-        FileUtils::cp(src_patch, d, fuo) unless FileTest::zero?(src_patch)
+        FileUtils.mkdir_p(d, fuo)
+        FileUtils.cp(File.expand_path(File.join(variables[:top], cygport)), d, fuo)
+        FileUtils.cp(File.expand_path(File.join(variables[:C], 'README')), d, fuo)
+        src_patch = File.expand_path(File.join(variables[:patchdir], "#{variables[:PF]}.src.patch"))
+        FileUtils.cp(src_patch, d, fuo) unless FileTest.zero?(src_patch)
       end
 
       def get_port_directory(options, xezat_ini_file = INI_FILE)
         d = nil
         inifile = options.key?('inifile') ? options['inifile'] : xezat_ini_file
-        ini = IniFile::load(inifile)['xezat']
+        ini = IniFile.load(inifile)['xezat']
         d = ini['portdir'] if ini.key?('portdir')
         d = options['portdir'] if options.key?('portdir')
         raise NoPortDirectoryError if d.nil?

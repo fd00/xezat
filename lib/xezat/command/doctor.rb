@@ -15,9 +15,9 @@ module Xezat
         end
       end
 
-      CommandManager::register(:doctor, self)
+      CommandManager.register(:doctor, self)
 
-      def execute(c, args, options)
+      def execute(c, _args, _options)
         get_contents_uniqueness.each do |path, pkg|
           c.logger.warn "#{path} is in multiple packages: #{pkg}" if pkg.length > 1
         end
@@ -30,11 +30,10 @@ module Xezat
           Zlib::GzipReader.open(lst) do |gz|
             gz.each_line do |line|
               line.strip!
-              unless line.end_with?('/')
-                path = line.intern
-                content2pkg[path] = [] unless content2pkg.key?(path)
-                content2pkg[path] << pkg
-              end
+              next if line.end_with?('/')
+              path = line.intern
+              content2pkg[path] = [] unless content2pkg.key?(path)
+              content2pkg[path] << pkg
             end
           end
         end

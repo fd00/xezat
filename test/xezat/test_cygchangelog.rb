@@ -7,7 +7,7 @@ module Xezat::Test
     def test_initialize
       changelog = Cygchangelog.new(<<EOF
 Port Notes:
-      
+
 ----- version 2.0.0-1bl2 -----
 Rebuild for xezat
 next line
@@ -19,8 +19,8 @@ Version bump.
 Initial release by fd0 <https://github.com/fd00/>
 
 EOF
-      )
-      assert_equal(['Rebuild for xezat', 'next line'].join($/), changelog[:'2.0.0-1bl2'])
+                                  )
+      assert_equal(['Rebuild for xezat', 'next line'].join($INPUT_RECORD_SEPARATOR), changelog[:'2.0.0-1bl2'])
     end
   end
 end

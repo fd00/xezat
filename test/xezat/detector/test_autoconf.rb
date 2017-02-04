@@ -10,15 +10,15 @@ module Xezat::Test::Detector
     end
 
     def test_yes_root
-      assert_true(@detector.detect({S: File::join(File::dirname(__FILE__), 'fixture', 'autoconf', 'yes_root')}))
+      assert_true(@detector.detect(S: File.join(File.dirname(__FILE__), 'fixture', 'autoconf', 'yes_root')))
     end
 
     def test_yes_subdir
-      assert_true(@detector.detect({S: File::join(File::dirname(__FILE__), 'fixture', 'autoconf', 'yes_subdir')}))
+      assert_true(@detector.detect(S: File.join(File.dirname(__FILE__), 'fixture', 'autoconf', 'yes_subdir')))
     end
 
     def test_no
-      assert_false(@detector.detect({S: File::join(File::dirname(__FILE__), 'fixture', 'autoconf', 'no')}))
+      assert_false(@detector.detect(S: File.join(File.dirname(__FILE__), 'fixture', 'autoconf', 'no')))
     end
   end
 end

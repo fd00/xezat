@@ -14,8 +14,8 @@ module Xezat
     end
 
     # validator をロードする
-    def self.load_default_validators(path = File::expand_path(File::join(File::dirname(__FILE__), 'validator')))
-      Dir::glob(File::join(path, '*.rb')) do |rb|
+    def self.load_default_validators(path = File.expand_path(File.join(File.dirname(__FILE__), 'validator')))
+      Dir.glob(File.join(path, '*.rb')) do |rb|
         require rb
       end
     end
@@ -25,7 +25,7 @@ module Xezat
       results = {}
       @@validators.each do |name, validator|
         result, detail = validator.validate(variables)
-        results[name] = {result: result, detail: detail}
+        results[name] = { result: result, detail: detail }
       end
       results
     end
@@ -33,6 +33,5 @@ module Xezat
     def self.[](name)
       @@validators[name]
     end
-
   end
 end

@@ -3,7 +3,7 @@
 print "Hello World\n"
 
 def printStr
-    print("Hello World\n")
+  print("Hello World\n")
 end
 
 printStr

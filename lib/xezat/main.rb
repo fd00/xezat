@@ -8,6 +8,6 @@ Mercenary.program(:xezat) do |p|
   p.description 'Xezat is the complement of cygport'
   p.syntax 'xezat <subcommand> [options]'
 
-  Xezat::CommandManager::program = p
-  Xezat::CommandManager::load_default_commands
+  Xezat::CommandManager.program = p
+  Xezat::CommandManager.load_default_commands
 end

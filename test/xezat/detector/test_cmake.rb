@@ -10,15 +10,15 @@ module Xezat::Test::Detector
     end
 
     def test_yes_root
-      assert_true(@detector.detect({S: File::join(File::dirname(__FILE__), 'fixture', 'cmake', 'yes_root')}))
+      assert_true(@detector.detect(S: File.join(File.dirname(__FILE__), 'fixture', 'cmake', 'yes_root')))
     end
 
     def test_yes_subdir
-      assert_true(@detector.detect({S: File::join(File::dirname(__FILE__), 'fixture', 'cmake', 'yes_subdir')}))
+      assert_true(@detector.detect(S: File.join(File.dirname(__FILE__), 'fixture', 'cmake', 'yes_subdir')))
     end
 
     def test_no
-      assert_false(@detector.detect({S: File::join(File::dirname(__FILE__), 'fixture', 'cmake', 'no')}))
+      assert_false(@detector.detect(S: File.join(File.dirname(__FILE__), 'fixture', 'cmake', 'no')))
     end
   end
 end

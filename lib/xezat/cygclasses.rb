@@ -6,11 +6,11 @@ module Xezat
     def initialize(cygclass_dir = '/usr/share/cygport/cygclass')
       @cygclasses = []
       @vcs_cygclassess = []
-      if Dir.exists?(cygclass_dir)
+      if Dir.exist?(cygclass_dir)
         Dir.glob(File.join(cygclass_dir, '*.cygclass')) do |filename|
-          cygclass = File::basename(filename, '.cygclass')
+          cygclass = File.basename(filename, '.cygclass')
           @cygclasses << cygclass.intern
-          File::foreach(filename) do |line|
+          File.foreach(filename) do |line|
             @vcs_cygclassess << cygclass.intern if "readonly -f #{cygclass}_fetch" == line.strip
           end
         end
@@ -25,9 +25,8 @@ module Xezat
       @vcs_cygclassess.include?(cygclass)
     end
 
-    def vcs()
+    def vcs
       @vcs_cygclassess
     end
-
   end
 end

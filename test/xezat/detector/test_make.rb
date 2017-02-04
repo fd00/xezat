@@ -10,19 +10,19 @@ module Xezat::Test::Detector
     end
 
     def test_yes
-      assert_true(@detector.detect({B: File::join(File::dirname(__FILE__), 'fixture', 'make', 'yes')}))
+      assert_true(@detector.detect(B: File.join(File.dirname(__FILE__), 'fixture', 'make', 'yes')))
     end
 
     def test_yes_cygport
-      assert_true(@detector.detect({B: File::join(File::dirname(__FILE__), 'fixture', 'make', 'no'),
-                                    top: File::join(File::dirname(__FILE__), 'fixture', 'make', 'yes_cygport'),
-                                    cygportfile: 'cygport_cygmake'}))
+      assert_true(@detector.detect(B: File.join(File.dirname(__FILE__), 'fixture', 'make', 'no'),
+                                   top: File.join(File.dirname(__FILE__), 'fixture', 'make', 'yes_cygport'),
+                                   cygportfile: 'cygport_cygmake'))
     end
 
     def test_no
-      assert_false(@detector.detect({B: File::join(File::dirname(__FILE__), 'fixture', 'make', 'no'),
-                                     top: File::join(File::dirname(__FILE__), 'fixture', 'make', 'yes_cygport'),
-                                     cygportfile: 'cygport_empty'}))
+      assert_false(@detector.detect(B: File.join(File.dirname(__FILE__), 'fixture', 'make', 'no'),
+                                    top: File.join(File.dirname(__FILE__), 'fixture', 'make', 'yes_cygport'),
+                                    cygportfile: 'cygport_empty'))
     end
   end
 end

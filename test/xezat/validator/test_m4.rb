@@ -10,13 +10,13 @@ module Xezat::Test::Validator
     end
 
     def test_skip
-      variables = {D: Dir.tmpdir, T: Dir.tmpdir}
+      variables = { D: Dir.tmpdir, T: Dir.tmpdir }
       result, detail = @validator.validate(variables)
       assert_nil(result)
     end
 
     def test_yes
-      variables = {D: File::join(File.dirname(__FILE__), 'fixture', 'm4', 'yes'), T: Dir::tmpdir}
+      variables = { D: File.join(File.dirname(__FILE__), 'fixture', 'm4', 'yes'), T: Dir.tmpdir }
       result, detail = @validator.validate(variables)
       assert_true(result)
     end

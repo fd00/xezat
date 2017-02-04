@@ -14,8 +14,8 @@ module Xezat
     end
 
     # command をロードする
-    def self.load_default_commands(path = File::expand_path(File::join(File::dirname(__FILE__), 'command')))
-      Dir::glob(File::join(path, '*.rb')) do |rb|
+    def self.load_default_commands(path = File.expand_path(File.join(File.dirname(__FILE__), 'command')))
+      Dir.glob(File.join(path, '*.rb')) do |rb|
         require rb
       end
     end
@@ -27,6 +27,5 @@ module Xezat
     def self.[](name)
       @@commands[name]
     end
-
   end
 end

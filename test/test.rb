@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
-here = File::dirname(__FILE__)
-$:.unshift File::expand_path(File::join(here, '..', 'lib'))
-$:.unshift File::expand_path(File::join(here))
+here = File.dirname(__FILE__)
+$LOAD_PATH.unshift File.expand_path(File.join(here, '..', 'lib'))
+$LOAD_PATH.unshift File.expand_path(File.join(here))
 
-Encoding::default_external = 'UTF-8'
+Encoding.default_external = 'UTF-8'
 
 require 'mercenary'
 require 'test/unit'
@@ -19,7 +19,7 @@ if ENV['CI']
   SimpleCov.start 'test_frameworks'
 end
 
-Xezat::CommandManager::program = Mercenary::Program.new(:xezat)
-Xezat::DetectorManager::load_default_detectors
+Xezat::CommandManager.program = Mercenary::Program.new(:xezat)
+Xezat::DetectorManager.load_default_detectors
 
-Test::Unit::AutoRunner.run(true, File::join(here, 'xezat'))
+Test::Unit::AutoRunner.run(true, File.join(here, 'xezat'))

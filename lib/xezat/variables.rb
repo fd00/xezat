@@ -11,7 +11,7 @@ module Xezat
   # cygport 変数を管理するクラス
   class VariableManager
     def initialize(str, description = nil)
-      @variables = YAML.load(str).each_value do |v|
+      @variables = YAML.safe_load(str).each_value do |v|
         v.strip! if v.respond_to?(:strip)
       end
       @variables[:DESCRIPTION] = description unless description.nil?
@@ -25,9 +25,9 @@ module Xezat
       @variables.key?(key)
     end
 
-    def each(&block)
+    def each
       @variables.each do |key, value|
-        block.call(key, value)
+        yield(key, value)
       end
     end
 
@@ -44,7 +44,7 @@ module Xezat
       raise CygportProcessError, error unless status.success?
       description.gsub!(/^.*\*\*\*.*$/, '')
 
-      self.new(result, description)
+      new(result, description)
     end
   end
 end

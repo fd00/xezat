@@ -41,20 +41,20 @@ module Xezat
         end
       end
 
-      CommandManager::register(:create, self)
+      CommandManager.register(:create, self)
 
       def execute(c, args, options)
         cygport = args.shift
         raise ArgumentError, 'wrong number of arguments (0 for 1)' unless cygport
-        c.logger.info "ignore extra arguments: #{args.to_s}" unless args.empty?
+        c.logger.info "ignore extra arguments: #{args}" unless args.empty?
 
-        repository_variables = self.get_repository_variables(options['repository'])
+        repository_variables = get_repository_variables(options['repository'])
 
-        raise UnoverwritableConfigurationError, "#{cygport} already exists" if File::exist?(cygport) && !options['overwrite']
+        raise UnoverwritableConfigurationError, "#{cygport} already exists" if File.exist?(cygport) && !options['overwrite']
 
         cygclasses = options['inherit'] || []
         template_variables = get_template_variables(repository_variables, CygclassManager.new, cygclasses)
-        File::atomic_write(cygport) do |f|
+        File.atomic_write(cygport) do |f|
           f.write(get_cygport(template_variables, options['category'], options['summary'], options['description'], options['apponly'], cygclasses, cygport))
         end
       end
@@ -62,16 +62,16 @@ module Xezat
       # repository からデフォルトのシェル変数群を取得する
       def get_repository_variables(repository)
         if repository
-          repository_file = File::expand_path(File::join(REPOSITORY_DIR, "#{repository}.json"))
-          if FileTest::exists?(repository_file) && FileTest::readable?(repository_file)
-            repository_variables = JSON.parse(File::read(repository_file), {:symbolize_names => true})
+          repository_file = File.expand_path(File.join(REPOSITORY_DIR, "#{repository}.json"))
+          if FileTest.exists?(repository_file) && FileTest.readable?(repository_file)
+            repository_variables = JSON.parse(File.read(repository_file), symbolize_names: true)
           else
             raise NoSuchRepositoryError, "No such repository: #{template}"
           end
         else
           {
-              :HOMEPAGE => '',
-              :SRC_URI => ''
+            HOMEPAGE: '',
+            SRC_URI: ''
           }
         end
       end
@@ -90,15 +90,15 @@ module Xezat
         vcs_prefix = vcs_class.to_s.upcase if vcs_class
         vcs_uri = "#{vcs_prefix}_URI".intern
         {
-            :HOMEPAGE => original_template_variables[:HOMEPAGE],
-            vcs_uri => original_template_variables[vcs_uri]
+          :HOMEPAGE => original_template_variables[:HOMEPAGE],
+          vcs_uri => original_template_variables[vcs_uri]
         }
       end
 
       # シェル変数群を埋め込まれたテンプレート文字列を返す
       def get_cygport(template_variables, category, summary, description, apponly, cygclasses, cygport)
-        erb = File::expand_path(File::join(TEMPLATE_DIR, 'cygport.erb'))
-        ERB.new(File::readlines(erb).join(nil), nil, '%-').result(binding)
+        erb = File.expand_path(File.join(TEMPLATE_DIR, 'cygport.erb'))
+        ERB.new(File.readlines(erb).join(nil), nil, '%-').result(binding)
       end
     end
   end

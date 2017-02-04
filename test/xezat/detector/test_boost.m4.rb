@@ -10,11 +10,11 @@ module Xezat::Test::Detector
     end
 
     def test_yes
-      assert_true(@detector.detect({S: File::join(File::dirname(__FILE__), 'fixture', 'boost.m4', 'yes')}))
+      assert_true(@detector.detect(S: File.join(File.dirname(__FILE__), 'fixture', 'boost.m4', 'yes')))
     end
 
     def test_no
-      assert_false(@detector.detect({S: File::join(File::dirname(__FILE__), 'fixture', 'boost.m4', 'no')}))
+      assert_false(@detector.detect(S: File.join(File.dirname(__FILE__), 'fixture', 'boost.m4', 'no')))
     end
   end
 end

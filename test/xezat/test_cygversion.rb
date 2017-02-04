@@ -6,12 +6,12 @@ module Xezat::Test
 
     def test_initialize
       cygversion = Cygversion.new('1.0.0-1bl1')
-      assert_equal(['1.0.0', 19700101, '1bl1'], cygversion.to_a)
+      assert_equal(['1.0.0', 19_700_101, '1bl1'], cygversion.to_a)
     end
 
     def test_initialize_vcs
       cygversion = Cygversion.new('1.0.0+git20150101-1bl1')
-      assert_equal(['1.0.0', 20150101, '1bl1'], cygversion.to_a)
+      assert_equal(['1.0.0', 20_150_101, '1bl1'], cygversion.to_a)
     end
 
     def test_compare

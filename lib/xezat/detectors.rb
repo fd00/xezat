@@ -13,8 +13,8 @@ module Xezat
     end
 
     # detector をロードする
-    def self.load_default_detectors(path = File::expand_path(File::join(File::dirname(__FILE__), 'detector')))
-      Dir::glob(File::join(path, '*.rb')) do |rb|
+    def self.load_default_detectors(path = File.expand_path(File.join(File.dirname(__FILE__), 'detector')))
+      Dir.glob(File.join(path, '*.rb')) do |rb|
         require rb
       end
     end
@@ -31,6 +31,5 @@ module Xezat
     def self.[](name)
       @@detectors[name]
     end
-
   end
 end

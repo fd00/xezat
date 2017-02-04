@@ -11,13 +11,13 @@ module Xezat::Test::Command
     end
 
     def test_get_src_uri
-      variables = {SRC_URI: 'src1 src2'}
+      variables = { SRC_URI: 'src1 src2' }
       src_uri = @command.get_src_uri(variables, @cygclass_manager)
-      assert_equal(['src1', 'src2'], src_uri)
+      assert_equal(%w(src1 src2), src_uri)
     end
 
     def test_get_src_uri_git
-      variables = {SRC_URI: 'src1 src2', GIT_URI: 'git1'}
+      variables = { SRC_URI: 'src1 src2', GIT_URI: 'git1' }
       src_uri = @command.get_src_uri(variables, @cygclass_manager)
       assert_equal(['git1'], src_uri)
     end

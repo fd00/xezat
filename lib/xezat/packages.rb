@@ -15,7 +15,7 @@ module Xezat
     end
 
     def self.get_installed_packages(db_path = '/etc/setup/installed.db')
-      self.new(File::read(db_path))
+      new(File.read(db_path))
     end
   end
 end

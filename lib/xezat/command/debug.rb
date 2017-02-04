@@ -16,14 +16,14 @@ module Xezat
         end
       end
 
-      CommandManager::register(:debug, self)
+      CommandManager.register(:debug, self)
 
-      def execute(c, args, options)
+      def execute(c, args, _options)
         cygport = args.shift
         raise ArgumentError, 'wrong number of arguments (0 for 1)' unless cygport
-        c.logger.info "ignore extra arguments: #{args.to_s}" unless args.empty?
+        c.logger.info "ignore extra arguments: #{args}" unless args.empty?
 
-        pp VariableManager::get_default_variables(cygport)
+        pp VariableManager.get_default_variables(cygport)
       end
     end
   end

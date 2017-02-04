@@ -27,6 +27,5 @@ module Xezat::Test
     def test_novcs_cygclass
       assert_equal(false, @cygclass_manager.vcs?(:cmake))
     end
-
   end
 end
