@@ -93,7 +93,7 @@ module Xezat
 
       # package を build するために必要な development package のリストを取得する
       def get_development_packages(variables, packages)
-        compilers = get_compilers(get_languages(variables))
+        compilers = get_compilers(get_languages(variables), variables)
         tools = get_tools(variables)
         development_packages = (compilers + tools + [:cygport]).uniq.sort
         development_packages.map! do |package|
@@ -127,14 +127,24 @@ module Xezat
       end
 
       # package を build するために必要な compiler package のリストを取得する
-      def get_compilers(languages)
+      def get_compilers(languages, variables)
         compiler_file = File.expand_path(File.join(DATA_DIR, 'compilers.json'))
         compiler_candidates = JSON.parse(File.read(compiler_file))
         compilers = []
         languages.uniq.each do |language|
           next unless compiler_candidates.key?(language)
           compiler_candidate = compiler_candidates[language]
-          compilers << compiler_candidate['package'].intern
+          if compiler_candidate['package'] == 'python' # python3 かどうかチェック
+            if variables[:PN].start_with?('python3-')
+              compilers << :'python3'
+            elsif variables[:PN].start_with?('pypi-')
+              compilers << :'pypi'
+            else
+              compilers << compiler_candidate['package'].intern
+            end
+          else
+            compilers << compiler_candidate['package'].intern
+          end
           next unless compiler_candidate.key?('dependencies')
           compiler_candidate['dependencies'].each do |dependency|
             compilers << dependency.intern

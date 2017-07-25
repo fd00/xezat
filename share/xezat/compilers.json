@@ -45,6 +45,9 @@
   "Ruby": {
     "package": "ruby"
   },
+  "Vala": {
+    "package": "vala"
+  },
   "Yacc": {
     "package": "bison"
   }
