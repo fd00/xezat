@@ -25,6 +25,9 @@
   "Lex": {
     "package": "flex"
   },
+  "Lua": {
+    "package": "lua"
+  },
   "Objective-C": {
     "package": "gcc-objc",
     "dependencies": [
@@ -41,6 +44,9 @@
   },
   "Python": {
     "package": "python"
+  },
+  "Ragel": {
+    "package": "ragel"
   },
   "Ruby": {
     "package": "ruby"

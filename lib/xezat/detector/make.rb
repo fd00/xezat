@@ -1,14 +1,12 @@
 require 'find'
-require 'xezat/detectors'
 
 module Xezat
   module Detector
     class Make
-      DetectorManager.register(:make, self)
-
       def detect(variables)
+        return true if variables.key?(:_cmake_CYGCLASS_)
         Find.find(variables[:B]) do |file|
-          return true if file.end_with?(File::SEPARATOR + 'Makefile') || file.end_with?(File::SEPARATOR + 'makefile')
+          return true if (file.end_with?(File::SEPARATOR + 'Makefile') || file.end_with?(File::SEPARATOR + 'makefile'))
         end
         File.foreach(File.join(variables[:top], variables[:cygportfile])) do |line|
           return true if line.index('cygmake')

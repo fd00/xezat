@@ -1,5 +1,5 @@
 {
-  "HOMEPAGE": "http://${PN}.sf.net/",
+  "HOMEPAGE": "https://${PN}.sourceforge.io/",
   "SRC_URI": "mirror://sourceforge/${PN}/${P}.tar.gz",
   "SVN_URI": "svn://svn.code.sf.net/p/${PN}/code",
   "GIT_URI": "git://git.code.sf.net/p/${PN}/code"

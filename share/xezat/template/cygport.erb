@@ -9,25 +9,25 @@ DESCRIPTION="<%= description %>"
 <% cygclasses.each do |cygclass| -%>
 inherit <%= cygclass %>
 <% end -%>
-<% pkg_name = cygport.gsub(/-[0-9].*$/, '').gsub(/[+-\.]/, '_') -%>
-<% unless apponly then -%>
+
+<% pkg_name = cygport.gsub(/-[0-9].*$/, '') -%>
+<% pkg_name_var = pkg_name.gsub(/[+-\.]/, '_') -%>
 PKG_NAMES="
-	${PN}
-	lib${PN}0
-	lib${PN}-devel
+	<%= pkg_name %>
+	lib<%= pkg_name.gsub(/^lib/, '') %>0
+	lib<%= pkg_name.gsub(/^lib/, '') %>-devel
 "
-<%= pkg_name %>_CONTENTS="
+<%= pkg_name_var %>_CONTENTS="
 	usr/bin/*.exe
 	usr/share
 "
-lib<%= pkg_name %>0_CONTENTS="
+lib<%= pkg_name_var.gsub(/^lib/, '') %>0_CONTENTS="
 	usr/bin/*.dll
 "
-lib<%= pkg_name %>_devel_CONTENTS="
+lib<%= pkg_name_var.gsub(/^lib/, '') %>_devel_CONTENTS="
 	usr/include
 	usr/lib
 "
-<%= pkg_name %>_SUMMARY="${SUMMARY} (licensing & readmes)"
-lib<%= pkg_name %>0_SUMMARY="${SUMMARY} (runtime)"
-lib<%= pkg_name %>_devel_SUMMARY="${SUMMARY} (development)"
-<% end -%>
+<%= pkg_name_var %>_SUMMARY="${SUMMARY} (licensing & readmes)"
+lib<%= pkg_name_var.gsub(/^lib/, '') %>0_SUMMARY="${SUMMARY} (runtime)"
+lib<%= pkg_name_var.gsub(/^lib/, '') %>_devel_SUMMARY="${SUMMARY} (development)"

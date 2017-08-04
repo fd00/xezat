@@ -1,7 +1,9 @@
 require 'xezat/cygversion'
 
 module Xezat
-  # package の changelog を管理するクラス
+  class ReadmeSyntaxError < StandardError
+  end
+
   class Cygchangelog
     def initialize(str = '')
       @changelogs = str.empty? ? {} : nil
@@ -16,7 +18,7 @@ module Xezat
               version = match_data[1].intern
             else
               if match_data = /^(.+)$/.match(line)
-                raise ReadmeSyntaxException, 'Version missing' if version.nil?
+                raise ReadmeSyntaxError, 'Version missing' if version.nil?
                 if @changelogs.key?(version)
                   @changelogs[version] << $INPUT_RECORD_SEPARATOR << match_data[1]
                 else

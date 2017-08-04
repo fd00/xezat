@@ -1,25 +1,16 @@
-require 'xezat/commands'
 require 'zlib'
 
 module Xezat
   module Command
-    # package tree が健全であるかどうかを診断する
     class Doctor
-      def initialize(program)
-        program.command(:doctor) do |c|
-          c.syntax 'doctor'
-          c.description 'diagnose installed packages'
-          c.action do |args, options|
-            execute(c, args, options)
-          end
-        end
+      include Xezat
+
+      def initialize
       end
 
-      CommandManager.register(:doctor, self)
-
-      def execute(c, _args, _options)
+      def execute
         get_contents_uniqueness.each do |path, pkg|
-          c.logger.warn "#{path} is in multiple packages: #{pkg}" if pkg.length > 1
+          puts "#{path} is not unique: #{pkg}" if pkg.length > 1
         end
       end
 

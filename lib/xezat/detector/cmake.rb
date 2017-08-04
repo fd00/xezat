@@ -1,11 +1,8 @@
 require 'find'
-require 'xezat/detectors'
 
 module Xezat
   module Detector
-    class Cmake
-      DetectorManager.register(:cmake, self)
-
+    class CMake
       def detect(variables)
         Find.find(variables[:S]) do |file|
           return true if file.end_with?(File::SEPARATOR + 'CMakeLists.txt')
