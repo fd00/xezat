@@ -37,7 +37,7 @@ module Xezat
 
     desc 'debug subcommand', 'Debug cygport'
     require 'xezat/command/debug'
-    subcommand 'debug',Command::Debug
+    subcommand 'debug', Command::Debug
 
     desc 'doctor', 'Check your system for potential problems'
 

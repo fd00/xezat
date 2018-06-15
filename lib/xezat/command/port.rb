@@ -1,3 +1,4 @@
+require 'xezat'
 require 'xezat/config'
 require 'xezat/variables'
 
@@ -16,18 +17,23 @@ module Xezat
       end
 
       def execute
+        LOG.debug('Start porting')
         vars = variables(@cygport)
         d = File.expand_path(File.join(get_port_directory(@options), vars[:PN]))
+        cygport = File.expand_path(File.join(vars[:top], @cygport))
+        readme = File.expand_path(File.join(vars[:C], 'README'))
+        src_patch = File.expand_path(File.join(vars[:patchdir], "#{vars[:PF]}.src.patch"))
+
         fuo = {
             noop: @options[:noop],
             verbose: @options[:noop] || @options[:verbose]
         }
 
         FileUtils.mkdir_p(d, fuo)
-        FileUtils.cp(File.expand_path(File.join(vars[:top], @cygport)), d, fuo)
-        FileUtils.cp(File.expand_path(File.join(vars[:C], 'README')), d, fuo)
-        src_patch = File.expand_path(File.join(vars[:patchdir], "#{vars[:PF]}.src.patch"))
+        FileUtils.cp(cygport, d, fuo)
+        FileUtils.cp(readme, d, fuo)
         FileUtils.cp(src_patch, d, fuo) unless FileTest.zero?(src_patch)
+        LOG.debug('End porting')
       end
 
       def get_port_directory(options)
