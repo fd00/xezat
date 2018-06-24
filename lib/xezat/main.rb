@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'thor'
 require 'thor/zsh_completion'
 require 'xezat'
@@ -11,7 +13,7 @@ module Xezat
 
     desc 'version', 'Print version'
 
-    def version()
+    def version
       puts "Xezat #{Xezat::VERSION}"
     end
 
@@ -58,6 +60,5 @@ module Xezat
       require 'xezat/command/port'
       Command::Port.new(options, cygport).execute
     end
-
   end
 end

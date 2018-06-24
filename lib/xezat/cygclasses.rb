@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Xezat
   class CygclassManager
     def initialize(cygclass_dir = '/usr/share/cygport/cygclass')
@@ -8,7 +10,7 @@ module Xezat
         cygclass = File.basename(filename, '.cygclass')
         @cygclasses << cygclass.intern
         File.foreach(filename) do |line|
-          @vcs_cygclasses << cygclass.intern if "readonly -f #{cygclass}_fetch" == line.strip
+          @vcs_cygclasses << cygclass.intern if line.strip == "readonly -f #{cygclass}_fetch"
         end
       end
     end

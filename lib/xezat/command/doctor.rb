@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zlib'
 
 module Xezat
@@ -5,8 +7,7 @@ module Xezat
     class Doctor
       include Xezat
 
-      def initialize
-      end
+      def initialize; end
 
       def execute
         get_contents_uniqueness.each do |path, pkg|

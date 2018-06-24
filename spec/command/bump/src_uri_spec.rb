@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'xezat/command/bump'
 require 'xezat/command/bump/src_uri'
@@ -17,5 +19,4 @@ describe Xezat::Command::Bump do
     src_uri = command.get_src_uri({ GIT_URI: 'https://github.com/fd00/xezat.git', _git_CYGCLASS_: 1 }, cygclasses)
     expect(src_uri.size).to eq(1)
   end
-
 end

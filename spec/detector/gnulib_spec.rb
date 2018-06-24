@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'facets/file/atomic_write'
 require 'fileutils'
 require 'spec_helper'
@@ -11,12 +13,12 @@ describe Xezat::Detector::Gnulib do
       f.puts('gnulib-tools')
     end
     detector = Xezat::Detector::Gnulib.new
-    expect(detector.detect({top: tmpdir, cygportfile: 'xezat.cygport'})).to be_truthy
+    expect(detector.detect(top: tmpdir, cygportfile: 'xezat.cygport')).to be_truthy
   end
   it 'contains no gnulib-tools' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'xezat.cygport')))
     detector = Xezat::Detector::Gnulib.new
-    expect(detector.detect({top: tmpdir, cygportfile: 'xezat.cygport'})).to be_falsey
+    expect(detector.detect(top: tmpdir, cygportfile: 'xezat.cygport')).to be_falsey
   end
 end

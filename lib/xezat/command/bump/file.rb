@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'xezat'
 
 module Xezat
-
   class IllegalStateError < StandardError
   end
 
@@ -17,7 +18,8 @@ module Xezat
           lines.delete_if do |path|
             path.strip!
             path[-1] == File::SEPARATOR # ignore directory
-          end.map! do |path|
+          end
+          lines.map! do |path|
             File::SEPARATOR + path
           end
           if variables[:PN] == pkg_name

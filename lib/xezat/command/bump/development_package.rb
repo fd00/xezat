@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'xezat'
 require 'xezat/command/bump/compiler'
 require 'xezat/command/bump/language'

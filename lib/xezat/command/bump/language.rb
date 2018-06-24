@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'xezat'
 require 'xezat/ext/linguist/file_blob'
 

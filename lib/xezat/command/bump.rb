@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'facets/file/atomic_write'
 require 'find'
 require 'json'
@@ -24,16 +26,16 @@ module Xezat
 
       def execute
         LOG.debug('Start bumping')
-        pkgs = packages()
+        pkgs = packages
         vars = variables(@cygport)
         readme_file = File.expand_path(File.join(vars[:C], 'README'))
 
         info = {
-            src_uri: get_src_uri(vars),
-            runtimes: get_runtime_packages(@cygport),
-            developments: get_development_packages(vars, pkgs),
-            files: get_files(vars),
-            changelog: get_changelog(vars, @options, readme_file)
+          src_uri: get_src_uri(vars),
+          runtimes: get_runtime_packages(@cygport),
+          developments: get_development_packages(vars, pkgs),
+          files: get_files(vars),
+          changelog: get_changelog(vars, @options, readme_file)
         }
 
         LOG.debug('Write ChangeLog atomically')

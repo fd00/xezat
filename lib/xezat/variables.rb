@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'facets/string/word_wrap'
 require 'open3'
 require 'uri'
@@ -9,13 +11,13 @@ module Xezat
   end
 
   def variables(cygport)
-    LOG.debug("Extract variables")
+    LOG.debug('Extract variables')
     command = ['bash', File.expand_path(File.join(DATA_DIR, 'show_cygport_variable.sh')), cygport]
     result, error, status = Open3.capture3(command.join(' '))
     raise CygportProcessError, error unless status.success?
     result.gsub!(/^.*\*\*\*.*$/, '')
 
-    variables = YAML.load(result).each_value do |v|
+    variables = YAML.safe_load(result, [Symbol]).each_value do |v|
       v.strip! if v.respond_to?(:strip)
     end
     variables[:DESCRIPTION].word_wrap!(79)

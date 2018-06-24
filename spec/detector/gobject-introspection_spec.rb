@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fileutils'
 require 'spec_helper'
 require 'tmpdir'
@@ -8,11 +10,11 @@ describe Xezat::Detector::GObjectIntrospection do
     tmpdir = Dir.mktmpdir
     FileUtils.mkpath(File.join(tmpdir, 'usr', 'lib', 'girepository-1.0'))
     detector = Xezat::Detector::GObjectIntrospection.new
-    expect(detector.detect({D: tmpdir})).to be_truthy
+    expect(detector.detect(D: tmpdir)).to be_truthy
   end
   it 'has no girepository_dir' do
     tmpdir = Dir.mktmpdir
     detector = Xezat::Detector::GObjectIntrospection.new
-    expect(detector.detect({D: tmpdir})).to be_falsey
+    expect(detector.detect(D: tmpdir)).to be_falsey
   end
 end

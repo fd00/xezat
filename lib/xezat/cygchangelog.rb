@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'xezat/cygversion'
 
 module Xezat
@@ -6,27 +8,27 @@ module Xezat
 
   class Cygchangelog
     def initialize(str = '')
-      @changelogs = str.empty? ? {} : nil
+      @changelogs = nil
       version = nil
       str.each_line do |line|
         line.rstrip!
-        if /^Port Notes:$/ === line
+        if line == 'Port Notes:'
           @changelogs = {}
+          next
+        end
+        next if @changelogs.nil?
+        match_version = /^----- version (.+) -----$/.match(line)
+        if match_version
+          version = match_version[1].intern
+          next
+        end
+        match_content = /^(.+)$/.match(line)
+        next unless match_content
+        raise ReadmeSyntaxError, 'Version missing' if version.nil?
+        if @changelogs.key?(version)
+          @changelogs[version] << $INPUT_RECORD_SEPARATOR << match_content[1]
         else
-          unless @changelogs.nil?
-            if match_data = /^----- version (.+) -----$/.match(line)
-              version = match_data[1].intern
-            else
-              if match_data = /^(.+)$/.match(line)
-                raise ReadmeSyntaxError, 'Version missing' if version.nil?
-                if @changelogs.key?(version)
-                  @changelogs[version] << $INPUT_RECORD_SEPARATOR << match_data[1]
-                else
-                  @changelogs[version] = match_data[1]
-                end
-              end
-            end
-          end
+          @changelogs[version] = match_content[1]
         end
       end
     end
@@ -44,9 +46,10 @@ module Xezat
     end
 
     def each
-      @changelogs.sort do |a, b|
+      logs = @changelogs.sort do |a, b|
         -(Cygversion.new(a[0].to_s) <=> Cygversion.new(b[0].to_s))
-      end.each do |k, v|
+      end
+      logs.each do |k, v|
         yield(k, v)
       end
     end

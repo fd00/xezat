@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rubygems'
 
 module Xezat
@@ -7,7 +9,7 @@ module Xezat
       version = matched[1]
       @release = matched[2]
       splitted = version.split('+')
-      @version = splitted[0].gsub('_', '.')
+      @version = splitted[0].tr('_', '.')
       @revision = splitted.length >= 2 ? splitted[1].match(/(\d+)/)[0].to_i : Time.at(0).strftime('%Y%m%d').to_i
     end
 
@@ -19,8 +21,8 @@ module Xezat
       [@version, @revision, @release]
     end
 
-    def <=>(operand)
-      to_v <=> operand.to_v
+    def <=>(other)
+      to_v <=> other.to_v
     end
   end
 end

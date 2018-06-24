@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require 'thor'
 
 module Xezat
   module Command
     class Debug < Thor
-
       desc 'linguist cygport', 'Show used programming languages'
 
       def linguist(cygport)
@@ -17,7 +18,6 @@ module Xezat
         require 'xezat/debugger/variable'
         Debugger::Variable.new(cygport).debug
       end
-
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'xezat'
 
 module Xezat
@@ -13,13 +15,13 @@ module Xezat
           compiler_candidate = compiler_candidates[language]
           if compiler_candidate['package'] == 'python'
             pkg_names = variables[:PKG_NAMES] || variables[:PN]
-            if pkg_names.include?('python3-')
-              compilers << :'python3'
-            elsif pkg_names.include?('pypi-')
-              compilers << :'pypi'
-            else
-              compilers << compiler_candidate['package'].intern
-            end
+            compilers << if pkg_names.include?('python3-')
+                           :python3
+                         elsif pkg_names.include?('pypi-')
+                           :pypi
+                         else
+                           compiler_candidate['package'].intern
+                         end
           else
             compilers << compiler_candidate['package'].intern
           end

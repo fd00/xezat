@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 require 'spec_helper'
 require 'xezat'
@@ -9,9 +11,9 @@ describe Xezat::CygclassManager do
   end
   it 'has cygclasses' do
     cygclasses = Xezat::CygclassManager.new(File.expand_path(File.join(Xezat::ROOT_DIR, 'spec', 'cygport', 'cygclass')))
-    expect(cygclasses.include? (:autotools)).to be_truthy
-    expect(cygclasses.include? (:git)).to be_truthy
-    expect(cygclasses.include? (:nosuchclass)).to be_falsey
+    expect(cygclasses.include?(:autotools)).to be_truthy
+    expect(cygclasses.include?(:git)).to be_truthy
+    expect(cygclasses.include?(:nosuchclass)).to be_falsey
     expect(cygclasses.vcs?(:autotools)).to be_falsey
     expect(cygclasses.vcs?(:git)).to be_truthy
     expect(cygclasses.vcs?(:nosuchclass)).to be_falsey

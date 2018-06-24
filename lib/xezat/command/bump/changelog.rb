@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'xezat'
 
 module Xezat
-
   class FilePermissionError < StandardError
   end
 

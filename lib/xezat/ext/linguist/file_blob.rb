@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'linguist'
 
 module Xezat
@@ -5,7 +7,7 @@ module Xezat
     class FileBlob < ::Linguist::FileBlob
       def data
         super.scrub
-      rescue
+      rescue StandardError
         ''
       end
     end

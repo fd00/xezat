@@ -1,0 +1,27 @@
+AllCops:
+  TargetRubyVersion: 2.3
+  Exclude:
+    - 'spec/cygport/**/*'
+    - 'vendor/**/*'
+
+Layout/IndentHeredoc:
+  EnforcedStyle: active_support
+
+Metrics/AbcSize:
+  Max: 30
+Metrics/BlockLength:
+  Exclude:
+    - "*.gemspec"
+Metrics/CyclomaticComplexity:
+  Max: 10
+Metrics/MethodLength:
+  Max: 35
+Metrics/ParameterLists:
+  Max: 8
+Metrics/PerceivedComplexity:
+  Max: 12
+
+Style/Documentation:
+  Enabled: false
+Style/LineLength:
+  Max: 160

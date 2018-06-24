@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require 'facets/file/atomic_open'
 require 'facets/file/atomic_write'
 require 'xezat/variables'
 
 module Xezat
-
   class UnregeneratableConfigurationError < StandardError
   end
 
@@ -34,7 +35,7 @@ module Xezat
         srcdir = variables[:CYGCMAKE_SOURCE] || variables[:S]
         pn = variables[:PN]
         pc = File.expand_path(File.join(srcdir, "#{pn}.pc.in"))
-        raise UnregeneratableConfigurationError, "#{pn}.pc.in already exists" if (File.exist?(pc) && !options['overwrite'])
+        raise UnregeneratableConfigurationError, "#{pn}.pc.in already exists" if File.exist?(pc) && !options['overwrite']
         File.atomic_write(pc) do |f|
           f.write(get_pkg_config(variables))
         end
@@ -48,10 +49,9 @@ module Xezat
       def append_commands_to_cmakelists(variables)
         srcdir = variables[:CYGCMAKE_SOURCE] || variables[:S]
         cmakelists = File.expand_path(File.join(srcdir, 'CMakeLists.txt'))
-        unless File.read(cmakelists) =~ /DESTINATION \$\{CMAKE_INSTALL_PREFIX\}\/lib\/pkgconfig/
-          File.atomic_open(cmakelists, 'a') do |f|
-            f.write(get_cmakelists(variables))
-          end
+        return if File.read(cmakelists) =~ %r!DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig!
+        File.atomic_open(cmakelists, 'a') do |f|
+          f.write(get_cmakelists(variables))
         end
       end
 
@@ -68,20 +68,18 @@ module Xezat
         raise AutotoolsFileNotFoundError unless File.exist?(configure_ac)
         original_ac = File.read(configure_ac)
 
-        unless original_ac =~ /#{pn}.pc/
-          original_ac.gsub!(/(AC_CONFIG_FILES\(\[)/, '\1' + "#{pn}.pc ")
-          File.atomic_write(configure_ac) do |fa|
-            fa.write(original_ac)
+        return if original_ac =~ /#{pn}.pc/
+        original_ac.gsub!(/(AC_CONFIG_FILES\(\[)/, '\1' + "#{pn}.pc ")
+        File.atomic_write(configure_ac) do |fa|
+          fa.write(original_ac)
 
-            makefile_am = File.expand_path(File.join(srcdir, 'Makefile.am'))
-            raise AutotoolsFileNotFoundError unless File.exist?(makefile_am)
+          makefile_am = File.expand_path(File.join(srcdir, 'Makefile.am'))
+          raise AutotoolsFileNotFoundError unless File.exist?(makefile_am)
 
-            unless File.read(makefile_am) =~ /pkgconfig_DATA/
-              commands_am = File.read(File.expand_path(File.join(TEMPLATE_DIR, 'Makefile.am')))
-              File.atomic_open(makefile_am, 'a') do |fm|
-                fm.write(commands_am)
-              end
-            end
+          break if File.read(makefile_am) =~ /pkgconfig_DATA/
+          commands_am = File.read(File.expand_path(File.join(TEMPLATE_DIR, 'Makefile.am')))
+          File.atomic_open(makefile_am, 'a') do |fm|
+            fm.write(commands_am)
           end
         end
       end

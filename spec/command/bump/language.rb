@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'facets/file/atomic_write'
 require 'spec_helper'
 require 'xezat/command/bump'
@@ -9,11 +11,11 @@ describe Xezat::Command::Bump do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'test.cpp')))
     File.atomic_write(File.expand_path(File.join(tmpdir, 'test.f90'))) do |f|
-      f.write(<<"EOS")
-program hello
-  print *, 'Hello World!'
-end program hello
-EOS
+      f.write(<<"FORTRAN".strip_heredoc)
+        program hello
+          print *, 'Hello World!'
+        end program hello
+FORTRAN
     end
     command = Xezat::Command::Bump.new(nil, nil)
     languages = command.get_languages(tmpdir)

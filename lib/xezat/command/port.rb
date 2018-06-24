@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require 'xezat'
 require 'xezat/config'
 require 'xezat/variables'
 
 module Xezat
-
   class NoPortDirectoryError < StandardError
   end
 
@@ -25,8 +26,8 @@ module Xezat
         src_patch = File.expand_path(File.join(vars[:patchdir], "#{vars[:PF]}.src.patch"))
 
         fuo = {
-            noop: @options[:noop],
-            verbose: @options[:noop] || @options[:verbose]
+          noop: @options[:noop],
+          verbose: @options[:noop] || @options[:verbose]
         }
 
         FileUtils.mkdir_p(d, fuo)
@@ -37,7 +38,7 @@ module Xezat
       end
 
       def get_port_directory(options)
-        conf = config(@options[:config])
+        conf = config(options[:config])
         port_dir = conf['xezat']['portdir'] || options[:portdir]
         raise NoPortDirectoryError if port_dir.nil?
         port_dir

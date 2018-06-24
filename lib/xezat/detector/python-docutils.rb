@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'find'
 
 module Xezat
@@ -7,7 +9,7 @@ module Xezat
         Find.find(variables[:S]) do |file|
           next unless file.end_with?(File::SEPARATOR + 'configure.ac') || file.end_with?(File::SEPARATOR + 'configure.in')
           File.foreach(file) do |line|
-            return true if (line.lstrip.start_with?('AC_CHECK_PROG') && line.index('rst2man').is_a?(Integer))
+            return true if line.lstrip.start_with?('AC_CHECK_PROG') && line.index('rst2man').is_a?(Integer)
           end
         end
         false
