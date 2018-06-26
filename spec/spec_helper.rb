@@ -18,3 +18,6 @@ RSpec.configure do |config|
 
   config.order = :random
 end
+
+require 'coveralls'
+Coveralls.wear!
