@@ -1,0 +1,6 @@
+speedups:
+  sort_vs_sort_by: false
+
+exclude_paths:
+  - 'spec/**/*.rb'
+  - 'vendor/**/*.rb'
