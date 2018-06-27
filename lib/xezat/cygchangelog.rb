@@ -31,6 +31,7 @@ module Xezat
           @changelogs[version] = match_content[1]
         end
       end
+      @changelogs ||= {}
     end
 
     def [](key)
