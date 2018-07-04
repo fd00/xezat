@@ -7,9 +7,6 @@ require 'yaml'
 require 'xezat'
 
 module Xezat
-  class CygportProcessError < StandardError
-  end
-
   def variables(cygport)
     LOG.debug('Extract variables')
     command = ['bash', File.expand_path(File.join(DATA_DIR, 'show_cygport_variable.sh')), cygport]
