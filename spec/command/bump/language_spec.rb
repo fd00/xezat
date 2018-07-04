@@ -11,7 +11,7 @@ describe Xezat::Command::Bump do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'test.cpp')))
     File.atomic_write(File.expand_path(File.join(tmpdir, 'test.f90'))) do |f|
-      f.write(<<"FORTRAN".strip_heredoc)
+      f.write(<<FORTRAN)
         program hello
           print *, 'Hello World!'
         end program hello
