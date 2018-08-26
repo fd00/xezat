@@ -17,12 +17,11 @@ module Xezat
       LOG.debug('Detect tools')
       tools = []
       @detectors.each do |name, detector|
-        d = detector.class.name.split('::').last
         if detector.detect(variables)
           tools << name
-          LOG.debug("  #{d} ... yes")
+          LOG.debug("  #{name} ... yes")
         else
-          LOG.debug("  #{d} ... no")
+          LOG.debug("  #{name} ... no")
         end
       end
       tools

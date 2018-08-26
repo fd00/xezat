@@ -42,9 +42,6 @@
       "gcc-core"
     ]
   },
-  "Python": {
-    "package": "python"
-  },
   "Ragel": {
     "package": "ragel"
   },
