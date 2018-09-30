@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'fileutils'
 require 'xezat'
 require 'xezat/config'
 require 'xezat/variables'
