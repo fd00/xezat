@@ -10,6 +10,9 @@ module Xezat
   INI_FILE = File.expand_path(File.join(Dir.home, '.xezat'))
 
   LOG = Logger.new(STDOUT)
+  LOG.formatter = proc { |_severity, datetime, _progname, message|
+    "#{datetime}: #{message}\n"
+  }
 
   class CygportProcessError < StandardError
   end

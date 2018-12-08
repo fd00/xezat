@@ -12,6 +12,7 @@ module Xezat
     command = ['bash', File.expand_path(File.join(DATA_DIR, 'show_cygport_variable.sh')), cygport]
     result, error, status = Open3.capture3(command.join(' '))
     raise CygportProcessError, error unless status.success?
+
     result.gsub!(/^.*\*\*\*.*$/, '')
 
     variables = YAML.safe_load(result, [Symbol]).each_value do |v|

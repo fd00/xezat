@@ -36,6 +36,7 @@ module Xezat
         pn = variables[:PN]
         pc = File.expand_path(File.join(srcdir, "#{pn}.pc.in"))
         raise UnregeneratableConfigurationError, "#{pn}.pc.in already exists" if File.exist?(pc) && !options['overwrite']
+
         File.atomic_write(pc) do |f|
           f.write(get_pkg_config(variables))
         end
@@ -50,6 +51,7 @@ module Xezat
         srcdir = variables[:CYGCMAKE_SOURCE] || variables[:S]
         cmakelists = File.expand_path(File.join(srcdir, 'CMakeLists.txt'))
         return if File.read(cmakelists) =~ %r!DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig!
+
         File.atomic_open(cmakelists, 'a') do |f|
           f.write(get_cmakelists(variables))
         end
@@ -66,9 +68,11 @@ module Xezat
         configure_ac = File.expand_path(File.join(srcdir, 'configure.ac'))
         configure_ac = File.expand_path(File.join(srcdir, 'configure.in')) unless File.exist?(configure_ac)
         raise AutotoolsFileNotFoundError unless File.exist?(configure_ac)
+
         original_ac = File.read(configure_ac)
 
         return if original_ac =~ /#{pn}.pc/
+
         original_ac.gsub!(/(AC_CONFIG_FILES\(\[)/, '\1' + "#{pn}.pc ")
         File.atomic_write(configure_ac) do |fa|
           fa.write(original_ac)
@@ -77,6 +81,7 @@ module Xezat
           raise AutotoolsFileNotFoundError unless File.exist?(makefile_am)
 
           break if File.read(makefile_am) =~ /pkgconfig_DATA/
+
           commands_am = File.read(File.expand_path(File.join(TEMPLATE_DIR, 'Makefile.am')))
           File.atomic_open(makefile_am, 'a') do |fm|
             fm.write(commands_am)

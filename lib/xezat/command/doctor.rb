@@ -23,6 +23,7 @@ module Xezat
             gz.each_line do |line|
               line.strip!
               next if line.end_with?('/')
+
               path = line.intern
               content2pkg[path] = [] unless content2pkg.key?(path)
               content2pkg[path] << pkg

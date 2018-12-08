@@ -31,6 +31,7 @@ module Xezat
         cygclass_dir = config(@options[:config])['cygwin']['cygclassdir']
         repository_variables = get_repository_variables(@options['repository'])
         raise UnoverwritableCygportError, "#{cygport} already exists" if FileTest.exist?(@cygport) && !@options['overwrite']
+
         cygclasses = (@options['inherit'] || '').split(',')
         template_variables = get_template_variables(repository_variables, CygclassManager.new(cygclass_dir), cygclasses)
         File.atomic_write(@cygport) do |f|
@@ -42,6 +43,7 @@ module Xezat
         if repository
           repository_file = File.expand_path(File.join(REPOSITORY_DIR, "#{repository}.json"))
           raise NoSuchRepositoryError, "No such repository: #{template}" unless FileTest.exist?(repository_file) || FileTest.readable?(repository_file)
+
           JSON.parse(File.read(repository_file), symbolize_names: true)
         else
           {
@@ -56,10 +58,11 @@ module Xezat
         vcs_prefix = 'SRC'
         cygclasses.each do |cygclass|
           raise NoSuchCygclassError, "No such cygclass: #{cygclass}" unless cygclass_manager.include?(cygclass.intern)
-          if cygclass_manager.vcs?(cygclass.intern)
-            raise CygclassConflictError, "#{cygclass} conflict with #{vcs_class}" if vcs_class
-            vcs_class = cygclass
-          end
+
+          next unless cygclass_manager.vcs?(cygclass.intern)
+          raise CygclassConflictError, "#{cygclass} conflict with #{vcs_class}" if vcs_class
+
+          vcs_class = cygclass
         end
         vcs_prefix = vcs_class.to_s.upcase if vcs_class
         vcs_uri = "#{vcs_prefix}_URI".intern

@@ -13,10 +13,12 @@ module Xezat
         languages = []
         Find.find(top_src_dir) do |path|
           next if FileTest.directory?(path)
+
           name = languages_candidates[File.extname(path)]
           if name.nil?
             language = Xezat::Linguist::FileBlob.new(path).language
             next if language.nil?
+
             name = language.name
           end
           languages << name

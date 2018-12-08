@@ -12,9 +12,11 @@ module Xezat
         compilers = []
         languages.uniq.each do |language|
           next unless compiler_candidates.key?(language)
+
           compiler_candidate = compiler_candidates[language]
           compilers << compiler_candidate['package'].intern
           next unless compiler_candidate.key?('dependencies')
+
           compiler_candidate['dependencies'].each do |dependency|
             compilers << dependency.intern
           end

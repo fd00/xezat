@@ -10,6 +10,7 @@ module Xezat
         LOG.debug('Collect SRC_URI')
         cygclasses.vcs.each do |vcs|
           next unless vars.key?("_#{vcs}_CYGCLASS_".intern)
+
           src_uri_key = "#{vcs.to_s.upcase}_URI".intern
           return vars[src_uri_key].split if vars.key?(src_uri_key)
         end

@@ -4,6 +4,7 @@ module Xezat
   class CygclassManager
     def initialize(cygclass_dir = '/usr/share/cygport/cygclass')
       raise ArgumentError, "#{cygclass_dir} not found" unless Dir.exist?(cygclass_dir)
+
       @cygclasses = []
       @vcs_cygclasses = []
       Dir.glob(File.join(cygclass_dir, '*.cygclass')) do |filename|

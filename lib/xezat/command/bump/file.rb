@@ -15,6 +15,7 @@ module Xezat
           LOG.debug("  Collect #{pkg_name}")
           lst_file = File.expand_path(File.join(variables[:T], ".#{pkg_name}.lst"))
           raise IllegalStateError, "No such file: #{lst_file}" unless FileTest.readable?(lst_file)
+
           lines = File.readlines(lst_file)
           lines.delete_if do |path|
             path.strip!
