@@ -24,16 +24,16 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.3.6'
 
   spec.add_runtime_dependency 'facets', '>= 3.1.0'
-  spec.add_runtime_dependency 'github-linguist', '>= 6.1.0'
+  spec.add_runtime_dependency 'github-linguist', '>= 7.1.3'
   spec.add_runtime_dependency 'inifile', '>= 3.0.0'
   spec.add_runtime_dependency 'io-console', '>= 0.4.6'
   spec.add_runtime_dependency 'thor', '>= 0.19.4'
   spec.add_runtime_dependency 'thor-zsh_completion', '>= 0.1.5'
 
   spec.add_development_dependency 'bundler', '>= 1.15.3'
-  spec.add_development_dependency 'coveralls', '>= 0.8.21'
+  spec.add_development_dependency 'coveralls', '>= 0.8.22'
   spec.add_development_dependency 'fasterer', '>= 0.4.1'
   spec.add_development_dependency 'rake', '>= 12.0'
-  spec.add_development_dependency 'rspec', '>= 3.7.0'
-  spec.add_development_dependency 'rubocop', '>= 0.57.2'
+  spec.add_development_dependency 'rspec', '>= 3.8.0'
+  spec.add_development_dependency 'rubocop', '>= 0.62'
 end
