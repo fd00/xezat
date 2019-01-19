@@ -8,12 +8,15 @@ Layout/IndentHeredoc:
   EnforcedStyle: active_support
 
 Metrics/AbcSize:
-  Max: 30
+  Max: 40
 Metrics/BlockLength:
   Exclude:
-    - "*.gemspec"
+    - '*.gemspec'
+    - 'spec/**/*'
 Metrics/CyclomaticComplexity:
   Max: 10
+Metrics/LineLength:
+  Max: 160
 Metrics/MethodLength:
   Max: 35
 Metrics/ParameterLists:
@@ -21,7 +24,8 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 12
 
+Naming/FileName:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
-Style/LineLength:
-  Max: 160
