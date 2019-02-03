@@ -1,5 +1,7 @@
 # Xezat
 
+[![CircleCI](https://circleci.com/gh/fd00/xezat/tree/master.svg?style=svg)](https://circleci.com/gh/fd00/xezat/tree/master)
+
 xezat helps you win at cygport.
 
 ## Installation
