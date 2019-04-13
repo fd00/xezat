@@ -18,3 +18,9 @@ RSpec.configure do |config|
 
   config.order = :random
 end
+
+# suppress log on test
+module Xezat
+  self.__send__(:remove_const, :LOG)
+  const_set(:LOG, Logger.new('/dev/null'))
+end
