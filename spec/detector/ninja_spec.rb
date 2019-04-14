@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'tmpdir'
 require 'xezat/detector/ninja'
 
 describe Xezat::Detector::Ninja do
@@ -13,5 +14,10 @@ describe Xezat::Detector::Ninja do
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'build.ninja')))
     detector = Xezat::Detector::Ninja.new
     expect(detector.detect(B: tmpdir)).to be_truthy
+  end
+  it 'does not inherit meson & does not contains build.ninja' do
+    tmpdir = Dir.mktmpdir
+    detector = Xezat::Detector::Ninja.new
+    expect(detector.detect(B: tmpdir)).to be_falsey
   end
 end

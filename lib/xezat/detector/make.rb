@@ -6,8 +6,6 @@ module Xezat
   module Detector
     class Make
       def detect(variables)
-        return true if variables.key?(:_cmake_CYGCLASS_)
-
         Find.find(variables[:B]) do |file|
           return true if file.end_with?(File::SEPARATOR + 'Makefile') || file.end_with?(File::SEPARATOR + 'makefile')
         end

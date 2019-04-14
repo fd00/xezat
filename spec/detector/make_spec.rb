@@ -7,12 +7,6 @@ require 'tmpdir'
 require 'xezat/detector/make'
 
 describe Xezat::Detector::Make do
-  it 'inherits cmake' do
-    tmpdir = Dir.mktmpdir
-    FileUtils.touch(File.expand_path(File.join(tmpdir, 'Makefile')))
-    detector = Xezat::Detector::Make.new
-    expect(detector.detect(_cmake_CYGCLASS_: '1')).to be_truthy
-  end
   it 'contains Makefile' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'Makefile')))
@@ -25,9 +19,6 @@ describe Xezat::Detector::Make do
     detector = Xezat::Detector::Make.new
     expect(detector.detect(B: tmpdir)).to be_truthy
   end
-end
-
-describe Xezat::Detector::Make do
   it 'contains cygmake' do
     tmpdir = Dir.mktmpdir
     File.atomic_write(File.expand_path(File.join(tmpdir, 'xezat.cygport'))) do |f|
