@@ -32,7 +32,7 @@ module Xezat
       end
 
       def generate_pkg_config(variables, options)
-        srcdir = variables[:CYGCMAKE_SOURCE] || variables[:S]
+        srcdir = variables[:CYGCONF_SOURCE] || variables[:CYGCMAKE_SOURCE] || variables[:S]
         pn = variables[:PN]
         pc = File.expand_path(File.join(srcdir, "#{pn}.pc.in"))
         raise UnregeneratableConfigurationError, "#{pn}.pc.in already exists" if File.exist?(pc) && !options['overwrite']
