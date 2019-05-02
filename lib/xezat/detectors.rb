@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'xezat'
+require 'xezat/ext/string'
 
 module Xezat
   class DetectorManager
@@ -9,7 +10,7 @@ module Xezat
       @detectors = {}
       Dir.glob(File.join(detector_dir, '*.rb')) do |rb|
         require rb
-        @detectors[File.basename(rb, '.rb').intern] = Object.const_get("Xezat::Detector::#{Xezat::Detector.constants[-1]}").new
+        @detectors[File.basename(rb, '.rb').intern] = Object.const_get("Xezat::Detector::#{File.basename(rb, '.rb').camelize}").new
       end
     end
 
