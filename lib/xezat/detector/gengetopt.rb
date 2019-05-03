@@ -7,7 +7,7 @@ module Xezat
     class Gengetopt
       def detect(variables)
         Find.find(variables[:S]) do |file|
-          return true if file.end_with?('.ggo')
+          return true if file.end_with?('.ggo', '.ggo.in')
         end
         false
       end

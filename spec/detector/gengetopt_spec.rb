@@ -12,6 +12,12 @@ describe Xezat::Detector::Gengetopt do
     detector = Xezat::Detector::Gengetopt.new
     expect(detector.detect(S: tmpdir)).to be_truthy
   end
+  it 'contains *.ggo.in' do
+    tmpdir = Dir.mktmpdir
+    FileUtils.touch(File.expand_path(File.join(tmpdir, 'foo.ggo.in')))
+    detector = Xezat::Detector::Gengetopt.new
+    expect(detector.detect(S: tmpdir)).to be_truthy
+  end
   it 'contains no *.ggo' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'foo.xxx')))
