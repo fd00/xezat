@@ -4,7 +4,7 @@ require 'find'
 
 module Xezat
   module Detector
-    class Python3Docutils
+    class Python36Docutils
       def detect(variables)
         Find.find(variables[:S]) do |file|
           next unless file.end_with?(File::SEPARATOR + 'configure.ac') || file.end_with?(File::SEPARATOR + 'configure.in')
