@@ -11,6 +11,7 @@ module Xezat
         end
         Find.find(variables[:S]) do |file|
           next unless file.end_with?(File::SEPARATOR + 'Makefile') || file.end_with?(File::SEPARATOR + 'makefile')
+          next if File.directory?(file)
 
           File.foreach(file) do |line|
             return true if line.lstrip.include?('libtool')
