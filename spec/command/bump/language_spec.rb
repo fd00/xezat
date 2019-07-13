@@ -17,8 +17,13 @@ describe Xezat::Command::Bump do
         end program hello
 FORTRAN
     end
+    File.atomic_write(File.expand_path(File.join(tmpdir, 'test.proto'))) do |f|
+      f.write(<<PROTO)
+        message Hello {}
+PROTO
+    end
     command = Xezat::Command::Bump.new(nil, nil)
     languages = command.get_languages(tmpdir)
-    expect(languages).to contain_exactly('Fortran', 'C++')
+    expect(languages).to contain_exactly('C++', 'Fortran', 'Protocol Buffer')
   end
 end

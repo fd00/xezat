@@ -42,6 +42,9 @@
       "gcc-core"
     ]
   },
+  "Protocol Buffer": {
+    "package": "libprotobuf-devel"
+  },
   "Ragel": {
     "package": "ragel"
   },
