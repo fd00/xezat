@@ -30,7 +30,7 @@ module Xezat
       def execute
         cygclass_dir = config(@options[:config])['cygwin']['cygclassdir']
         repository_variables = get_repository_variables(@options['repository'])
-        raise UnoverwritableCygportError, "#{cygport} already exists" if FileTest.exist?(@cygport) && !@options['overwrite']
+        raise UnoverwritableCygportError, "#{@cygport} already exists" if FileTest.exist?(@cygport) && !@options['overwrite']
 
         cygclasses = (@options['inherit'] || '').split(',')
         template_variables = get_template_variables(repository_variables, CygclassManager.new(cygclass_dir), cygclasses)
