@@ -25,7 +25,7 @@ module Xezat
       end
 
       def execute
-        LOG.debug('Start bumping')
+        Xezat.logger.debug('Start bumping')
         pkgs = packages
         vars = variables(@cygport)
         readme_file = File.expand_path(File.join(vars[:C], 'README'))
@@ -38,12 +38,12 @@ module Xezat
           changelog: get_changelog(vars, @options, readme_file)
         }
 
-        LOG.debug('Write ChangeLog atomically')
+        Xezat.logger.debug('Write ChangeLog atomically')
         File.atomic_write(readme_file) do |f|
           f.write(get_embedded_contents(vars, info))
         end
 
-        LOG.debug('End bumping')
+        Xezat.logger.debug('End bumping')
       end
 
       def get_embedded_contents(variables, info)

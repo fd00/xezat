@@ -7,7 +7,7 @@ module Xezat
   module Command
     class Bump
       def get_src_uri(vars, cygclasses = CygclassManager.new)
-        LOG.debug('Collect SRC_URI')
+        Xezat.logger.debug('Collect SRC_URI')
         cygclasses.vcs.each do |vcs|
           next unless vars.key?("_#{vcs}_CYGCLASS_".intern)
 

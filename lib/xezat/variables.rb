@@ -12,10 +12,10 @@ module Xezat
     cygport_dir = File.dirname(File.absolute_path(cygport))
     cache_file = File.expand_path(File.join(cygport_dir, File.basename(cygport, '.cygport') + '.cache.yml'))
 
-    LOG.debug('Extract variables')
+    Xezat.logger.debug('Extract variables')
 
     if File.exist?(cache_file) && File.ctime(cache_file) > File.ctime(cygport)
-      LOG.debug('  Read cache for variables')
+      Xezat.logger.debug('  Read cache for variables')
       return YAML.safe_load(File.open(cache_file), [Symbol]).each_value do |v|
         v.strip! if v.respond_to?(:strip)
       end
@@ -33,7 +33,7 @@ module Xezat
     variables[:DESCRIPTION].word_wrap!(79)
 
     File.atomic_write(cache_file) do |f|
-      LOG.debug('  Write cache for variables')
+      Xezat.logger.debug('  Write cache for variables')
       f.write(YAML.dump(variables))
     end
 

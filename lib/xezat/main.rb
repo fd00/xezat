@@ -60,5 +60,12 @@ module Xezat
       require 'xezat/command/port'
       Command::Port.new(options, cygport).execute
     end
+
+    desc 'validate cygport', 'Validate files'
+
+    def validate(cygport)
+      require 'xezat/command/validate'
+      Command::Validate.new(nil, cygport).execute
+    end
   end
 end

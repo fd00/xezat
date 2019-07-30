@@ -9,7 +9,7 @@ module Xezat
   module Command
     class Bump
       def get_development_packages(variables, packages)
-        LOG.debug('Collect development packages')
+        Xezat.logger.debug('Collect development packages')
         compilers = get_compilers(get_languages(variables[:S]), variables)
         tools = get_tools(variables)
         development_packages = (compilers + tools + [:cygport]).uniq.sort

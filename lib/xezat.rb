@@ -9,8 +9,11 @@ module Xezat
   TEMPLATE_DIR = File.expand_path(File.join(DATA_DIR, 'template'))
   INI_FILE = File.expand_path(File.join(Dir.home, '.xezat'))
 
-  LOG = Logger.new(STDOUT)
-  LOG.formatter = proc { |_severity, datetime, _progname, message|
+  class << self
+    attr_accessor :logger
+  end
+  Xezat.logger = Logger.new(STDOUT)
+  Xezat.logger.formatter = proc { |_severity, datetime, _progname, message|
     "#{datetime}: #{message}\n"
   }
 

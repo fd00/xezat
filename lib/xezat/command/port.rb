@@ -19,7 +19,7 @@ module Xezat
       end
 
       def execute
-        LOG.debug('Start porting')
+        Xezat.logger.debug('Start porting')
         vars = variables(@cygport)
         d = File.expand_path(File.join(get_port_directory(@options), vars[:PN]))
         cygport = File.expand_path(File.join(vars[:top], @cygport))
@@ -35,7 +35,7 @@ module Xezat
         FileUtils.cp(cygport, d, fuo)
         FileUtils.cp(readme, d, fuo)
         FileUtils.cp(src_patch, d, fuo) unless FileTest.zero?(src_patch)
-        LOG.debug('End porting')
+        Xezat.logger.debug('End porting')
       end
 
       def get_port_directory(options)

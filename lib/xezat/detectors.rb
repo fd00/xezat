@@ -6,7 +6,7 @@ require 'xezat/ext/string'
 module Xezat
   class DetectorManager
     def initialize(detector_dir = File.expand_path(File.join(File.dirname(__FILE__), 'detector')))
-      LOG.debug('Load detectors')
+      Xezat.logger.debug('Load detectors')
       @detectors = {}
       Dir.glob(File.join(detector_dir, '*.rb')) do |rb|
         require rb
@@ -15,14 +15,14 @@ module Xezat
     end
 
     def detect(variables)
-      LOG.debug('Detect tools')
+      Xezat.logger.debug('Detect tools')
       tools = []
       @detectors.each do |name, detector|
         if detector.detect(variables)
           tools << name
-          LOG.debug("  #{name} ... yes")
+          Xezat.logger.debug("  #{name} ... yes")
         else
-          LOG.debug("  #{name} ... no")
+          Xezat.logger.debug("  #{name} ... no")
         end
       end
       tools

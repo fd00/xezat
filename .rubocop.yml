@@ -6,9 +6,6 @@ AllCops:
     - 'spec/cygport/**/*'
     - 'vendor/**/*'
 
-Layout/IndentHeredoc:
-  EnforcedStyle: active_support
-
 Metrics/AbcSize:
   Max: 40
 Metrics/BlockLength:

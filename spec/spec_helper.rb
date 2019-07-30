@@ -21,6 +21,5 @@ end
 
 # suppress log on test
 module Xezat
-  __send__(:remove_const, :LOG)
-  const_set(:LOG, Logger.new('/dev/null'))
+  # Xezat.logger = Logger.new('/dev/null')
 end

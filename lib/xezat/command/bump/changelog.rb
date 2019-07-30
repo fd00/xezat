@@ -9,7 +9,7 @@ module Xezat
   module Command
     class Bump
       def get_changelog(variables, options, readme_file)
-        LOG.debug('Append latest log to changelog')
+        Xezat.logger.debug('Append latest log to changelog')
         current_version = variables[:PVR].intern
         if FileTest.exist?(readme_file)
           raise FilePermissionError, "Cannot read #{readme_file}" unless FileTest.readable?(readme_file)

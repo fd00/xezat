@@ -7,7 +7,7 @@ module Xezat
   module Command
     class Bump
       def get_languages(top_src_dir)
-        LOG.debug('Collect languages')
+        Xezat.logger.debug('Collect languages')
         languages_file = File.expand_path(File.join(DATA_DIR, 'languages.json'))
         languages_candidates = JSON.parse(File.read(languages_file))
         languages = []

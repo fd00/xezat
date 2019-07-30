@@ -9,10 +9,10 @@ module Xezat
   module Command
     class Bump
       def get_files(variables)
-        LOG.debug('Collect files')
+        Xezat.logger.debug('Collect files')
         pkg2files = {}
         variables[:pkg_name].each do |pkg_name|
-          LOG.debug("  Collect #{pkg_name}")
+          Xezat.logger.debug("  Collect #{pkg_name}")
           lst_file = File.expand_path(File.join(variables[:T], ".#{pkg_name}.lst"))
           raise IllegalStateError, "No such file: #{lst_file}" unless FileTest.readable?(lst_file)
 

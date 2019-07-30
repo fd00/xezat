@@ -4,7 +4,7 @@ require 'xezat'
 
 module Xezat
   def packages(db_path = '/etc/setup/installed.db')
-    LOG.debug("Collect installed packages from #{db_path}")
+    Xezat.logger.debug("Collect installed packages from #{db_path}")
     raise ArgumentError, "#{db_path} not found" unless File.exist?(db_path)
 
     packages = {}
