@@ -50,6 +50,7 @@ PC
     Xezat.logger = spy
     command.validate_pkgconfig(vars)
     expect(Xezat.logger).to have_received(:debug).twice
+    Xezat.logger = Logger.new('/dev/null')
   end
 
   it 'has pc and version differs' do
@@ -82,5 +83,6 @@ PC
     command.validate_pkgconfig(vars)
     expect(Xezat.logger).to have_received(:debug).twice
     expect(Xezat.logger).to have_received(:error).once
+    Xezat.logger = Logger.new('/dev/null')
   end
 end
