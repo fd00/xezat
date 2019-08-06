@@ -21,16 +21,15 @@ module Xezat
       end
 
       def validate_pkgconfig(variables)
-        PKGConfig.add_path(File.join(variables[:D], 'usr', 'lib', 'pkgconfig'))
-        pn = variables[:PN]
-        if PKGConfig.exist?(pn)
-          Xezat.logger.debug("  #{pn}.pc found")
-          modversion = PKGConfig.modversion(pn)
+        pkgconfig_path = File.join(variables[:D], 'usr', 'lib', 'pkgconfig')
+        PKGConfig.add_path(pkgconfig_path)
+        Dir.glob('*.pc', 0, base: pkgconfig_path).each do |pc|
+          basename = File.basename(pc, '.pc')
+          Xezat.logger.debug("  #{basename}.pc found")
+          modversion = PKGConfig.modversion(basename)
           Xezat.logger.debug("    modversion = #{modversion}")
           pv = variables[:PV][0]
           Xezat.logger.error("    modversion differs from $PN = #{pv}") unless modversion == pv
-        else
-          Xezat.logger.debug("  #{pn}.pc not found")
         end
       end
     end

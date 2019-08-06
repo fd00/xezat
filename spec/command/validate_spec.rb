@@ -18,7 +18,8 @@ describe Xezat::Command::Validate do
     }
     Xezat.logger = spy
     command.validate_pkgconfig(vars)
-    expect(Xezat.logger).to have_received(:debug).once
+    expect(Xezat.logger).to have_received(:debug).exactly(0).times
+    Xezat.logger = Logger.new('/dev/null')
   end
 
   it 'has pc' do
