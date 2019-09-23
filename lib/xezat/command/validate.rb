@@ -29,7 +29,9 @@ module Xezat
           modversion = PKGConfig.modversion(basename)
           Xezat.logger.debug("    modversion = #{modversion}")
           pv = variables[:PV][0]
-          Xezat.logger.error("    modversion differs from $PN = #{pv}") unless modversion == pv
+          Xezat.logger.error("      modversion differs from $PN = #{pv}") unless modversion == pv
+          Xezat.logger.debug("    cflags = #{PKGConfig.cflags(basename)}")
+          Xezat.logger.debug("    libs = #{PKGConfig.libs(basename)}")
         end
       end
     end
