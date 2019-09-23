@@ -50,7 +50,7 @@ PC
     end
     Xezat.logger = spy
     command.validate_pkgconfig(vars)
-    expect(Xezat.logger).to have_received(:debug).twice
+    expect(Xezat.logger).to have_received(:debug).exactly(4).times
     Xezat.logger = Logger.new('/dev/null')
   end
 
@@ -82,7 +82,7 @@ PC
     end
     Xezat.logger = spy
     command.validate_pkgconfig(vars)
-    expect(Xezat.logger).to have_received(:debug).twice
+    expect(Xezat.logger).to have_received(:debug).exactly(4).times
     expect(Xezat.logger).to have_received(:error).once
     Xezat.logger = Logger.new('/dev/null')
   end
