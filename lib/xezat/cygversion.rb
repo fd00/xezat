@@ -8,9 +8,9 @@ module Xezat
       matched = str.match(/(.+)-(.+)/)
       version = matched[1]
       @release = matched[2]
-      splitted = version.split('+')
-      @version = splitted[0].tr('_', '.')
-      @revision = splitted.length >= 2 ? splitted[1].match(/(\d+)/)[0].to_i : Time.at(0).strftime('%Y%m%d').to_i
+      split = version.split('+')
+      @version = split[0].tr('_', '.')
+      @revision = split.length >= 2 ? split[1].match(/(\d+)/)[0].to_i : Time.at(0).strftime('%Y%m%d').to_i
     end
 
     def to_v

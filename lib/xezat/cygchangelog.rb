@@ -18,19 +18,19 @@ module Xezat
         end
         next if @changelogs.nil?
 
-        match_version = /^----- version (.+) -----$/.match(line)
-        if match_version
-          version = match_version[1].intern
+        matched_version = /^----- version (.+) -----$/.match(line)
+        if matched_version
+          version = matched_version[1].intern
           next
         end
-        match_content = /^(.+)$/.match(line)
-        next unless match_content
+        matched_content = /^(.+)$/.match(line)
+        next unless matched_content
         raise ReadmeSyntaxError, 'Version missing' if version.nil?
 
         if @changelogs.key?(version)
-          @changelogs[version] << $INPUT_RECORD_SEPARATOR << match_content[1]
+          @changelogs[version] << $INPUT_RECORD_SEPARATOR << matched_content[1]
         else
-          @changelogs[version] = match_content[1]
+          @changelogs[version] = matched_content[1]
         end
       end
       @changelogs ||= {}
