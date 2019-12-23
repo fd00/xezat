@@ -16,8 +16,8 @@ module Xezat
 
     if File.exist?(cache_file) && File.ctime(cache_file) > File.ctime(cygport)
       Xezat.logger.debug('  Read cache for variables')
-      return YAML.safe_load(File.open(cache_file), [Symbol]).each_value do |v|
-        v.strip! if v.respond_to?(:strip)
+      return YAML.safe_load(File.open(cache_file), [Symbol]).each do |k, v|
+        v.strip! if v.respond_to?(:strip) && k != :DESCRIPTION
       end
     end
 
