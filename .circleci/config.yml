@@ -73,6 +73,6 @@ jobs:
       # Collect reports
       - store_test_results:
           path: /tmp/test-results
-      - store_test_results:
+      - store_artifacts:
           path: ~/repo/coverage
           destination: coverage
