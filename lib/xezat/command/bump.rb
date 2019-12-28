@@ -32,7 +32,7 @@ module Xezat
 
         info = {
           src_uri: get_src_uri(vars),
-          runtimes: get_runtime_packages(@cygport),
+          runtimes: get_runtime_packages(vars, @cygport),
           developments: get_development_packages(vars, pkgs),
           files: get_files(vars),
           changelog: get_changelog(vars, @options, readme_file)
