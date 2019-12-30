@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'facets/file/atomic_write'
 require 'fileutils'
 require 'spec_helper'
 require 'tmpdir'
@@ -17,5 +18,13 @@ describe Xezat::Detector::Libtool do
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'ltmain.xxx')))
     detector = Xezat::Detector::Libtool.new
     expect(detector.detect(S: tmpdir)).to be_falsey
+  end
+  it 'contains libtool command in Makefile' do
+    tmpdir = Dir.mktmpdir
+    File.atomic_write(File.expand_path(File.join(tmpdir, 'Makefile'))) do |f|
+      f.puts('libtool')
+    end
+    detector = Xezat::Detector::Libtool.new
+    expect(detector.detect(S: tmpdir)).to be_truthy
   end
 end
