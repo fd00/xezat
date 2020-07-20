@@ -48,7 +48,7 @@ module Xezat
 
       def get_embedded_contents(variables, info)
         erb = File.expand_path(File.join(TEMPLATE_DIR, 'README.erb'))
-        ERB.new(File.readlines(erb).join(nil), nil, '%-').result(binding).chop # remove redundant new line
+        ERB.new(File.readlines(erb).join(nil), trim_mode: '%-').result(binding).chop # remove redundant new line
       end
     end
   end

@@ -1,10 +1,13 @@
 require: rubocop-performance
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.6
   Exclude:
     - 'spec/cygport/**/*'
     - 'vendor/**/*'
+
+Layout/LineLength:
+  Max: 160
 
 Metrics/AbcSize:
   Max: 40
@@ -14,8 +17,6 @@ Metrics/BlockLength:
     - 'spec/**/*'
 Metrics/CyclomaticComplexity:
   Max: 10
-Metrics/LineLength:
-  Max: 160
 Metrics/MethodLength:
   Max: 35
 Metrics/ParameterLists:

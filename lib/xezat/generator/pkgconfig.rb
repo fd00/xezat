@@ -44,13 +44,13 @@ module Xezat
 
       def get_pkg_config(variables)
         erb = File.expand_path(File.join(TEMPLATE_DIR, 'pkgconfig.erb'))
-        ERB.new(File.readlines(erb).join(nil), nil, '%-').result(binding)
+        ERB.new(File.readlines(erb).join(nil), trim_mode: '%-').result(binding)
       end
 
       def append_commands_to_cmakelists(variables)
         srcdir = variables[:CYGCMAKE_SOURCE] || variables[:S]
         cmakelists = File.expand_path(File.join(srcdir, 'CMakeLists.txt'))
-        return if File.read(cmakelists) =~ %r!DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig!
+        return if %r!DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/pkgconfig!.match?(File.read(cmakelists))
 
         File.atomic_open(cmakelists, 'a') do |f|
           f.write(get_cmakelists(variables))
@@ -59,7 +59,7 @@ module Xezat
 
       def get_cmakelists(variables)
         erb = File.expand_path(File.join(TEMPLATE_DIR, 'cmake.erb'))
-        ERB.new(File.readlines(erb).join(nil), nil, '%-').result(binding)
+        ERB.new(File.readlines(erb).join(nil), trim_mode: '%-').result(binding)
       end
 
       def append_commands_to_autotools(variables)
@@ -71,7 +71,7 @@ module Xezat
 
         original_ac = File.read(configure_ac)
 
-        return if original_ac =~ /#{pn}.pc/
+        return if /#{pn}.pc/.match?(original_ac)
 
         original_ac.gsub!(/(AC_CONFIG_FILES\(\[)/, '\1' + "#{pn}.pc ")
         File.atomic_write(configure_ac) do |fa|
@@ -80,7 +80,7 @@ module Xezat
           makefile_am = File.expand_path(File.join(srcdir, 'Makefile.am'))
           raise AutotoolsFileNotFoundError unless File.exist?(makefile_am)
 
-          break if File.read(makefile_am) =~ /pkgconfig_DATA/
+          break if /pkgconfig_DATA/.match?(File.read(makefile_am))
 
           commands_am = File.read(File.expand_path(File.join(TEMPLATE_DIR, 'Makefile.am')))
           File.atomic_open(makefile_am, 'a') do |fm|

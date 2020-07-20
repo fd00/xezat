@@ -74,7 +74,7 @@ module Xezat
 
       def get_cygport(template_variables, category, summary, description, cygclasses, cygport)
         erb = File.expand_path(File.join(TEMPLATE_DIR, 'cygport.erb'))
-        ERB.new(File.readlines(erb).join(nil), nil, '%-').result(binding)
+        ERB.new(File.readlines(erb).join(nil), trim_mode: '%-').result(binding)
       end
     end
   end
