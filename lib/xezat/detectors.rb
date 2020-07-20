@@ -25,6 +25,10 @@ module Xezat
           Xezat.logger.debug("  #{name} ... no")
         end
       end
+      if tools.include?(:python27) && (tools.include?(:python36) || tools.include?(:python37))
+        Xezat.logger.debug('    Remove python27 because of detecting python3x')
+        tools.delete(:python27)
+      end
       tools
     end
   end
