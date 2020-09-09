@@ -15,7 +15,7 @@
       "gcc-core"
     ]
   },
-  "Fortran": {
+  "Fortran Free Form": {
     "package": "gcc-fortran",
     "dependencies": [
       "binutils",
