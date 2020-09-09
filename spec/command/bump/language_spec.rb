@@ -24,6 +24,6 @@ PROTO
     end
     command = Xezat::Command::Bump.new(nil, nil)
     languages = command.get_languages(tmpdir)
-    expect(languages).to contain_exactly('C++', 'Fortran', 'Protocol Buffer')
+    expect(languages).to contain_exactly('C++', 'Fortran Free Form', 'Protocol Buffer')
   end
 end
