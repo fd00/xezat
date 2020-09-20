@@ -43,6 +43,7 @@ module Xezat
         port_dir = conf['xezat']['portdir'] || options[:portdir]
         raise NoPortDirectoryError if port_dir.nil?
 
+        Xezat.logger.debug("Port directory: #{port_dir}")
         port_dir
       end
     end

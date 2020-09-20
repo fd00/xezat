@@ -12,8 +12,8 @@ describe Xezat do
   end
   it 'has config' do
     tf = Tempfile.open do |t|
-      t.puts '[cygwin]'
-      t.puts 'cygclassdir = "/tmp"'
+      t.puts 'cygwin:'
+      t.puts '  cygclassdir: /tmp'
       t
     end
     conf = config(tf.path)

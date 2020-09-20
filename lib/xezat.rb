@@ -7,7 +7,7 @@ module Xezat
   DATA_DIR = File.expand_path(File.join(ROOT_DIR, 'share', 'xezat'))
   REPOSITORY_DIR = File.expand_path(File.join(DATA_DIR, 'repository'))
   TEMPLATE_DIR = File.expand_path(File.join(DATA_DIR, 'template'))
-  INI_FILE = File.expand_path(File.join(Dir.home, '.xezat'))
+  CONFIG_FILE = File.expand_path(File.join(Dir.home, '.xezat', 'config.yml'))
 
   class << self
     attr_accessor :logger

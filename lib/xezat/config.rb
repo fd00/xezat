@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require 'inifile'
+require 'yaml'
 
 module Xezat
   def config(filepath = nil)
-    config = IniFile.new
+    config = {}
     config['cygwin'] = {
       'cygclassdir' => '/usr/share/cygport/cygclass'
     }
     config['xezat'] = {
     }
-    config.merge!(IniFile.load(filepath)) if filepath
+    config.merge!(YAML.load_file(filepath)) if filepath
     config
   end
 end
