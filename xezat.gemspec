@@ -25,7 +25,6 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'facets', '>= 3.1.0'
   spec.add_runtime_dependency 'github-linguist', '>= 7.11.0'
-  spec.add_runtime_dependency 'io-console', '>= 0.5.6'
   spec.add_runtime_dependency 'pkg-config', '>= 1.4.2'
   spec.add_runtime_dependency 'thor', '>= 0.20.3'
   spec.add_runtime_dependency 'thor-zsh_completion', '>= 0.1.7'
