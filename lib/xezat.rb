@@ -12,7 +12,7 @@ module Xezat
   class << self
     attr_accessor :logger
   end
-  Xezat.logger = Logger.new(STDOUT)
+  Xezat.logger = Logger.new($stdout)
   Xezat.logger.formatter = proc { |_severity, datetime, _progname, message|
     "#{datetime}: #{message}\n"
   }
