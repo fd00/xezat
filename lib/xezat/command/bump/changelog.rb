@@ -17,7 +17,7 @@ module Xezat
 
           changelog = Cygchangelog.new(File.read(readme_file))
           message = options['message'] || 'Version bump.'
-          changelog[current_version] = message unless changelog.key?(current_version)
+          changelog[current_version] = message # overwrite
         else
           changelog = Cygchangelog.new
           changelog[current_version] = 'Initial release by fd0 <https://github.com/fd00/>'

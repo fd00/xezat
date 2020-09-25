@@ -59,7 +59,7 @@ module Xezat
             lib_dirs.each do |dir|
               archive_path = File.join(dir, "lib#{lib_name}.dll.a")
               if File.exist?(archive_path)
-                Xezat.logger.debug("        #{lib_name} -> #{archive_path}")
+                Xezat.logger.debug("        #{lib_name} -> #{archive_path.gsub(variables[:D], '$D')}")
                 found = true
                 break
               end
