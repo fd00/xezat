@@ -29,7 +29,7 @@ describe Xezat::Command::Validate do
     vars = {
       D: tmpdir,
       PN: SecureRandom.hex(8),
-      PV: [SecureRandom.random_number(100)]
+      PV: [SecureRandom.random_number(100).to_s]
     }
     FileUtils.mkpath(pkgconfigdir)
     File.atomic_write(File.expand_path(File.join(pkgconfigdir, "#{vars[:PN]}.pc"))) do |f|
@@ -61,7 +61,7 @@ PC
     vars = {
       D: tmpdir,
       PN: SecureRandom.hex(8),
-      PV: [SecureRandom.random_number(100)]
+      PV: [SecureRandom.random_number(100).to_s]
     }
     FileUtils.mkpath(pkgconfigdir)
     File.atomic_write(File.expand_path(File.join(pkgconfigdir, "#{vars[:PN]}.pc"))) do |f|
@@ -83,7 +83,7 @@ PC
     Xezat.logger = spy
     command.validate_pkgconfig(vars)
     expect(Xezat.logger).to have_received(:debug).exactly(4).times
-    expect(Xezat.logger).to have_received(:error).once
+    expect(Xezat.logger).to have_received(:error).exactly(3).times
     Xezat.logger = Logger.new('/dev/null')
   end
 end

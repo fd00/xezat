@@ -41,10 +41,37 @@ module Xezat
           Xezat.logger.debug("    #{basename}.pc found")
           modversion = PKGConfig.modversion(basename)
           Xezat.logger.debug("      modversion = #{modversion}")
-          pv = variables[:PV][0]
+          pv = variables[:PV][0].gsub(/\+.+$/, '')
           Xezat.logger.error("        modversion differs from $PN = #{pv}") unless modversion == pv
           Xezat.logger.debug("      cflags = #{PKGConfig.cflags(basename)}")
-          Xezat.logger.debug("      libs = #{PKGConfig.libs(basename)}")
+          libs = PKGConfig.libs(basename)
+          Xezat.logger.debug("      libs = #{libs}")
+          validate_libs(variables, libs)
+        end
+      end
+
+      def validate_libs(variables, libs)
+        lib_dirs = [File.join(variables[:D], '/usr/lib'), '/usr/lib']
+        libs.split do |option|
+          if option.start_with?('-l')
+            lib_name = option[2, 255] # Assume file length limit
+            found = false
+            lib_dirs.each do |dir|
+              archive_path = File.join(dir, "lib#{lib_name}.dll.a")
+              if File.exist?(archive_path)
+                Xezat.logger.debug("        #{lib_name} -> #{archive_path}")
+                found = true
+                break
+              end
+              static_path = File.join(dir, "lib#{lib_name}.a")
+              next unless File.exist?(static_path)
+
+              Xezat.logger.debug("        #{lib_name} -> #{static_path}")
+              found = true
+              break
+            end
+            Xezat.logger.error("        #{lib_name} not found") unless found
+          end
         end
       end
     end
