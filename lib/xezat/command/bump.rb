@@ -38,7 +38,7 @@ module Xezat
           changelog: get_changelog(vars, @options, readme_file)
         }
 
-        Xezat.logger.debug('Write ChangeLog atomically')
+        Xezat.logger.debug('  Write ChangeLog atomically')
         File.atomic_write(readme_file) do |f|
           f.write(get_embedded_contents(vars, info))
         end

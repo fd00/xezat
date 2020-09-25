@@ -6,7 +6,7 @@ module Xezat
   module Command
     class Bump
       def get_compilers(languages, _variables)
-        Xezat.logger.debug('Collect compilers')
+        Xezat.logger.debug('  Collect compilers')
         compiler_file = File.expand_path(File.join(DATA_DIR, 'compilers.json'))
         compiler_candidates = JSON.parse(File.read(compiler_file))
         compilers = []
