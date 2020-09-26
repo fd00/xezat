@@ -13,8 +13,8 @@ module Xezat
     attr_accessor :logger
   end
   Xezat.logger = Logger.new($stdout)
-  Xezat.logger.formatter = proc { |_severity, datetime, _progname, message|
-    "#{datetime}: [#{_severity}] #{message}\n"
+  Xezat.logger.formatter = proc { |severity, datetime, _progname, message|
+    "#{datetime}: [#{severity}] #{message}\n"
   }
 
   class CygportProcessError < StandardError

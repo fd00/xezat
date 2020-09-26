@@ -7,8 +7,6 @@ module Xezat
     class Doctor
       include Xezat
 
-      def initialize; end
-
       def execute
         get_contents_uniqueness.each do |path, pkg|
           puts "#{path} is not unique: #{pkg}" if pkg.length > 1
