@@ -22,7 +22,7 @@ end
 
 # suppress log on test
 module Xezat
-  # Xezat.logger = Logger.new('/dev/null')
+  Xezat.logger = Logger.new('/dev/null')
 end
 
 SimpleCov.start
