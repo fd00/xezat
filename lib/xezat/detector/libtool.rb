@@ -7,10 +7,10 @@ module Xezat
     class Libtool
       def detect(variables)
         Find.find(variables[:S]) do |file|
-          return true if file.end_with?(File::SEPARATOR + 'ltmain.sh')
+          return true if file.end_with?("#{File::SEPARATOR}ltmain.sh")
         end
         Find.find(variables[:S]) do |file|
-          next unless file.end_with?(File::SEPARATOR + 'Makefile') || file.end_with?(File::SEPARATOR + 'makefile')
+          next unless file.end_with?("#{File::SEPARATOR}Makefile", "#{File::SEPARATOR}makefile")
           next if File.directory?(file)
 
           File.foreach(file) do |line|

@@ -6,7 +6,7 @@ module Xezat
       def detect(variables)
         if variables.key?(:_waf_CYGCLASS_)
           Find.find(variables[:S]) do |file|
-            return false if file.end_with?(File::SEPARATOR + 'waf')
+            return false if file.end_with?("#{File::SEPARATOR}waf")
           end
           return true
         end

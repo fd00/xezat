@@ -10,7 +10,7 @@ require 'xezat'
 module Xezat
   def variables(cygport)
     cygport_dir = File.dirname(File.absolute_path(cygport))
-    cache_file = File.expand_path(File.join(cygport_dir, File.basename(cygport, '.cygport') + '.cache.yml'))
+    cache_file = File.expand_path(File.join(cygport_dir, "#{File.basename(cygport, '.cygport')}.cache.yml"))
 
     Xezat.logger.debug('  Extract variables')
 

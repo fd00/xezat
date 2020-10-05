@@ -73,7 +73,7 @@ module Xezat
 
         return if /#{pn}.pc/.match?(original_ac)
 
-        original_ac.gsub!(/(AC_CONFIG_FILES\(\[)/, '\1' + "#{pn}.pc ")
+        original_ac.gsub!(/(AC_CONFIG_FILES\(\[)/, "\\1#{"#{pn}.pc "}")
         File.atomic_write(configure_ac) do |fa|
           fa.write(original_ac)
 
