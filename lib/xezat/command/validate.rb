@@ -30,7 +30,12 @@ module Xezat
 
       def validate_homepage(variables)
         response = Net::HTTP.get_response(URI.parse(variables[:HOMEPAGE]))
-        Xezat.logger.debug("    code = #{response.code}")
+        code = response.code
+        if code == '200'
+          Xezat.logger.debug("    code = #{response.code}")
+        else
+          Xezat.logger.error("    code = #{response.code}")
+        end
       end
 
       def validate_pkgconfig(variables)

@@ -15,6 +15,8 @@ module Xezat
 
     def to_v
       [Gem::Version.new(@version), @revision, @release]
+    rescue ArgumentError
+      to_a
     end
 
     def to_a
@@ -22,7 +24,10 @@ module Xezat
     end
 
     def <=>(other)
-      to_v <=> other.to_v
+      result = (to_v <=> other.to_v)
+      return result unless result.nil?
+
+      (to_a <=> other.to_a)
     end
   end
 end
