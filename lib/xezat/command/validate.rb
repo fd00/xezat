@@ -56,7 +56,7 @@ module Xezat
       end
 
       def validate_libs(variables, libs)
-        lib_dirs = [File.join(variables[:D], '/usr/lib'), '/usr/lib']
+        lib_dirs = [File.join(variables[:D], '/usr/lib'), '/usr/lib', '/usr/lib/w32api', '/usr/lib/gcc/x86_64-pc-cygwin/10']
         libs.split do |option|
           if option.start_with?('-l')
             lib_name = option[2, 255] # Assume file length limit
