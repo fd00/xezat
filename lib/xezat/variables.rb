@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'etc'
 require 'facets/file/atomic_write'
 require 'facets/string/word_wrap'
 require 'open3'
@@ -10,7 +11,7 @@ require 'xezat'
 module Xezat
   def variables(cygport)
     cygport_dir = File.dirname(File.absolute_path(cygport))
-    cache_file = File.expand_path(File.join(cygport_dir, "#{File.basename(cygport, '.cygport')}.cache.yml"))
+    cache_file = File.expand_path(File.join(cygport_dir, "#{File.basename(cygport, '.cygport')}.#{Etc.uname[:machine]}.yml"))
 
     Xezat.logger.debug('  Extract variables')
 
