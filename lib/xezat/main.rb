@@ -67,5 +67,12 @@ module Xezat
       require 'xezat/command/validate'
       Command::Validate.new(nil, cygport).execute
     end
+
+    desc 'announce cygport', 'Show announce'
+
+    def announce(cygport)
+      require 'xezat/command/announce'
+      Command::Announce.new(nil, cygport).execute
+    end
   end
 end

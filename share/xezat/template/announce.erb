@@ -1,0 +1,7 @@
+The following packages have been uploaded to the Cygwin distribution:
+
+<% variables[:pkg_name].each { |pkg_name| -%>
+* <%= pkg_name + '-' + variables[:PVR] %>
+<% } -%>
+
+<%= variables[:DESCRIPTION] %>
