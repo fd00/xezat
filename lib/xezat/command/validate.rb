@@ -19,6 +19,9 @@ module Xezat
         Xezat.logger.debug('Start validating')
         vars = variables(@cygport)
 
+        Xezat.logger.debug('  Validate .cygport')
+        validate_cygport(@cygport)
+
         Xezat.logger.debug('  Validate homepage')
         validate_homepage(vars)
 
@@ -26,6 +29,12 @@ module Xezat
         validate_pkgconfig(vars)
 
         Xezat.logger.debug('End validating')
+      end
+
+      def validate_cygport(cygport)
+        original_string = File.read(cygport)
+        stripped_string = original_string.gsub(/^\xEF\xBB\xBF/, '')
+        Xezat.logger.error('    .cygport contains BOM') unless original_string == stripped_string
       end
 
       def validate_homepage(variables)
