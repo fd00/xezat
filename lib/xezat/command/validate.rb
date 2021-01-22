@@ -22,8 +22,11 @@ module Xezat
         Xezat.logger.debug('  Validate .cygport')
         validate_cygport(@cygport)
 
+        Xezat.logger.debug('  Validate category')
+        validate_category(vars[:CATEGORY])
+
         Xezat.logger.debug('  Validate homepage')
-        validate_homepage(vars)
+        validate_homepage(vars[:HOMEPAGE])
 
         Xezat.logger.debug('  Validate *.pc')
         validate_pkgconfig(vars)
@@ -37,8 +40,13 @@ module Xezat
         Xezat.logger.error('    .cygport contains BOM') unless original_string == stripped_string
       end
 
-      def validate_homepage(variables)
-        response = Net::HTTP.get_response(URI.parse(variables[:HOMEPAGE]))
+      def validate_category(category)
+        categories_file = File.expand_path(File.join(DATA_DIR, 'categories.yaml'))
+        Xezat.logger.error("    Category is invalid : #{category}") unless YAML.safe_load(File.open(categories_file), [Symbol]).include?(category.downcase)
+      end
+
+      def validate_homepage(homepage)
+        response = Net::HTTP.get_response(URI.parse(homepage))
         code = response.code
         if code == '200'
           Xezat.logger.debug("    code = #{response.code}")

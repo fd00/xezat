@@ -54,5 +54,9 @@ module Xezat
       end
       logs.each(&block)
     end
+
+    def length
+      @changelogs.length
+    end
   end
 end

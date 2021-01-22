@@ -36,6 +36,22 @@ describe Xezat::Command::Validate do
     Xezat.logger = Logger.new('/dev/null')
   end
 
+  it 'contains valid category' do
+    command = Xezat::Command::Validate.new(nil, nil)
+    Xezat.logger = spy
+    command.validate_category('Text')
+    expect(Xezat.logger).to have_received(:error).exactly(0).times
+    Xezat.logger = Logger.new('/dev/null')
+  end
+
+  it 'contains invalid category' do
+    command = Xezat::Command::Validate.new(nil, nil)
+    Xezat.logger = spy
+    command.validate_category('invalid_category')
+    expect(Xezat.logger).to have_received(:error).exactly(1).times
+    Xezat.logger = Logger.new('/dev/null')
+  end
+
   it 'has no pc' do
     command = Xezat::Command::Validate.new(nil, nil)
     tmpdir = Dir.mktmpdir
