@@ -13,6 +13,11 @@ module Xezat
             return true if line.strip.start_with?('AC_CHECK_PROG') && line.index('rst2man').is_a?(Integer)
           end
         end
+        if variables.key?(:_meson_CYGCLASS_)
+          File.foreach(File.join(variables[:S], 'meson.build')) do |line|
+            return true if line.strip.index('rst2man').is_a?(Integer)
+          end
+        end
         false
       end
     end
