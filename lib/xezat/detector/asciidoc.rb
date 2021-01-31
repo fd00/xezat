@@ -10,7 +10,7 @@ module Xezat
           next unless file.end_with?("#{File::SEPARATOR}configure.ac", "#{File::SEPARATOR}configure.in")
 
           File.foreach(file) do |line|
-            return true if line.lstrip.include?('asciidoc')
+            return true if line.include?('asciidoc')
           end
         end
         false
