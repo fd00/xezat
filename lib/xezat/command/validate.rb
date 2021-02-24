@@ -53,6 +53,10 @@ module Xezat
         else
           Xezat.logger.error("    code = #{response.code}")
         end
+      rescue OpenSSL::SSL::SSLError => e
+        raise e unless @options[:ignore]
+
+        Xezat.logger.error('    Ignore SSLError')
       end
 
       def validate_pkgconfig(variables)

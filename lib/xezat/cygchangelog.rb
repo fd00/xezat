@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'English'
 require 'xezat/cygversion'
 
 module Xezat
@@ -28,7 +29,7 @@ module Xezat
         raise ReadmeSyntaxError, 'Version missing' if version.nil?
 
         if @changelogs.key?(version)
-          @changelogs[version] << $/ << matched_content[1]
+          @changelogs[version] << $INPUT_RECORD_SEPARATOR << matched_content[1]
         else
           @changelogs[version] = matched_content[1]
         end

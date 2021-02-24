@@ -62,10 +62,11 @@ module Xezat
     end
 
     desc 'validate cygport', 'Validate files'
+    option :ignore, type: :boolean, aliases: '-i', desc: 'ignore error'
 
     def validate(cygport)
       require 'xezat/command/validate'
-      Command::Validate.new(nil, cygport).execute
+      Command::Validate.new(options, cygport).execute
     end
 
     desc 'announce cygport', 'Show announce'
