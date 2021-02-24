@@ -24,11 +24,11 @@ module Xezat
           next
         end
         matched_content = /^(.+)$/.match(line)
-        next unless matched_content
+        next if matched_content.nil?
         raise ReadmeSyntaxError, 'Version missing' if version.nil?
 
         if @changelogs.key?(version)
-          @changelogs[version] << $INPUT_RECORD_SEPARATOR << matched_content[1]
+          @changelogs[version] << $/ << matched_content[1]
         else
           @changelogs[version] = matched_content[1]
         end
