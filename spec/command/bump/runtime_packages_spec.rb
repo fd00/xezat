@@ -13,7 +13,7 @@ describe Xezat::Command::Bump do
   cygwin-3-1
   libfoo-4-1
 LIST
-    actual = command.get_runtime_packages(nil, nil)
+    actual = command.get_runtime_packages({}, nil, nil)
     expect(actual).to contain_exactly('cygwin-3-1', 'libfoo-4-1')
   end
 end
