@@ -12,7 +12,8 @@ module Xezat
         Xezat.logger.debug('  Collect development packages')
         compilers = get_compilers(get_languages(variables[:S]), variables)
         tools = get_tools(variables)
-        development_packages = (compilers + tools + [:cygport]).uniq.sort
+        build_requires = variables[:BUILD_REQUIRES].nil? ? [] : variables[:BUILD_REQUIRES].split.map(&:to_sym)
+        development_packages = (compilers + tools + build_requires + [:cygport]).uniq.sort
         development_packages.map! do |package|
           packages[package] || ''
         end
