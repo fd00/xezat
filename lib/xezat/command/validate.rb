@@ -3,6 +3,7 @@
 require 'net/http'
 require 'pkg-config'
 require 'uri'
+require 'xezat/packages'
 require 'xezat/variables'
 
 module Xezat
@@ -18,6 +19,7 @@ module Xezat
       def execute
         Xezat.logger.debug('Start validating')
         vars = variables(@cygport)
+        pkgs = packages
 
         Xezat.logger.debug('  Validate .cygport')
         validate_cygport(@cygport)
@@ -27,6 +29,9 @@ module Xezat
 
         Xezat.logger.debug('  Validate homepage')
         validate_homepage(vars[:HOMEPAGE])
+
+        Xezat.logger.debug('  Validate BUILD_REQUIRES')
+        validate_build_requires(vars[:BUILD_REQUIRES], pkgs)
 
         Xezat.logger.debug('  Validate *.pc')
         validate_pkgconfig(vars)
@@ -57,6 +62,19 @@ module Xezat
         raise e unless @options[:ignore]
 
         Xezat.logger.error('    Ignore SSLError')
+      end
+
+      def validate_build_requires(build_requires, pkgs)
+        return if build_requires.nil?
+
+        build_requires.split.each do |build_require|
+          build_require_pkg = pkgs[build_require.to_sym]
+          if build_require_pkg.nil?
+            Xezat.logger.error("    #{build_require} not found")
+          else
+            Xezat.logger.debug("    #{build_require_pkg}")
+          end
+        end
       end
 
       def validate_pkgconfig(variables)
