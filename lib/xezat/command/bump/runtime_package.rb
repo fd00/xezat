@@ -7,11 +7,13 @@ require 'xezat/variables'
 module Xezat
   module Command
     class Bump
-      def get_runtime_packages(vars, pkgs, cygport)
+      def get_runtime_packages(variables, pkgs, cygport)
         Xezat.logger.debug('  Collect runtime packages from cygport dep')
-        result = invoke_cygport_dep(vars, cygport)
+        result = invoke_cygport_dep(variables, cygport)
         runtime_packages = result.gsub(/^.*\*\*\*.*$/, '').split($INPUT_RECORD_SEPARATOR).map(&:lstrip)
-        vars[:REQUIRES]&.split&.each do |req|
+        build_requires = variables[:BUILD_REQUIRES].nil? ? [] : variables[:BUILD_REQUIRES].split.map(&:to_sym)
+        runtime_packages.delete(pkgs[:'libssl-devel']) if build_requires.include?(:'libssl1.0-devel')
+        variables[:REQUIRES]&.split&.each do |req|
           runtime_packages << pkgs[req.to_sym]
         end
         runtime_packages.sort

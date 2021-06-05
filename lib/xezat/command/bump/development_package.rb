@@ -14,6 +14,7 @@ module Xezat
         tools = get_tools(variables)
         build_requires = variables[:BUILD_REQUIRES].nil? ? [] : variables[:BUILD_REQUIRES].split.map(&:to_sym)
         development_packages = (compilers + tools + build_requires + [:cygport]).uniq.sort
+        development_packages.delete(:'libssl-devel') if development_packages.include?(:'libssl1.0-devel')
         development_packages.map! do |package|
           packages[package] || ''
         end

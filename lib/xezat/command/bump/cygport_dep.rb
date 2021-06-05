@@ -7,8 +7,8 @@ require 'xezat'
 module Xezat
   module Command
     class Bump
-      def invoke_cygport_dep(vars, cygport)
-        candidate_files = Find.find(vars[:D]).select do |file|
+      def invoke_cygport_dep(variables, cygport)
+        candidate_files = Find.find(variables[:D]).select do |file|
           file.end_with?('.exe', '.dll', '.so')
         end
         additional_path = candidate_files.map do |file|
