@@ -18,7 +18,9 @@ module Xezat
       Xezat.logger.debug('    Detect tools')
       tools = []
       @detectors.each do |name, detector|
-        if detector.detect(variables)
+        if variables[:PN].intern == name
+          Xezat.logger.debug("      #{name} ... no (self)")
+        elsif detector.detect(variables)
           tools << name
           Xezat.logger.debug("      #{name} ... yes")
         else
