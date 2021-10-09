@@ -11,11 +11,11 @@ module Xezat
         Find.find(variables[:D]) do |file|
           next unless file.end_with?('.py')
 
-          File.foreach(file) do |line|
-            return true if line.strip == '#!/usr/bin/env python' || line.strip.start_with?('#!/usr/bin/env python2')
-
-            break
-          end
+          first_line = File.readlines(file).first.chomp
+          return true if %r{^#!\s*/usr/bin/env\s*python2\s*$}.match?(first_line)
+          return true if %r{^#!\s*/usr/bin/env\s*python2.7\s*$}.match?(first_line)
+          return true if %r{^#!\s*/usr/bin/python2\s*$}.match?(first_line)
+          return true if %r{^#!\s*/usr/bin/python2.7\s*$}.match?(first_line)
         end
         false
       end
