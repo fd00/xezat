@@ -11,7 +11,7 @@ module Xezat
         Find.find(variables[:D]) do |file|
           next unless file.end_with?('.py')
 
-          first_line = File.readlines(file).first.chomp
+          first_line = File.readlines(file).first
           return true if %r{^#!\s*/usr/bin/env\s*python2\s*$}.match?(first_line)
           return true if %r{^#!\s*/usr/bin/env\s*python2.7\s*$}.match?(first_line)
           return true if %r{^#!\s*/usr/bin/python2\s*$}.match?(first_line)
