@@ -29,42 +29,10 @@ describe Xezat::Detector::Python38 do
     detector = Xezat::Detector::Python38.new
     expect(detector.detect(D: tmpdir)).to be_truthy
   end
-  it 'has executable script (env python3)' do
-    tmpdir = Dir.mktmpdir
-    File.atomic_write(File.expand_path(File.join(tmpdir, 'xezat.py'))) do |f|
-      f.puts('#!/usr/bin/env python3')
-    end
-    detector = Xezat::Detector::Python38.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
-  end
   it 'has executable script (python3)' do
     tmpdir = Dir.mktmpdir
     File.atomic_write(File.expand_path(File.join(tmpdir, 'xezat.py'))) do |f|
       f.puts('#!/usr/bin/python3')
-    end
-    detector = Xezat::Detector::Python38.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
-  end
-  it 'has executable script (env python)' do
-    tmpdir = Dir.mktmpdir
-    File.atomic_write(File.expand_path(File.join(tmpdir, 'xezat.py'))) do |f|
-      f.puts('#!/usr/bin/env python')
-    end
-    detector = Xezat::Detector::Python38.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
-  end
-  it 'has executable script (python)' do
-    tmpdir = Dir.mktmpdir
-    File.atomic_write(File.expand_path(File.join(tmpdir, 'xezat.py'))) do |f|
-      f.puts('#!/usr/bin/python')
-    end
-    detector = Xezat::Detector::Python38.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
-  end
-  it 'has executable script (python2)' do
-    tmpdir = Dir.mktmpdir
-    File.atomic_write(File.expand_path(File.join(tmpdir, 'xezat.py'))) do |f|
-      f.puts('#!/usr/bin/python2')
     end
     detector = Xezat::Detector::Python38.new
     expect(detector.detect(D: tmpdir)).to be_falsey
