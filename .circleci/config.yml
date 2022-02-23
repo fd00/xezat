@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  ruby: circleci/ruby@1.4.0
 jobs:
   test:
     docker:
@@ -72,7 +74,34 @@ jobs:
           path: ~/repo/coverage
           destination: coverage
 
+  deploy:
+    docker:
+      - image: cimg/ruby:2.6
+    steps:
+      - checkout
+      - run:
+          name: Install native libraries
+          command: |
+            sudo apt-get install cmake libicu-dev
+
+      - run:
+          name: Install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - run:
+          name: Publish gem to Rubygems
+          command: bundle exec rake release
+
 workflows:
   test:
     jobs:
       - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
