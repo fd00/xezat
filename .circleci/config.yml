@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  ruby: circleci/ruby@1.4.0
 jobs:
   build:
     docker:
@@ -35,7 +33,10 @@ jobs:
           command: |
             sudo apt-get install cmake libicu-dev
 
-      - ruby/install-deps
+      - run:
+          name: Install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
 
       - save_cache:
           paths:
