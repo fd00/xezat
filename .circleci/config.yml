@@ -1,8 +1,8 @@
 version: 2.1
 jobs:
-  build:
+  test:
     docker:
-       - image: cimg/ruby:2.6
+      - image: cimg/ruby:2.6
 
     working_directory: ~/repo
 
@@ -71,3 +71,8 @@ jobs:
       - store_artifacts:
           path: ~/repo/coverage
           destination: coverage
+
+workflows:
+  test:
+    jobs:
+      - test
