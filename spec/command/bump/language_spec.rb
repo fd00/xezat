@@ -7,6 +7,7 @@ require 'xezat/command/bump/language'
 
 describe Xezat::Command::Bump do
   include Xezat
+
   it 'contains C++' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'test.cpp')))
@@ -14,6 +15,7 @@ describe Xezat::Command::Bump do
     languages = command.get_languages(tmpdir)
     expect(languages).to contain_exactly('C++')
   end
+
   it 'contains Fortran77' do
     tmpdir = Dir.mktmpdir
     File.atomic_write(File.expand_path(File.join(tmpdir, 'test.f77'))) do |f|
@@ -27,6 +29,7 @@ describe Xezat::Command::Bump do
     languages = command.get_languages(tmpdir)
     expect(languages).to contain_exactly('Fortran')
   end
+
   it 'contains Fortran90' do
     tmpdir = Dir.mktmpdir
     File.atomic_write(File.expand_path(File.join(tmpdir, 'test.f90'))) do |f|
@@ -40,6 +43,7 @@ FORTRAN
     languages = command.get_languages(tmpdir)
     expect(languages).to contain_exactly('Fortran Free Form')
   end
+
   it 'contains Protocol Buffer' do
     tmpdir = Dir.mktmpdir
     File.atomic_write(File.expand_path(File.join(tmpdir, 'test.proto'))) do |f|

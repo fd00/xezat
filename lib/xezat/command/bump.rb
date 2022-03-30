@@ -30,13 +30,12 @@ module Xezat
         vars = variables(@cygport)
         readme_file = File.expand_path(File.join(vars[:C], 'README'))
 
-        info = {
-          src_uri: get_src_uri(vars),
-          runtimes: get_runtime_packages(vars, pkgs, @cygport),
-          developments: get_development_packages(vars, pkgs),
-          files: get_files(vars),
-          changelog: get_changelog(vars, @options, readme_file)
-        }
+        info = {}
+        info[:src_uri] = get_src_uri(vars)
+        info[:runtimes] = get_runtime_packages(vars, pkgs, @cygport)
+        info[:developments] = get_development_packages(vars, pkgs, info[:runtimes])
+        info[:files] = get_files(vars)
+        info[:changelog] = get_changelog(vars, @options, readme_file)
 
         Xezat.logger.debug('  Write ChangeLog atomically')
         File.atomic_write(readme_file) do |f|
