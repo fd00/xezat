@@ -8,7 +8,7 @@ require 'xezat/command/bump/tool'
 module Xezat
   module Command
     class Bump
-      def get_development_packages(variables, packages, runtimes)
+      def get_development_packages(variables, packages, runtimes, pkg2files)
         Xezat.logger.debug('  Collect development packages')
         compilers = get_compilers(get_languages(variables[:S]), variables)
         tools = get_tools(variables)
@@ -19,7 +19,13 @@ module Xezat
         development_packages.delete(:'libssl-devel') if development_packages.include?(:'libssl1.0-devel')
 
         # Check gcc-gfortran
-        development_packages.delete(:'gcc-fortran') if runtimes.grep(/^libgfortran/).empty?
+        if runtimes.grep(/^libgfortran/).empty?
+          delete_fortran = true
+          pkg2files.each_value do |files|
+            delete_fortran = false unless files.grep(/\.mod$/).empty?
+          end
+          development_packages.delete(:'gcc-fortran') if delete_fortran
+        end
 
         development_packages.map! do |package|
           pkg = packages[package]

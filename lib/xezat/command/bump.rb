@@ -33,8 +33,8 @@ module Xezat
         info = {}
         info[:src_uri] = get_src_uri(vars)
         info[:runtimes] = get_runtime_packages(vars, pkgs, @cygport)
-        info[:developments] = get_development_packages(vars, pkgs, info[:runtimes])
         info[:files] = get_files(vars)
+        info[:developments] = get_development_packages(vars, pkgs, info[:runtimes], info[:files])
         info[:changelog] = get_changelog(vars, @options, readme_file)
 
         Xezat.logger.debug('  Write ChangeLog atomically')
