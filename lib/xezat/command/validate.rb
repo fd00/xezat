@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'net/http'
-require 'pkg-config'
 require 'uri'
+require 'xezat/command/validate/pkgconfig'
 require 'xezat/packages'
 require 'xezat/variables'
 
@@ -35,6 +35,9 @@ module Xezat
 
         Xezat.logger.debug('  Validate *.pc')
         validate_pkgconfig(vars)
+
+        Xezat.logger.debug('  Validate *-config')
+        validate_config(vars)
 
         Xezat.logger.debug('End validating')
       end
@@ -77,20 +80,20 @@ module Xezat
         end
       end
 
-      def validate_pkgconfig(variables)
-        pkgconfig_path = File.join(variables[:D], 'usr', 'lib', 'pkgconfig')
-        PKGConfig.add_path(pkgconfig_path)
-        Dir.glob('*.pc', 0, base: pkgconfig_path).each do |pc|
-          basename = File.basename(pc, '.pc')
-          Xezat.logger.debug("    #{basename}.pc found")
-          modversion = PKGConfig.modversion(basename)
-          Xezat.logger.debug("      modversion = #{modversion}")
-          pv = variables[:PV][0].gsub(/\+.+$/, '')
-          Xezat.logger.error("        modversion differs from $PN = #{pv}") unless modversion == pv
-          Xezat.logger.debug("      cflags = #{PKGConfig.cflags(basename)}")
-          libs = PKGConfig.libs(basename)
-          Xezat.logger.debug("      libs = #{libs}")
-          validate_libs(variables, libs)
+      def validate_config(variables)
+        configs = Dir.glob(File.join(variables[:D], '/usr/bin/*-config'))
+        configs.each do |config|
+          basename = File.basename(config)
+          Xezat.logger.debug("    #{basename} found")
+          result, error, status = Open3.capture3("#{config} --cflags")
+          raise CygportProcessError, error unless status.success?
+
+          Xezat.logger.debug("      cflags = #{result.strip}")
+          result, error, status = Open3.capture3("#{config} --libs")
+          raise CygportProcessError, error unless status.success?
+
+          Xezat.logger.debug("      libs = #{result.strip}")
+          validate_libs(variables, result.strip)
         end
       end
 
