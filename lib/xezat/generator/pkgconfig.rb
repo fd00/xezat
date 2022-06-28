@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'English'
 require 'facets/file/atomic_open'
 require 'facets/file/atomic_write'
 require 'xezat/variables'
@@ -90,8 +91,10 @@ module Xezat
           return
         end
 
-        File.atomic_open(configure_ac, 'a') do |fa|
-          fa.write("AC_CONFIG_FILES([#{pn}.pc])")
+        rewritten_ac = original_ac.gsub(/^AC_OUTPUT$/, "AC_CONFIG_FILES([#{pn}.pc])#{$INPUT_RECORD_SEPARATOR}AC_OUTPUT")
+
+        File.atomic_open(configure_ac, 'w') do |fa|
+          fa.write(rewritten_ac)
 
           makefile_am = File.expand_path(File.join(srcdir, 'Makefile.am'))
           raise AutotoolsFileNotFoundError unless File.exist?(makefile_am)
