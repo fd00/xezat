@@ -5,8 +5,9 @@ require 'thor'
 module Xezat
   module Command
     class Generate < Thor
-      desc 'generate pkgconfig cygport', 'Generate *.pc'
+      desc 'pkgconfig cygport', 'Generate *.pc'
       option :overwrite, type: :boolean, aliases: '-o', desc: 'overwrite *.pc'
+      option :srcdir, type: :string, aliases: '-s', desc: 'relative path to Makefile.am / CMakeLists.txt'
 
       def pkgconfig(cygport)
         require 'xezat/generator/pkgconfig'

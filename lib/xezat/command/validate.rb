@@ -2,6 +2,7 @@
 
 require 'net/http'
 require 'uri'
+require 'xezat/command/validate/config'
 require 'xezat/command/validate/pkgconfig'
 require 'xezat/packages'
 require 'xezat/variables'
@@ -77,23 +78,6 @@ module Xezat
           else
             Xezat.logger.debug("    #{build_require_pkg}")
           end
-        end
-      end
-
-      def validate_config(variables)
-        configs = Dir.glob(File.join(variables[:D], '/usr/bin/*-config'))
-        configs.each do |config|
-          basename = File.basename(config)
-          Xezat.logger.debug("    #{basename} found")
-          result, error, status = Open3.capture3("#{config} --cflags")
-          raise CygportProcessError, error unless status.success?
-
-          Xezat.logger.debug("      cflags = #{result.strip}")
-          result, error, status = Open3.capture3("#{config} --libs")
-          raise CygportProcessError, error unless status.success?
-
-          Xezat.logger.debug("      libs = #{result.strip}")
-          validate_libs(variables, result.strip)
         end
       end
 

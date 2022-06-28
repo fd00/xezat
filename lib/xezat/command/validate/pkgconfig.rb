@@ -14,6 +14,12 @@ module Xezat
           Xezat.logger.debug("    #{basename}.pc found")
           modversion = PKGConfig.modversion(basename)
           Xezat.logger.debug("      modversion = #{modversion}")
+          prefix = PKGConfig.variable(basename, 'prefix')
+          if prefix.eql?('/usr') || prefix.empty?
+            Xezat.logger.debug("      prefix = #{prefix}")
+          else
+            Xezat.logger.warn("       prefix = #{prefix} (not standard)")
+          end
           pv = variables[:PV][0].gsub(/\+.+$/, '')
           Xezat.logger.error("        modversion differs from $PN = #{pv}") unless modversion == pv
           Xezat.logger.debug("      cflags = #{PKGConfig.cflags(basename)}")

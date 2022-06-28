@@ -13,10 +13,9 @@ module Xezat
         compilers = get_compilers(get_languages(variables[:S]), variables)
         tools = get_tools(variables)
         build_requires = variables[:BUILD_REQUIRES].nil? ? [] : variables[:BUILD_REQUIRES].split.map(&:to_sym)
-        development_packages = (compilers + tools + build_requires + [:cygport]).uniq.sort
+        development_packages = (compilers + tools + build_requires + [:cygport]).uniq
 
-        # Check libssl duplication
-        development_packages.delete(:'libssl-devel') if development_packages.include?(:'libssl1.0-devel')
+        resolve_development_package(development_packages)
 
         # Check gcc-gfortran
         if runtimes.grep(/^libgfortran/).empty?
@@ -27,12 +26,23 @@ module Xezat
           development_packages.delete(:'gcc-fortran') if delete_fortran
         end
 
+        development_packages.sort!
+
         development_packages.map! do |package|
           pkg = packages[package]
           raise "Package #{package} is not installed in your system" if pkg.nil?
 
           pkg
         end
+      end
+
+      def resolve_development_package(development_packages)
+        # Check libssl duplication
+        development_packages.delete(:'libssl-devel') if development_packages.include?(:'libssl1.0-devel')
+
+        # Check lua duplication
+        development_packages.delete(:lua) if development_packages.include?(:'lua5.1-devel')
+        development_packages.delete(:lua) if development_packages.include?(:'luajit-devel')
       end
     end
   end
