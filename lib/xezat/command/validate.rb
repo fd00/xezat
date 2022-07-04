@@ -31,6 +31,9 @@ module Xezat
         Xezat.logger.debug('  Validate homepage')
         validate_homepage(vars[:HOMEPAGE])
 
+        Xezat.logger.debug('  Validate licenses')
+        validate_license(vars)
+
         Xezat.logger.debug('  Validate BUILD_REQUIRES')
         validate_build_requires(vars[:BUILD_REQUIRES], pkgs)
 
@@ -66,6 +69,17 @@ module Xezat
         raise e unless @options[:ignore]
 
         Xezat.logger.error('    Ignore SSLError')
+      end
+
+      def validate_license(vars)
+        licenses_file = File.expand_path(File.join(DATA_DIR, 'licenses.yaml'))
+        licenses = YAML.safe_load(File.open(licenses_file), [Symbol])
+        license = vars[:LICENSE]
+        if licenses.include?(license)
+          Xezat.logger.debug("    LICENSE is listed : #{license}")
+        else
+          Xezat.logger.error("    LICENSE is unlisted : #{license}")
+        end
       end
 
       def validate_build_requires(build_requires, pkgs)

@@ -6,6 +6,10 @@ CATEGORY="<%= category %>"
 SUMMARY="<%= summary %>"
 DESCRIPTION="<%= description %>"
 
+LICENSE=""
+LICENSE_SPDX="SPDX-License-Identifier: "
+LICENSE_URI="COPYING"
+
 <% cygclasses.each do |cygclass| -%>
 inherit <%= cygclass %>
 <% end -%>
