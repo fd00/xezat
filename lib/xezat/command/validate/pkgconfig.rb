@@ -10,19 +10,23 @@ module Xezat
         pkgconfig_path = File.join(variables[:D], 'usr', 'lib', 'pkgconfig')
         PKGConfig.add_path(pkgconfig_path)
         Dir.glob('*.pc', 0, base: pkgconfig_path).each do |pc|
+          Xezat.logger.debug("    #{pc} found")
           basename = File.basename(pc, '.pc')
-          Xezat.logger.debug("    #{basename}.pc found")
+
           modversion = PKGConfig.modversion(basename)
           Xezat.logger.debug("      modversion = #{modversion}")
+          pv = variables[:PV][0].gsub(/\+.+$/, '')
+          Xezat.logger.error("        modversion differs from $PN = #{pv}") unless modversion == pv
+
           prefix = PKGConfig.variable(basename, 'prefix')
-          if prefix.eql?('/usr') || prefix.empty?
+          if prefix.nil? || prefix.empty? || prefix.eql?('/usr')
             Xezat.logger.debug("      prefix = #{prefix}")
           else
             Xezat.logger.warn("       prefix = #{prefix} (not standard)")
           end
-          pv = variables[:PV][0].gsub(/\+.+$/, '')
-          Xezat.logger.error("        modversion differs from $PN = #{pv}") unless modversion == pv
+
           Xezat.logger.debug("      cflags = #{PKGConfig.cflags(basename)}")
+
           libs = PKGConfig.libs(basename)
           Xezat.logger.debug("      libs = #{libs}")
           validate_libs(variables, libs)
