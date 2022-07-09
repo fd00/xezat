@@ -19,7 +19,7 @@ describe Xezat::Command::Validate do
       PV: '1.6.37'
     }
     Xezat.logger = spy
-    command.validate_pkgconfig(vars)
+    command.validate_pkgconfig(vars, '11')
     expect(Xezat.logger).to have_received(:debug).exactly(0).times
     Xezat.logger = Logger.new('/dev/null')
   end
@@ -51,7 +51,7 @@ describe Xezat::Command::Validate do
 PC
     end
     Xezat.logger = spy
-    command.validate_pkgconfig(vars)
+    command.validate_pkgconfig(vars, '11')
     expect(Xezat.logger).to have_received(:debug).exactly(4).times
     Xezat.logger = Logger.new('/dev/null')
   end
@@ -83,7 +83,7 @@ PC
 PC
     end
     Xezat.logger = spy
-    command.validate_pkgconfig(vars)
+    command.validate_pkgconfig(vars, '11')
     expect(Xezat.logger).to have_received(:debug).exactly(4).times
     expect(Xezat.logger).to have_received(:error).exactly(3).times
     Xezat.logger = Logger.new('/dev/null')

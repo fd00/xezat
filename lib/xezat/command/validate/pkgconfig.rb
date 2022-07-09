@@ -6,7 +6,7 @@ require 'xezat'
 module Xezat
   module Command
     class Validate
-      def validate_pkgconfig(variables)
+      def validate_pkgconfig(variables, gcc_version)
         pkgconfig_path = File.join(variables[:D], 'usr', 'lib', 'pkgconfig')
         PKGConfig.add_path(pkgconfig_path)
         Dir.glob('*.pc', 0, base: pkgconfig_path).each do |pc|
@@ -29,7 +29,7 @@ module Xezat
 
           libs = PKGConfig.libs(basename)
           Xezat.logger.debug("      libs = #{libs}")
-          validate_libs(variables, libs)
+          validate_libs(variables, libs, gcc_version)
         end
       end
     end

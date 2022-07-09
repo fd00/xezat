@@ -3,7 +3,9 @@
 require 'net/http'
 require 'uri'
 require 'xezat/command/validate/config'
+require 'xezat/command/validate/license'
 require 'xezat/command/validate/pkgconfig'
+require 'xezat/cygversion'
 require 'xezat/packages'
 require 'xezat/variables'
 
@@ -22,6 +24,8 @@ module Xezat
         vars = variables(@cygport)
         pkgs = packages
 
+        gcc_version = Cygversion.new(pkgs[:'gcc-core'].gsub(/^gcc-core-/, '')).version.split('.')[0]
+
         Xezat.logger.debug('  Validate .cygport')
         validate_cygport(@cygport)
 
@@ -38,10 +42,10 @@ module Xezat
         validate_build_requires(vars[:BUILD_REQUIRES], pkgs)
 
         Xezat.logger.debug('  Validate *.pc')
-        validate_pkgconfig(vars)
+        validate_pkgconfig(vars, gcc_version)
 
         Xezat.logger.debug('  Validate *-config')
-        validate_config(vars)
+        validate_config(vars, gcc_version)
 
         Xezat.logger.debug('End validating')
       end
@@ -61,27 +65,14 @@ module Xezat
         response = Net::HTTP.get_response(URI.parse(homepage))
         code = response.code
         if code == '200'
-          Xezat.logger.debug("    code = #{response.code}")
+          Xezat.logger.debug("    code = #{code}")
         else
-          Xezat.logger.error("    code = #{response.code}")
+          Xezat.logger.error("    code = #{code}")
         end
       rescue OpenSSL::SSL::SSLError => e
         raise e unless @options[:ignore]
 
         Xezat.logger.error('    Ignore SSLError')
-      end
-
-      def validate_license(vars)
-        licenses_file = File.expand_path(File.join(DATA_DIR, 'licenses.yaml'))
-        licenses = YAML.safe_load(File.open(licenses_file), [Symbol])
-        license = vars[:LICENSE]
-        if license.empty?
-          Xezat.logger.warn('     LICENSE is not defined')
-        elsif licenses.include?(license)
-          Xezat.logger.debug("    LICENSE is listed : #{license}")
-        else
-          Xezat.logger.error("    LICENSE is unlisted : #{license}")
-        end
       end
 
       def validate_build_requires(build_requires, pkgs)
@@ -97,8 +88,8 @@ module Xezat
         end
       end
 
-      def validate_libs(variables, libs)
-        lib_dirs = [File.join(variables[:D], '/usr/lib'), '/usr/lib', '/usr/lib/w32api', '/usr/lib/gcc/x86_64-pc-cygwin/11']
+      def validate_libs(variables, libs, gcc_version)
+        lib_dirs = [File.join(variables[:D], '/usr/lib'), '/usr/lib', '/usr/lib/w32api', "/usr/lib/gcc/x86_64-pc-cygwin/#{gcc_version}"]
         libs.split do |option|
           if option.start_with?('-l')
             lib_name = option[2, 255] # Assume file length limit

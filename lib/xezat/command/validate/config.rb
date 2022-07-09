@@ -6,7 +6,7 @@ require 'xezat'
 module Xezat
   module Command
     class Validate
-      def validate_config(variables)
+      def validate_config(variables, gcc_version)
         configs = Dir.glob(File.join(variables[:D], '/usr/bin/*-config'))
         configs.each do |config|
           basename = File.basename(config)
@@ -29,7 +29,7 @@ module Xezat
           result, _, status = Open3.capture3("#{config} --libs")
           if status.success?
             Xezat.logger.debug("      libs = #{result.strip}")
-            validate_libs(variables, result.strip)
+            validate_libs(variables, result.strip, gcc_version)
           else
             Xezat.logger.warn('       libs not supported')
           end

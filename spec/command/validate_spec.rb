@@ -22,7 +22,7 @@ describe Xezat::Command::Validate do
     Xezat.logger = Logger.new('/dev/null')
   end
 
-  it 'contains invalid char' do
+  it 'contains invalid char (BOM)' do
     command = Xezat::Command::Validate.new(nil, nil)
     tmpdir = Dir.mktmpdir
     cygport = File.expand_path(File.join(tmpdir, 'foo.cygport'))

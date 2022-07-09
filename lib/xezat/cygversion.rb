@@ -4,6 +4,8 @@ require 'rubygems'
 
 module Xezat
   class Cygversion
+    attr_reader :version
+
     def initialize(str)
       matched = str.match(/(.+)-(.+)/)
       version = matched[1]
