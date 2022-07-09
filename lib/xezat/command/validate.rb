@@ -75,7 +75,9 @@ module Xezat
         licenses_file = File.expand_path(File.join(DATA_DIR, 'licenses.yaml'))
         licenses = YAML.safe_load(File.open(licenses_file), [Symbol])
         license = vars[:LICENSE]
-        if licenses.include?(license)
+        if license.empty?
+          Xezat.logger.warn('     LICENSE is not defined')
+        elsif licenses.include?(license)
           Xezat.logger.debug("    LICENSE is listed : #{license}")
         else
           Xezat.logger.error("    LICENSE is unlisted : #{license}")
