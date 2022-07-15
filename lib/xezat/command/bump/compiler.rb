@@ -7,8 +7,8 @@ module Xezat
     class Bump
       def get_compilers(languages, _variables)
         Xezat.logger.debug('  Collect compilers')
-        compiler_file = File.expand_path(File.join(DATA_DIR, 'compilers.json'))
-        compiler_candidates = JSON.parse(File.read(compiler_file))
+        compiler_file = File.expand_path(File.join(DATA_DIR, 'compilers.yaml'))
+        compiler_candidates = YAML.safe_load(File.open(compiler_file), [Symbol])
         compilers = []
         languages.uniq.each do |language|
           next unless compiler_candidates.key?(language)
