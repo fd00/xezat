@@ -12,7 +12,7 @@ Layout/LineLength:
   Max: 160
 
 Metrics/AbcSize:
-  Max: 40
+  Max: 45
 Metrics/BlockLength:
   Exclude:
     - '*.gemspec'

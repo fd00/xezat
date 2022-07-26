@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'English'
 require 'etc'
 require 'facets/file/atomic_write'
 require 'facets/string/word_wrap'
@@ -28,9 +29,15 @@ module Xezat
 
     result.gsub!(/^.*\*\*\*.*$/, '')
 
-    variables = YAML.safe_load(result, [Symbol]).each_value do |v|
-      v.strip! if v.respond_to?(:strip)
+    begin
+      variables = YAML.safe_load(result, [Symbol]).each_value do |v|
+        v.strip! if v.respond_to?(:strip)
+      end
+    rescue Psych::SyntaxError => e
+      print_yaml(result)
+      raise e
     end
+
     variables[:DESCRIPTION].word_wrap!(79)
 
     File.atomic_write(cache_file) do |f|
@@ -39,5 +46,13 @@ module Xezat
     end
 
     variables
+  end
+
+  def print_yaml(result)
+    lineno = 1
+    result.split($INPUT_RECORD_SEPARATOR).each do |line|
+      printf '%<lineno>5d | %<line>s%<ls>s', lineno: lineno, line: line, ls: $INPUT_RECORD_SEPARATOR
+      lineno += 1
+    end
   end
 end

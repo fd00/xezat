@@ -8,6 +8,7 @@ show_cygport_variables()
 		[ $var = 'COMP_WORDBREAKS' ] && continue
 		[ $var = 'HOMEPATH' ] && continue
 		[ $var = 'PERL_MB_OPT' ] && continue
+		[ $var = 'PSModulePath' ] && continue
 		[[ ${!var} =~ ^[A-Za-z]:.* ]] && continue
 		
 		echo -n :$var:
