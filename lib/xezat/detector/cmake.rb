@@ -6,10 +6,7 @@ module Xezat
   module Detector
     class Cmake
       def detect(variables)
-        Find.find(variables[:S]) do |file|
-          return true if file.end_with?("#{File::SEPARATOR}CMakeLists.txt")
-        end
-        false
+        variables.key?(:_cmake_CYGCLASS_)
       end
     end
   end
