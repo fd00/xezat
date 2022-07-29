@@ -23,7 +23,7 @@ module Xezat
       end
     end
 
-    command = ['bash', File.expand_path(File.join(DATA_DIR, 'show_cygport_variable.sh')), cygport]
+    command = ['bash', File.expand_path(File.join(DATA_DIR, 'var2yaml.sh')), cygport]
     result, error, status = Open3.capture3(command.join(' '))
     raise CygportProcessError, error unless status.success?
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-show_cygport_variables()
+var2yaml()
 {
 	for var in `compgen -A variable`
 	do
@@ -29,4 +29,4 @@ show_cygport_variables()
 	done
 }
 
-source ${CYGPORT:-/usr/bin/cygport} $* show_cygport_variables
+source ${CYGPORT:-/usr/bin/cygport} $* var2yaml
