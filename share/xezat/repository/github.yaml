@@ -1,0 +1,4 @@
+---
+HOMEPAGE: https://github.com/${GITHUB_USER}/${PN}
+SRC_URI: https://github.com/${GITHUB_USER}/${PN}/archive/refs/tags/v${PV}.tar.gz
+GIT_URI: https://github.com/${GITHUB_USER}/${PN}.git

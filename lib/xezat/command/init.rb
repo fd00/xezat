@@ -41,10 +41,10 @@ module Xezat
 
       def get_repository_variables(repository)
         if repository
-          repository_file = File.expand_path(File.join(REPOSITORY_DIR, "#{repository}.json"))
+          repository_file = File.expand_path(File.join(REPOSITORY_DIR, "#{repository}.yaml"))
           raise NoSuchRepositoryError, "No such repository: #{template}" unless FileTest.exist?(repository_file) || FileTest.readable?(repository_file)
 
-          JSON.parse(File.read(repository_file), symbolize_names: true)
+          YAML.safe_load(File.open(repository_file), symbolize_names: true)
         else
           {
             HOMEPAGE: '',

@@ -1,0 +1,4 @@
+---
+HOMEPAGE: https://bitbucket.org/${BITBUCKET_USER}/${PN}
+SRC_URI: https://bitbucket.org/${BITBUCKET_USER}/${PN}/downloads/${P}.tar.gz
+HG_URI: https://bitbucket.org/${BITBUCKET_USER}/${PN}

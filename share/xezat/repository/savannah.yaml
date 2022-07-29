@@ -1,0 +1,3 @@
+---
+HOMEPAGE: https://www.nongnu.org/${PN}/
+SRC_URI: mirror://savannah/${PN}/${P}.tar.gz
