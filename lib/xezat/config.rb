@@ -8,8 +8,7 @@ module Xezat
     config['cygwin'] = {
       'cygclassdir' => '/usr/share/cygport/cygclass'
     }
-    config['xezat'] = {
-    }
+    config['xezat'] = {}
     config.merge!(YAML.load_file(filepath)) if filepath
     config
   end

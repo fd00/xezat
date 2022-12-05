@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'find'
-require 'pp'
 require 'xezat/ext/linguist/file_blob'
 require 'xezat/variables'
 
