@@ -14,8 +14,12 @@ module Xezat
         Find.find(top_src_dir) do |path|
           next if FileTest.directory?(path)
 
-          name = languages_candidates[File.extname(path)]
+          extname = File.extname(path)
+          next if extname == '.inc' # ambiguous
+
+          name = languages_candidates[extname]
           if name.nil?
+
             language = Xezat::Linguist::FileBlob.new(path).language
             next if language.nil?
 
