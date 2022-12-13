@@ -25,4 +25,6 @@ module Xezat
   Xezat.logger = Logger.new('/dev/null')
 end
 
-SimpleCov.start
+SimpleCov.start do
+  add_filter '/spec/'
+end
