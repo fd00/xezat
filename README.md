@@ -1,6 +1,6 @@
 # Xezat
 
-[![CircleCI](https://circleci.com/gh/fd00/xezat/tree/master.svg?style=svg)](https://circleci.com/gh/fd00/xezat/tree/master)
+[![Actions](https://github.com/fd00/xezat/actions/workflows/ruby.yml/badge.svg)](https://github.com/fd00/xezat/)
 
 xezat helps you win at cygport.
 
