@@ -26,6 +26,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        submodules: true
     - name: Install native libraries
       run: sudo apt-get install cmake libicu-dev
     - name: Set up Ruby
