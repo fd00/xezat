@@ -99,7 +99,7 @@ module Xezat
           makefile_am = File.expand_path(File.join(srcdir, 'Makefile.am'))
           raise AutotoolsFileNotFoundError unless File.exist?(makefile_am)
 
-          if /pkgconfig_DATA/.match?(File.read(makefile_am))
+          if File.read(makefile_am).include?('pkgconfig_DATA')
             Xezat.logger.debug("  Not rewrite #{makefile_am}")
             break
           end

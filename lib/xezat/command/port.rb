@@ -34,7 +34,7 @@ module Xezat
         FileUtils.mkdir_p(d, fuo)
         FileUtils.cp(cygport, d, fuo)
         FileUtils.cp(readme, d, fuo)
-        FileUtils.cp(src_patch, d, fuo) unless FileTest.zero?(src_patch)
+        FileUtils.cp(src_patch, d, fuo) unless FileTest.empty?(src_patch)
         Xezat.logger.debug('End porting')
       end
 
