@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'facets', '>= 3.1.0'
   spec.add_runtime_dependency 'github-linguist', '>= 7.25.0'
-  spec.add_runtime_dependency 'pkg-config', '>= 1.4.7'
+  spec.add_runtime_dependency 'pkg-config', '>= 1.5.1'
   spec.add_runtime_dependency 'spdx', '>= 4.1.2'
   spec.add_runtime_dependency 'thor', '>= 0.20.3'
   spec.add_runtime_dependency 'thor-zsh_completion', '>= 0.1.9'
@@ -37,7 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec_junit_formatter', '<= 0.4.1'
   spec.add_development_dependency 'rubocop', '>= 1.49.0'
   spec.add_development_dependency 'rubocop-performance', '>= 1.17.1'
-  spec.add_development_dependency 'simplecov', '>= 0.21.2'
+  spec.add_development_dependency 'simplecov', '>= 0.22.0'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 end
