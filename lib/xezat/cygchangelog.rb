@@ -49,11 +49,11 @@ module Xezat
       @changelogs.key?(key)
     end
 
-    def each(&block)
+    def each(&)
       logs = @changelogs.sort do |a, b|
         -(Cygversion.new(a[0].to_s) <=> Cygversion.new(b[0].to_s))
       end
-      logs.each(&block)
+      logs.each(&)
     end
 
     def length

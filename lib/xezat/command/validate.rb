@@ -58,7 +58,8 @@ module Xezat
 
       def validate_category(category)
         categories_file = File.expand_path(File.join(DATA_DIR, 'categories.yaml'))
-        Xezat.logger.error("    Category is invalid : #{category}") unless YAML.safe_load(File.open(categories_file), [Symbol]).include?(category.downcase)
+        Xezat.logger.error("    Category is invalid : #{category}") unless
+          YAML.safe_load(File.open(categories_file), symbolize_names: true, permitted_classes: [Symbol]).include?(category.downcase)
       end
 
       def validate_homepage(homepage)
@@ -72,7 +73,7 @@ module Xezat
       rescue OpenSSL::SSL::SSLError => e
         raise e unless @options[:ignore]
 
-        Xezat.logger.error('    Ignore SSLError')
+        Xezat.logger.warn('    Ignore SSLError')
       end
 
       def validate_build_requires(build_requires, pkgs)

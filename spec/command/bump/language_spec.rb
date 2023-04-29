@@ -13,7 +13,7 @@ describe Xezat::Command::Bump do
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'test.cpp')))
     command = Xezat::Command::Bump.new(nil, nil)
     languages = command.get_languages(tmpdir)
-    expect(languages).to contain_exactly('C++')
+    expect(languages).to contain_exactly(:'C++')
   end
 
   it 'contains Fortran77' do
@@ -27,7 +27,7 @@ describe Xezat::Command::Bump do
     end
     command = Xezat::Command::Bump.new(nil, nil)
     languages = command.get_languages(tmpdir)
-    expect(languages).to contain_exactly('Fortran')
+    expect(languages).to contain_exactly(:Fortran)
   end
 
   it 'contains Fortran90' do
@@ -41,7 +41,7 @@ FORTRAN
     end
     command = Xezat::Command::Bump.new(nil, nil)
     languages = command.get_languages(tmpdir)
-    expect(languages).to contain_exactly('Fortran Free Form')
+    expect(languages).to contain_exactly(:'Fortran Free Form')
   end
 
   it 'contains Protocol Buffer' do
@@ -53,6 +53,6 @@ PROTO
     end
     command = Xezat::Command::Bump.new(nil, nil)
     languages = command.get_languages(tmpdir)
-    expect(languages).to contain_exactly('Protocol Buffer')
+    expect(languages).to contain_exactly(:'Protocol Buffer')
   end
 end

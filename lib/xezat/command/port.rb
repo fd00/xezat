@@ -26,15 +26,13 @@ module Xezat
         readme = File.expand_path(File.join(vars[:C], 'README'))
         src_patch = File.expand_path(File.join(vars[:patchdir], "#{vars[:PF]}.src.patch"))
 
-        fuo = {
-          noop: @options[:noop],
-          verbose: @options[:noop] || @options[:verbose]
-        }
+        noop = @options[:noop]
+        verbose = @options[:noop] || @options[:verbose]
 
-        FileUtils.mkdir_p(d, fuo)
-        FileUtils.cp(cygport, d, fuo)
-        FileUtils.cp(readme, d, fuo)
-        FileUtils.cp(src_patch, d, fuo) unless FileTest.empty?(src_patch)
+        FileUtils.mkdir_p(d, noop:, verbose:)
+        FileUtils.cp(cygport, d, noop:, verbose:)
+        FileUtils.cp(readme, d,  noop:, verbose:)
+        FileUtils.cp(src_patch, d, noop:, verbose:) unless FileTest.empty?(src_patch)
         Xezat.logger.debug('End porting')
       end
 

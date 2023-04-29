@@ -44,7 +44,7 @@ module Xezat
           repository_file = File.expand_path(File.join(REPOSITORY_DIR, "#{repository}.yaml"))
           raise NoSuchRepositoryError, "No such repository: #{template}" unless FileTest.exist?(repository_file) || FileTest.readable?(repository_file)
 
-          YAML.safe_load(File.open(repository_file), symbolize_names: true)
+          YAML.safe_load(File.open(repository_file), symbolize_names: true, permitted_classes: [Symbol])
         else
           {
             HOMEPAGE: '',

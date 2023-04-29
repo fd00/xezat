@@ -11,7 +11,7 @@ module Xezat
         end.nil?
 
         cygautoreconf = false
-        File.foreach(File.join(variables[:S], variables[:cygportfile])) do |line|
+        File.foreach(File.join(variables[:top], variables[:cygportfile])) do |line|
           if line.index('cygautoreconf')
             cygautoreconf = true
             return true
@@ -19,7 +19,7 @@ module Xezat
         end
 
         unless cygautoreconf
-          File.foreach(File.join(variables[:S], variables[:cygportfile])) do |line|
+          File.foreach(File.join(variables[:top], variables[:cygportfile])) do |line|
             return false if line.index('src_compile')
           end
         end

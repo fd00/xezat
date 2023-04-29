@@ -7,33 +7,37 @@ require 'xezat/detector/autoconf'
 
 describe Xezat::Detector::Autoconf do
   it 'contains configure.ac' do
-    tmpdir = Dir.mktmpdir
-    FileUtils.touch(File.expand_path(File.join(tmpdir, 'configure.ac')))
-    FileUtils.touch(File.expand_path(File.join(tmpdir, 'xezat.cygport')))
+    srcdir = Dir.mktmpdir
+    FileUtils.touch(File.expand_path(File.join(srcdir, 'configure.ac')))
+    topdir = Dir.mktmpdir
+    FileUtils.touch(File.expand_path(File.join(topdir, 'xezat.cygport')))
     detector = Xezat::Detector::Autoconf.new
-    expect(detector.detect(S: tmpdir, cygportfile: 'xezat.cygport')).to be_truthy
+    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_truthy
   end
   it 'contains configure.in' do
-    tmpdir = Dir.mktmpdir
-    FileUtils.touch(File.expand_path(File.join(tmpdir, 'configure.in')))
-    FileUtils.touch(File.expand_path(File.join(tmpdir, 'xezat.cygport')))
+    srcdir = Dir.mktmpdir
+    FileUtils.touch(File.expand_path(File.join(srcdir, 'configure.in')))
+    topdir = Dir.mktmpdir
+    FileUtils.touch(File.expand_path(File.join(topdir, 'xezat.cygport')))
     detector = Xezat::Detector::Autoconf.new
-    expect(detector.detect(S: tmpdir, cygportfile: 'xezat.cygport')).to be_truthy
+    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_truthy
   end
   it 'contains no configure.{ac,in}' do
-    tmpdir = Dir.mktmpdir
-    FileUtils.touch(File.expand_path(File.join(tmpdir, 'configure.xxx')))
-    FileUtils.touch(File.expand_path(File.join(tmpdir, 'xezat.cygport')))
+    srcdir = Dir.mktmpdir
+    FileUtils.touch(File.expand_path(File.join(srcdir, 'configure.xxx')))
+    topdir = Dir.mktmpdir
+    FileUtils.touch(File.expand_path(File.join(topdir, 'xezat.cygport')))
     detector = Xezat::Detector::Autoconf.new
-    expect(detector.detect(S: tmpdir, cygportfile: 'xezat.cygport')).to be_falsey
+    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_falsey
   end
   it 'contains unused configure.{ac}' do
-    tmpdir = Dir.mktmpdir
-    FileUtils.touch(File.expand_path(File.join(tmpdir, 'configure.ac')))
-    File.atomic_write(File.expand_path(File.join(tmpdir, 'xezat.cygport'))) do |f|
+    srcdir = Dir.mktmpdir
+    FileUtils.touch(File.expand_path(File.join(srcdir, 'configure.ac')))
+    topdir = Dir.mktmpdir
+    File.atomic_write(File.expand_path(File.join(topdir, 'xezat.cygport'))) do |f|
       f.puts('src_compile')
     end
     detector = Xezat::Detector::Autoconf.new
-    expect(detector.detect(S: tmpdir, cygportfile: 'xezat.cygport')).to be_falsey
+    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_falsey
   end
 end

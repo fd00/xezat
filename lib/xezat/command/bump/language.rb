@@ -9,7 +9,7 @@ module Xezat
       def get_languages(top_src_dir)
         Xezat.logger.debug('  Collect languages')
         languages_file = File.expand_path(File.join(DATA_DIR, 'languages.yaml'))
-        languages_candidates = YAML.safe_load(File.open(languages_file), [Symbol])
+        languages_candidates = YAML.safe_load(File.open(languages_file), symbolize_names: true, permitted_classes: [Symbol])
         languages = []
         Find.find(top_src_dir) do |path|
           next if FileTest.directory?(path)
@@ -17,7 +17,7 @@ module Xezat
           extname = File.extname(path)
           next if extname == '.inc' # ambiguous
 
-          name = languages_candidates[extname]
+          name = languages_candidates[extname.to_sym]
           if name.nil?
 
             language = Xezat::Linguist::FileBlob.new(path).language
@@ -25,7 +25,7 @@ module Xezat
 
             name = language.name
           end
-          languages << name
+          languages << name.to_sym
         end
         languages.uniq
       end

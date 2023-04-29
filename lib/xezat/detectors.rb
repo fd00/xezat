@@ -8,7 +8,7 @@ module Xezat
     def initialize(detector_dir = File.expand_path(File.join(File.dirname(__FILE__), 'detector')))
       Xezat.logger.debug('  Load detectors')
       @detectors = {}
-      Dir.glob(File.join(detector_dir, '*.rb')).sort.each do |rb|
+      Dir.glob(File.join(detector_dir, '*.rb')).each do |rb|
         require rb
         @detectors[File.basename(rb, '.rb').intern] = Object.const_get("Xezat::Detector::#{File.basename(rb, '.rb').camelize}").new
       end

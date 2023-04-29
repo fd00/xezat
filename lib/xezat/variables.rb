@@ -18,7 +18,7 @@ module Xezat
 
     if File.exist?(cache_file) && File.ctime(cache_file) > File.ctime(cygport)
       Xezat.logger.debug('    Read cache for variables')
-      return YAML.safe_load(File.open(cache_file), [Symbol]).each do |k, v|
+      return YAML.safe_load(File.open(cache_file), symbolize_names: true, permitted_classes: [Symbol]).each do |k, v|
         v.strip! if v.respond_to?(:strip) && k != :DESCRIPTION
       end
     end
@@ -30,7 +30,7 @@ module Xezat
     result.gsub!(/^.*\*\*\*.*$/, '')
 
     begin
-      variables = YAML.safe_load(result, [Symbol]).each_value do |v|
+      variables = YAML.safe_load(result, symbolize_names: true, permitted_classes: [Symbol]).each_value do |v|
         v.strip! if v.respond_to?(:strip)
       end
     rescue Psych::SyntaxError => e
@@ -51,7 +51,7 @@ module Xezat
   def print_yaml(result)
     lineno = 1
     result.split($INPUT_RECORD_SEPARATOR).each do |line|
-      printf '%<lineno>5d | %<line>s%<ls>s', lineno: lineno, line: line, ls: $INPUT_RECORD_SEPARATOR
+      printf '%<lineno>5d | %<line>s%<ls>s', lineno:, line:, ls: $INPUT_RECORD_SEPARATOR
       lineno += 1
     end
   end
