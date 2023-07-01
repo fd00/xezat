@@ -8,6 +8,9 @@ AllCops:
     - 'spec/cygport/**/*'
     - 'vendor/**/*'
 
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
+
 Layout/LineLength:
   Max: 160
 
