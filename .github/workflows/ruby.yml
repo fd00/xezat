@@ -36,3 +36,13 @@ jobs:
       run: bundle exec fasterer
     - name: Run tests
       run: bundle exec rspec
+    - name: Formatting coverage results
+      uses: 5monkeys/cobertura-action@master
+      with:
+        path: tmp/coverage/coverage.xml
+        minimum_coverage: 75
+        show_branch: true
+        show_missing: true
+        show_class_names: true
+        link_missing_lines: true
+        report_name: code coverage results

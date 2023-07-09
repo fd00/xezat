@@ -37,7 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec_junit_formatter', '<= 0.4.1'
   spec.add_development_dependency 'rubocop', '>= 1.49.0'
   spec.add_development_dependency 'rubocop-performance', '>= 1.17.1'
-  spec.add_development_dependency 'simplecov', '>= 0.22.0'
+  spec.add_development_dependency 'simplecov-cobertura', '>= 2.1.0'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 end

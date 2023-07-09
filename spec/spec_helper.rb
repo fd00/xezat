@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require 'simplecov'
+require 'simplecov-cobertura'
 require 'xezat'
 
 RSpec.configure do |config|
@@ -27,4 +27,7 @@ end
 
 SimpleCov.start do
   add_filter '/spec/'
+  coverage_dir 'tmp/coverage'
 end
+
+SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter if ENV['CI']
