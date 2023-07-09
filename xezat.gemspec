@@ -31,12 +31,11 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'thor-zsh_completion', '>= 0.1.10'
 
   spec.add_development_dependency 'bundler', '>= 1.15.3'
-  spec.add_development_dependency 'fasterer', '>= 0.10.0'
+  spec.add_development_dependency 'fasterer', '>= 0.10.1'
   spec.add_development_dependency 'rake', '>= 13.0'
-  spec.add_development_dependency 'rspec', '>= 3.9.0'
-  spec.add_development_dependency 'rspec_junit_formatter', '<= 0.4.1'
-  spec.add_development_dependency 'rubocop', '>= 1.49.0'
-  spec.add_development_dependency 'rubocop-performance', '>= 1.17.1'
+  spec.add_development_dependency 'rspec', '>= 3.12.0'
+  spec.add_development_dependency 'rubocop', '>= 1.54.1'
+  spec.add_development_dependency 'rubocop-performance', '>= 1.18.0'
   spec.add_development_dependency 'simplecov-cobertura', '>= 2.1.0'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
