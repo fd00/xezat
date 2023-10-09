@@ -27,4 +27,24 @@ LIST
                                           { 'libssl1.0-devel': 'libssl1.0-devel-1.0.2t-1', 'libssl-devel': 'libssl-devel-1.1.1f-1' }, nil)
     expect(actual).to contain_exactly('cygwin-3-1')
   end
+
+  it 'contains python3' do
+    command = Xezat::Command::Bump.new(nil, nil)
+    allow(command).to receive(:invoke_cygport_dep).and_return(<<LIST)
+  cygwin-3-1
+  python3
+LIST
+    actual = command.get_runtime_packages({}, { python39: 'python39-3.9.16-1' }, nil)
+    expect(actual).to contain_exactly('cygwin-3-1', 'python39-3.9.16-1')
+  end
+
+  it 'contains perl' do
+    command = Xezat::Command::Bump.new(nil, nil)
+    allow(command).to receive(:invoke_cygport_dep).and_return(<<LIST)
+  cygwin-3-1
+  perl5_036
+LIST
+    actual = command.get_runtime_packages({}, { perl_base: 'perl-5.36.1-1' }, nil)
+    expect(actual).to contain_exactly('cygwin-3-1', 'perl-5.36.1-1')
+  end
 end
