@@ -26,10 +26,12 @@ module Xezat
 
       def resolve_pseudo(pkg, pkgs)
         case pkg
-        when 'python3'
+        when pkgs[:python3]
           pkgs[:python39]
         when 'perl5_036'
           pkgs[:perl_base]
+        when 'ruby_32'
+          pkgs[:ruby]
         else
           pkg
         end

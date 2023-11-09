@@ -12,11 +12,16 @@ module Xezat
           basename = File.basename(config)
           Xezat.logger.debug("    #{basename} found")
 
-          result, _, status = Open3.capture3("#{config} --cflags")
-          if status.success?
-            Xezat.logger.debug("      cflags = #{result.strip}")
-          else
-            Xezat.logger.warn('       cflags not supported')
+          begin
+            result, _, status = Open3.capture3("#{config} --cflags")
+            if status.success?
+              Xezat.logger.debug("      cflags = #{result.strip}")
+            else
+              Xezat.logger.warn('       cflags not supported')
+            end
+          rescue StandardError => e
+            Xezat.logger.warn("       #{config} not executable: #{e}")
+            next
           end
 
           result, _, status = Open3.capture3("#{config} --cxxflags")
