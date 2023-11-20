@@ -11,10 +11,10 @@ describe Xezat::Command::Bump do
     command = Xezat::Command::Bump.new(nil, nil)
     allow(command).to receive(:invoke_cygport_dep).and_return(<<LIST)
   cygwin-3-1
-  libfoo-4-1
+  foo-4-1
 LIST
     actual = command.get_runtime_packages({}, nil, nil)
-    expect(actual).to contain_exactly('cygwin-3-1', 'libfoo-4-1')
+    expect(actual).to contain_exactly('cygwin-3-1', 'foo-4-1')
   end
 
   it 'contains libssl1.0-devel' do
@@ -46,5 +46,15 @@ LIST
 LIST
     actual = command.get_runtime_packages({}, { perl_base: 'perl-5.36.1-1' }, nil)
     expect(actual).to contain_exactly('cygwin-3-1', 'perl-5.36.1-1')
+  end
+
+  it 'contains ruby' do
+    command = Xezat::Command::Bump.new(nil, nil)
+    allow(command).to receive(:invoke_cygport_dep).and_return(<<LIST)
+  cygwin-3-1
+  ruby_32
+LIST
+    actual = command.get_runtime_packages({}, { ruby: 'ruby-3.2.2-2' }, nil)
+    expect(actual).to contain_exactly('cygwin-3-1', 'ruby-3.2.2-2')
   end
 end

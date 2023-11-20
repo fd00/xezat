@@ -7,10 +7,8 @@ module Xezat
   module Command
     class Validate
       def validate_config(variables, gcc_version)
-        configs = Dir.glob(File.join(variables[:D], '/usr/bin/*-config'))
-        configs.each do |config|
-          basename = File.basename(config)
-          Xezat.logger.debug("    #{basename} found")
+        Dir.glob(File.join(variables[:D], '/usr/bin/*-config')).each do |config|
+          Xezat.logger.debug("    #{File.basename(config)} found")
 
           begin
             result, _, status = Open3.capture3("#{config} --cflags")
