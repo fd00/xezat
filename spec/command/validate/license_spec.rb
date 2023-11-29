@@ -27,6 +27,15 @@ describe Xezat::Command::Validate do
     Xezat.logger = Logger.new('/dev/null')
   end
 
+  it 'has valid license & uri starts with https' do
+    command = Xezat::Command::Validate.new(nil, nil)
+    tmpdir = Dir.mktmpdir
+    Xezat.logger = spy
+    command.validate_license({ LICENSE: 'MIT', S: tmpdir, LICENSE_URI: 'https://google.com/' })
+    expect(Xezat.logger).to have_received(:debug).exactly(2).times
+    Xezat.logger = Logger.new('/dev/null')
+  end
+
   it 'has invalid license & uri not found' do
     command = Xezat::Command::Validate.new(nil, nil)
     Xezat.logger = spy

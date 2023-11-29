@@ -19,6 +19,9 @@ module Xezat
         license_uri = vars[:LICENSE_URI]
         if license_uri.nil? || license_uri.empty?
           Xezat.logger.warn('     LICENSE_URI is not defined')
+        elsif license_uri.start_with?('https://', 'http://')
+          Xezat.logger.debug("    LICENSE_URI = #{license_uri}")
+          livecheck(license_uri)
         elsif File.exist?(File.join(vars[:S], license_uri))
           Xezat.logger.debug("    LICENSE_URI = #{license_uri}")
         else

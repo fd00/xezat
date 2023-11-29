@@ -63,17 +63,8 @@ module Xezat
       end
 
       def validate_homepage(homepage)
-        response = Net::HTTP.get_response(URI.parse(homepage))
-        code = response.code
-        if code == '200'
-          Xezat.logger.debug("    code = #{code}")
-        else
-          Xezat.logger.error("    code = #{code}")
-        end
-      rescue OpenSSL::SSL::SSLError => e
-        raise e unless @options[:ignore]
-
-        Xezat.logger.warn('    Ignore SSLError')
+        Xezat.logger.debug("    HOMEPAGE = #{homepage}")
+        livecheck(homepage)
       end
 
       def validate_build_requires(build_requires, pkgs)
@@ -112,6 +103,22 @@ module Xezat
             Xezat.logger.error("        #{lib_name} not found") unless found
           end
         end
+      end
+
+      private
+
+      def livecheck(url)
+        response = Net::HTTP.get_response(URI.parse(url))
+        code = response.code
+        if code == '200'
+          Xezat.logger.debug("      code = #{code}")
+        else
+          Xezat.logger.error("      code = #{code}")
+        end
+      rescue OpenSSL::SSL::SSLError => e
+        raise e unless @options[:ignore]
+
+        Xezat.logger.warn('      Ignore SSLError')
       end
     end
   end
