@@ -9,9 +9,9 @@ module Xezat
       def get_src_uri(variables, cygclasses = CygclassManager.new)
         Xezat.logger.debug('  Collect SRC_URI')
         cygclasses.vcs.each do |vcs|
-          next unless variables.key?("_#{vcs}_CYGCLASS_".intern)
+          next unless variables.key?(:"_#{vcs}_CYGCLASS_")
 
-          src_uri_key = "#{vcs.to_s.upcase}_URI".intern
+          src_uri_key = :"#{vcs.to_s.upcase}_URI"
           return variables[src_uri_key].split if variables.key?(src_uri_key)
         end
         variables[:SRC_URI].split

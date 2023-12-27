@@ -65,7 +65,7 @@ module Xezat
           vcs_class = cygclass
         end
         vcs_prefix = vcs_class.to_s.upcase if vcs_class
-        vcs_uri = "#{vcs_prefix}_URI".intern
+        vcs_uri = :"#{vcs_prefix}_URI"
         {
           :HOMEPAGE => original_template_variables[:HOMEPAGE],
           vcs_uri => original_template_variables[vcs_uri]
