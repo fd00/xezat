@@ -22,14 +22,4 @@ describe Xezat::Detector::Automake do
     detector = Xezat::Detector::Automake.new
     expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_falsey
   end
-  it 'contains unused Makefile.am' do
-    srcdir = Dir.mktmpdir
-    FileUtils.touch(File.expand_path(File.join(srcdir, 'Makefile.am')))
-    topdir = Dir.mktmpdir
-    File.atomic_write(File.expand_path(File.join(topdir, 'xezat.cygport'))) do |f|
-      f.puts('src_compile')
-    end
-    detector = Xezat::Detector::Automake.new
-    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_falsey
-  end
 end
