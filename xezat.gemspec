@@ -33,9 +33,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '>= 2.4.10'
   spec.add_development_dependency 'fasterer', '>= 0.11.0'
   spec.add_development_dependency 'rake', '>= 13.0'
-  spec.add_development_dependency 'rspec', '>= 3.12.0'
-  spec.add_development_dependency 'rubocop', '>= 1.59.0'
-  spec.add_development_dependency 'rubocop-performance', '>= 1.20.1'
+  spec.add_development_dependency 'rspec', '>= 3.13.0'
+  spec.add_development_dependency 'rubocop', '>= 1.60.2'
+  spec.add_development_dependency 'rubocop-performance', '>= 1.20.2'
   spec.add_development_dependency 'simplecov-cobertura', '>= 2.1.0'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
