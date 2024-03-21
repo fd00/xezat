@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'colorize'
 require 'logger'
 
 module Xezat
@@ -14,7 +15,15 @@ module Xezat
   end
   Xezat.logger = Logger.new($stdout)
   Xezat.logger.formatter = proc { |severity, datetime, _progname, message|
-    "#{datetime}: [#{severity}] #{message}\n"
+    format = "#{datetime}: [#{severity}] #{message}\n"
+    case severity
+    when 'ERROR'
+      format.colorize(:red)
+    when 'WARN'
+      format.colorize(:yellow)
+    else
+      format
+    end
   }
 
   class CygportProcessError < StandardError

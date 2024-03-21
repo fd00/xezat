@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 3.2.2'
 
+  spec.add_runtime_dependency 'colorize', '>= 1.1.0'
   spec.add_runtime_dependency 'facets', '>= 3.1.0'
   spec.add_runtime_dependency 'github-linguist', '>= 7.28.0'
   spec.add_runtime_dependency 'pkg-config', '>= 1.5.6'
