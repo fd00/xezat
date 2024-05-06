@@ -9,6 +9,7 @@ var2yaml()
 		[ $var = 'HOMEPATH' ] && continue
 		[ $var = 'PERL_MB_OPT' ] && continue
 		[ $var = 'PSModulePath' ] && continue
+		[ $var = '_cygport_orig_env' ] && continue
 		[[ ${!var} =~ ^[A-Za-z]:.* ]] && continue
 		
 		echo -n :$var:
