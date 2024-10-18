@@ -16,7 +16,7 @@ module Xezat
 
           autoconf_archive_macros.each do |macro|
             File.foreach(file) do |line|
-              return true if line.strip.start_with?(macro)
+              return true if line.scrub.strip.start_with?(macro)
             end
           end
         end

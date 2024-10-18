@@ -8,7 +8,7 @@ module Xezat
           next unless file.end_with?("#{File::SEPARATOR}configure.ac", "#{File::SEPARATOR}configure.in")
 
           File.foreach(file) do |line|
-            return true if /AM_GNU_GETTEXT|AM_ICONV|AC_GGZ_INTL/.match?(line.lstrip)
+            return true if /AM_GNU_GETTEXT|AM_ICONV|AC_GGZ_INTL/.match?(line.scrub.lstrip)
           end
         end
         false

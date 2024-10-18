@@ -10,7 +10,7 @@ module Xezat
           next unless file.end_with?("#{File::SEPARATOR}configure.ac", "#{File::SEPARATOR}configure.in")
 
           File.foreach(file) do |line|
-            return true if line.strip.start_with?('AC_CHECK_PROG') && line.index('rst2man').is_a?(Integer)
+            return true if line.scrub.strip.start_with?('AC_CHECK_PROG') && line.index('rst2man').is_a?(Integer)
           end
         end
         if variables.key?(:_meson_CYGCLASS_)
