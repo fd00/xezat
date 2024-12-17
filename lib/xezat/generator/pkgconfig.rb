@@ -84,7 +84,7 @@ module Xezat
         configure_ac = File.expand_path(File.join(srcdir, 'configure.in')) unless File.exist?(configure_ac)
         raise AutotoolsFileNotFoundError unless File.exist?(configure_ac)
 
-        original_ac = File.read(configure_ac)
+        original_ac = File.read(configure_ac).scrub
 
         if /#{pn}.pc/.match?(original_ac)
           Xezat.logger.debug("  Not rewrite #{configure_ac}")
