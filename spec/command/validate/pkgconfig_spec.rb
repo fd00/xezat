@@ -21,7 +21,7 @@ describe Xezat::Command::Validate do
     Xezat.logger = spy
     command.validate_pkgconfig(vars, '11')
     expect(Xezat.logger).to have_received(:debug).exactly(0).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 
   it 'has pc' do
@@ -53,7 +53,7 @@ PC
     Xezat.logger = spy
     command.validate_pkgconfig(vars, '11')
     expect(Xezat.logger).to have_received(:debug).exactly(4).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 
   it 'has pc and version differs' do
@@ -86,6 +86,6 @@ PC
     command.validate_pkgconfig(vars, '11')
     expect(Xezat.logger).to have_received(:debug).exactly(4).times
     expect(Xezat.logger).to have_received(:error).exactly(3).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 end

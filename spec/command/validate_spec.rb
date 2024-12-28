@@ -19,7 +19,7 @@ describe Xezat::Command::Validate do
     Xezat.logger = spy
     command.validate_cygport(cygport)
     expect(Xezat.logger).to have_received(:error).exactly(0).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 
   it 'contains invalid char (BOM)' do
@@ -32,7 +32,7 @@ describe Xezat::Command::Validate do
     Xezat.logger = spy
     command.validate_cygport(cygport)
     expect(Xezat.logger).to have_received(:error).exactly(1).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 
   it 'contains valid category' do
@@ -40,7 +40,7 @@ describe Xezat::Command::Validate do
     Xezat.logger = spy
     command.validate_category('Text')
     expect(Xezat.logger).to have_received(:error).exactly(0).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 
   it 'contains invalid category' do
@@ -48,6 +48,6 @@ describe Xezat::Command::Validate do
     Xezat.logger = spy
     command.validate_category('invalid_category')
     expect(Xezat.logger).to have_received(:error).exactly(1).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 end

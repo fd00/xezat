@@ -13,7 +13,7 @@ describe Xezat::Command::Validate do
     Xezat.logger = spy
     command.validate_license({})
     expect(Xezat.logger).to have_received(:warn).exactly(2).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 
   it 'has valid license' do
@@ -24,7 +24,7 @@ describe Xezat::Command::Validate do
     Xezat.logger = spy
     command.validate_license({ LICENSE: 'MIT', S: tmpdir, LICENSE_URI: license_uri })
     expect(Xezat.logger).to have_received(:debug).exactly(2).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 
   it 'has valid license & uri starts with https' do
@@ -33,7 +33,7 @@ describe Xezat::Command::Validate do
     Xezat.logger = spy
     command.validate_license({ LICENSE: 'MIT', S: tmpdir, LICENSE_URI: 'https://google.com/' })
     expect(Xezat.logger).to have_received(:debug).exactly(2).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 
   it 'has invalid license & uri not found' do
@@ -41,6 +41,6 @@ describe Xezat::Command::Validate do
     Xezat.logger = spy
     command.validate_license({ LICENSE: SecureRandom.hex(8), S: SecureRandom.hex(8), LICENSE_URI: SecureRandom.hex(8) })
     expect(Xezat.logger).to have_received(:error).exactly(2).times
-    Xezat.logger = Logger.new('/dev/null')
+    Xezat.logger = Logger.new(File::NULL)
   end
 end
