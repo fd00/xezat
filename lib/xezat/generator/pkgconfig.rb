@@ -51,7 +51,7 @@ module Xezat
       end
 
       def get_pkg_config(variables)
-        erb = File.expand_path(File.join(TEMPLATE_DIR, 'pkgconfig.erb'))
+        erb = File.expand_path(File.join(TEMPLATE_DIR, 'pkgconfig', 'pkgconfig.erb'))
         ERB.new(File.readlines(erb).join(nil), trim_mode: '%-').result(binding)
       end
 
@@ -72,7 +72,7 @@ module Xezat
       end
 
       def get_cmakelists(variables)
-        erb = File.expand_path(File.join(TEMPLATE_DIR, 'cmake.erb'))
+        erb = File.expand_path(File.join(TEMPLATE_DIR, 'pkgconfig', 'cmake.erb'))
         ERB.new(File.readlines(erb).join(nil), trim_mode: '%-').result(binding)
       end
 
@@ -104,7 +104,7 @@ module Xezat
             break
           end
 
-          commands_am = File.read(File.expand_path(File.join(TEMPLATE_DIR, 'Makefile.am')))
+          commands_am = File.read(File.expand_path(File.join(TEMPLATE_DIR, 'pkgconfig', 'Makefile.am')))
           File.atomic_open(makefile_am, 'a') do |fm|
             fm.write(commands_am)
           end
