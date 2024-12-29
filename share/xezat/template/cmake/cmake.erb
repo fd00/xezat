@@ -1,0 +1,22 @@
+# cmake_minimum_required(VERSION 3.28)
+project(<%= variables[:PN] %>
+  VERSION <%= variables[:PV] %>
+  DESCRIPTION "<%= variables[:SUMMARY] %>"
+  HOMEPAGE_URL "<%= variables[:HOMEPAGE] %>")
+
+include(GNUInstallDirs)
+
+files(GLOB_RECURSE BIN_SOURCES "bin/*.c")
+add_executable(sampleApp "${BIN_SOURCES}")
+install(TARGETS sampleApp RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+files(GLOB_RECURSE LIB_SOURCES "lib/*.c")
+add_library(sampleLib "${LIB_SOURCES}")
+if (DEFINED SOVERSION)
+  set_target_properties(sampleLib PROPERTIES SOVERSION ${SOVERSION})
+endif()
+install(TARGETS sampleLib
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+install(DIRECTORY include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

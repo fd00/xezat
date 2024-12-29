@@ -3,12 +3,10 @@
 require 'English'
 require 'facets/file/atomic_open'
 require 'facets/file/atomic_write'
+require 'xezat/generator'
 require 'xezat/variables'
 
 module Xezat
-  class UnregeneratableConfigurationError < StandardError
-  end
-
   class AutotoolsFileNotFoundError < StandardError
   end
 
