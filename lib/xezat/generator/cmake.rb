@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'xezat/generator'
+require 'xezat/variables'
 
 module Xezat
   module Generator
