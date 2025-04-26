@@ -7,17 +7,16 @@ project(<%= variables[:PN] %>
 include(GNUInstallDirs)
 include(CTest)
 
-file(GLOB_RECURSE BIN_SOURCES "bin/*.c")
-add_executable(sampleApp "${BIN_SOURCES}")
-install(TARGETS sampleApp RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-
 file(GLOB_RECURSE LIB_SOURCES "lib/*.c")
 add_library(sampleLib SHARED "${LIB_SOURCES}")
-if (DEFINED SOVERSION)
-  set_target_properties(sampleLib PROPERTIES SOVERSION ${SOVERSION})
-endif()
+set_target_properties(sampleLib PROPERTIES SOVERSION ${SOVERSION})
+
 install(TARGETS sampleLib
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+file(GLOB_RECURSE BIN_SOURCES "bin/*.c")
+add_executable(sampleApp "${BIN_SOURCES}")
+install(TARGETS sampleApp RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install(DIRECTORY include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
