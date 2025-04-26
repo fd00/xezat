@@ -25,9 +25,9 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'colorize', '>= 1.1.0'
   spec.add_dependency 'facets', '>= 3.1.0'
-  spec.add_dependency 'github-linguist', '>= 7.28.0'
-  spec.add_dependency 'pkg-config', '>= 1.5.8'
-  spec.add_dependency 'spdx', '>= 4.1.4'
+  spec.add_dependency 'github-linguist', '>= 9.1.0'
+  spec.add_dependency 'pkg-config', '>= 1.6.1'
+  spec.add_dependency 'spdx', '>= 4.1.5'
   spec.add_dependency 'thor', '>= 1.2.2'
   spec.add_dependency 'thor-zsh_completion', '>= 0.1.10'
 
