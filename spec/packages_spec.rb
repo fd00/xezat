@@ -13,7 +13,7 @@ describe Xezat do
   it 'has invalid & valid record' do
     tf = Tempfile.open do |t|
       t.puts 'foo foo-1.0-1bl1.tar.bz2 0'
-      t.puts 'bar bar-2.0-1bl1.tar.bz2' # invalid record is ignored
+      t.puts 'bar bar-2.0-1bl1.tar.bz2' # an invalid record is ignored
       t.puts 'baz baz-3.0-1bl1.tar.bz2 0'
       t
     end
