@@ -16,7 +16,26 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features)/})
+    f.match(%r{
+      ^(
+        test|spec|features|    # Test directories
+        bin|                   # Bundler-generated bin files
+        \.bundle|              # Bundler files
+        \.github|              # GitHub files
+        \.idea|                # IDE files
+        tmp|                   # Temp files
+        vendor                 # Vendor files
+      )/|
+      \A(
+        \.fasterer\.yml|
+        \.git(ignore|modules)|
+        \.rspec|
+        \.rubocop\.yml|
+        \.ruby-version|
+        Gemfile(\.lock)?|
+        Rakefile
+      )\z
+    }x)
   end
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
