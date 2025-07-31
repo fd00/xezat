@@ -8,6 +8,7 @@ require 'xezat/version'
 module Xezat
   class Main < Thor
     include ZshCompletion::Command
+
     class_option :config, type: :string, aliases: '-c', desc: 'specify config', default: CONFIG_FILE
     class_option :help, type: :boolean, aliases: '-h', desc: 'help message'
 

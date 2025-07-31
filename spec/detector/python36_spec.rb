@@ -11,7 +11,7 @@ describe Xezat::Detector::Python36 do
     tmpdir = Dir.mktmpdir
     FileUtils.mkpath(File.join(tmpdir, 'usr', 'lib', 'python3.6'))
     detector = Xezat::Detector::Python36.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
+    expect(detector.detect?(D: tmpdir)).to be_truthy
   end
   it 'has executable script (env python3.6)' do
     tmpdir = Dir.mktmpdir
@@ -19,7 +19,7 @@ describe Xezat::Detector::Python36 do
       f.puts('#!/usr/bin/env python3.6')
     end
     detector = Xezat::Detector::Python36.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
+    expect(detector.detect?(D: tmpdir)).to be_truthy
   end
   it 'has executable script (python3.6)' do
     tmpdir = Dir.mktmpdir
@@ -27,7 +27,7 @@ describe Xezat::Detector::Python36 do
       f.puts('#!/usr/bin/python3.6')
     end
     detector = Xezat::Detector::Python36.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
+    expect(detector.detect?(D: tmpdir)).to be_truthy
   end
   it 'has executable script (python3)' do
     tmpdir = Dir.mktmpdir
@@ -35,6 +35,6 @@ describe Xezat::Detector::Python36 do
       f.puts('#!/usr/bin/python3')
     end
     detector = Xezat::Detector::Python36.new
-    expect(detector.detect(D: tmpdir)).to be_falsey
+    expect(detector.detect?(D: tmpdir)).to be_falsey
   end
 end

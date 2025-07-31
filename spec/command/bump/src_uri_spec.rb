@@ -6,6 +6,7 @@ require 'xezat/command/bump/src_uri'
 
 describe Xezat::Command::Bump do
   include Xezat
+
   it 'is tarball' do
     cygclasses = Xezat::CygclassManager.new(File.expand_path(File.join(Xezat::ROOT_DIR, 'spec', 'cygport', 'cygclass')))
     command = Xezat::Command::Bump.new(nil, nil)

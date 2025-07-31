@@ -6,6 +6,7 @@ require 'xezat/config'
 
 describe Xezat do
   include Xezat
+
   it 'has no config' do
     conf = config
     expect(conf['cygwin']['cygclassdir']).to eq '/usr/share/cygport/cygclass'

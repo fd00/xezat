@@ -10,6 +10,6 @@ describe Xezat::Detector::Nasm do
     File.atomic_write(File.expand_path(File.join(tmpdir, 'meson.build'))) do |f|
       f.puts("find_program('nasm')")
     end
-    expect(detector.detect(_meson_CYGCLASS_: '1', S: tmpdir)).to be_truthy
+    expect(detector.detect?(_meson_CYGCLASS_: '1', S: tmpdir)).to be_truthy
   end
 end

@@ -11,13 +11,13 @@ describe Xezat::Detector::Make do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'Makefile')))
     detector = Xezat::Detector::Make.new
-    expect(detector.detect(B: tmpdir)).to be_truthy
+    expect(detector.detect?(B: tmpdir)).to be_truthy
   end
   it 'contains makefile' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'makefile')))
     detector = Xezat::Detector::Make.new
-    expect(detector.detect(B: tmpdir)).to be_truthy
+    expect(detector.detect?(B: tmpdir)).to be_truthy
   end
   it 'contains cygmake' do
     tmpdir = Dir.mktmpdir
@@ -25,12 +25,12 @@ describe Xezat::Detector::Make do
       f.puts('cygmake')
     end
     detector = Xezat::Detector::Make.new
-    expect(detector.detect(B: tmpdir, top: tmpdir, cygportfile: 'xezat.cygport')).to be_truthy
+    expect(detector.detect?(B: tmpdir, top: tmpdir, cygportfile: 'xezat.cygport')).to be_truthy
   end
   it 'contains no makefile' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'xezat.cygport')))
     detector = Xezat::Detector::Make.new
-    expect(detector.detect(B: tmpdir, top: tmpdir, cygportfile: 'xezat.cygport')).to be_falsey
+    expect(detector.detect?(B: tmpdir, top: tmpdir, cygportfile: 'xezat.cygport')).to be_falsey
   end
 end

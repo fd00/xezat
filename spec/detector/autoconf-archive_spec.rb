@@ -13,7 +13,7 @@ describe Xezat::Detector::AutoconfArchive do
       f.puts('AX_COMPILER_FLAGS')
     end
     detector = Xezat::Detector::AutoconfArchive.new
-    expect(detector.detect(S: tmpdir)).to be_truthy
+    expect(detector.detect?(S: tmpdir)).to be_truthy
   end
   it 'contains not autoconf-archive macro in configure.ac' do
     tmpdir = Dir.mktmpdir
@@ -21,7 +21,7 @@ describe Xezat::Detector::AutoconfArchive do
       f.puts('AX_CPP_VARARG_MACRO_ISO')
     end
     detector = Xezat::Detector::AutoconfArchive.new
-    expect(detector.detect(S: tmpdir)).to be_falsey
+    expect(detector.detect?(S: tmpdir)).to be_falsey
   end
   it 'contains no autoconf-archive macro in configure.ac' do
     tmpdir = Dir.mktmpdir
@@ -29,6 +29,6 @@ describe Xezat::Detector::AutoconfArchive do
       f.puts('AC_INIT(')
     end
     detector = Xezat::Detector::AutoconfArchive.new
-    expect(detector.detect(S: tmpdir)).to be_falsey
+    expect(detector.detect?(S: tmpdir)).to be_falsey
   end
 end

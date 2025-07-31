@@ -13,12 +13,12 @@ describe Xezat::Detector::GettextDevel do
       f.puts('AM_GNU_GETTEXT')
     end
     detector = Xezat::Detector::GettextDevel.new
-    expect(detector.detect(S: tmpdir)).to be_truthy
+    expect(detector.detect?(S: tmpdir)).to be_truthy
   end
   it 'contains no AM_GNU_GETTEXT' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'configure.ac')))
     detector = Xezat::Detector::GettextDevel.new
-    expect(detector.detect(S: tmpdir)).to be_falsey
+    expect(detector.detect?(S: tmpdir)).to be_falsey
   end
 end

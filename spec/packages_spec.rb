@@ -7,6 +7,7 @@ require 'xezat/packages'
 
 describe Xezat do
   include Xezat
+
   it 'has no such database' do
     expect { packages(SecureRandom.hex(8)) }.to raise_error(ArgumentError)
   end

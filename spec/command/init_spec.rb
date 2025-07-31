@@ -6,6 +6,7 @@ require 'xezat/command/init'
 
 describe Xezat::Command::Init do
   include Xezat
+
   it 'get cygport (not lib)' do
     command = Xezat::Command::Init.new(nil, nil)
     template = command.get_cygport({}, '', '', '', [], 'foo')

@@ -5,6 +5,7 @@ require 'xezat/generator/cmake'
 
 describe Xezat::Generator::CMake do
   include Xezat
+
   it 'generates CMakeLists.txt' do
     command = Xezat::Generator::CMake.new(nil, nil)
     tmpdir = Dir.mktmpdir

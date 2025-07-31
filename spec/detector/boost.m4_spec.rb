@@ -13,12 +13,12 @@ describe Xezat::Detector::BoostM4 do
       f.puts('BOOST_REQUIRED')
     end
     detector = Xezat::Detector::BoostM4.new
-    expect(detector.detect(S: tmpdir)).to be_truthy
+    expect(detector.detect?(S: tmpdir)).to be_truthy
   end
   it 'contains no BOOST_REQUIRE' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'configure.ac')))
     detector = Xezat::Detector::BoostM4.new
-    expect(detector.detect(S: tmpdir)).to be_falsey
+    expect(detector.detect?(S: tmpdir)).to be_falsey
   end
 end

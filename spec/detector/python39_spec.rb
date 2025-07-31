@@ -11,7 +11,7 @@ describe Xezat::Detector::Python39 do
     tmpdir = Dir.mktmpdir
     FileUtils.mkpath(File.join(tmpdir, 'usr', 'lib', 'python3.9'))
     detector = Xezat::Detector::Python39.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
+    expect(detector.detect?(D: tmpdir)).to be_truthy
   end
   it 'has executable script (env python3.9)' do
     tmpdir = Dir.mktmpdir
@@ -19,7 +19,7 @@ describe Xezat::Detector::Python39 do
       f.puts('#!/usr/bin/env python3.9')
     end
     detector = Xezat::Detector::Python39.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
+    expect(detector.detect?(D: tmpdir)).to be_truthy
   end
   it 'has executable script (python3.9)' do
     tmpdir = Dir.mktmpdir
@@ -27,7 +27,7 @@ describe Xezat::Detector::Python39 do
       f.puts('#!/usr/bin/python3.9')
     end
     detector = Xezat::Detector::Python39.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
+    expect(detector.detect?(D: tmpdir)).to be_truthy
   end
   it 'has executable script (env python3)' do
     tmpdir = Dir.mktmpdir
@@ -35,7 +35,7 @@ describe Xezat::Detector::Python39 do
       f.puts('#!/usr/bin/env python3')
     end
     detector = Xezat::Detector::Python39.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
+    expect(detector.detect?(D: tmpdir)).to be_truthy
   end
   it 'has executable script (python3)' do
     tmpdir = Dir.mktmpdir
@@ -43,7 +43,7 @@ describe Xezat::Detector::Python39 do
       f.puts('#!/usr/bin/python3')
     end
     detector = Xezat::Detector::Python39.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
+    expect(detector.detect?(D: tmpdir)).to be_truthy
   end
   it 'has executable script (env python)' do
     tmpdir = Dir.mktmpdir
@@ -51,7 +51,7 @@ describe Xezat::Detector::Python39 do
       f.puts('#!/usr/bin/env python')
     end
     detector = Xezat::Detector::Python39.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
+    expect(detector.detect?(D: tmpdir)).to be_truthy
   end
   it 'has executable script (python)' do
     tmpdir = Dir.mktmpdir
@@ -59,7 +59,7 @@ describe Xezat::Detector::Python39 do
       f.puts('#!/usr/bin/python')
     end
     detector = Xezat::Detector::Python39.new
-    expect(detector.detect(D: tmpdir)).to be_truthy
+    expect(detector.detect?(D: tmpdir)).to be_truthy
   end
   it 'has executable script (env python2)' do
     tmpdir = Dir.mktmpdir
@@ -67,7 +67,7 @@ describe Xezat::Detector::Python39 do
       f.puts('#!/usr/bin/env python2')
     end
     detector = Xezat::Detector::Python39.new
-    expect(detector.detect(D: tmpdir)).to be_falsey
+    expect(detector.detect?(D: tmpdir)).to be_falsey
   end
   it 'has executable script (python2)' do
     tmpdir = Dir.mktmpdir
@@ -75,6 +75,6 @@ describe Xezat::Detector::Python39 do
       f.puts('#!/usr/bin/python2')
     end
     detector = Xezat::Detector::Python39.new
-    expect(detector.detect(D: tmpdir)).to be_falsey
+    expect(detector.detect?(D: tmpdir)).to be_falsey
   end
 end

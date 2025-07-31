@@ -12,7 +12,7 @@ describe Xezat::Detector::Autoconf do
     topdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(topdir, 'xezat.cygport')))
     detector = Xezat::Detector::Autoconf.new
-    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_truthy
+    expect(detector.detect?(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_truthy
   end
   it 'contains configure.in' do
     srcdir = Dir.mktmpdir
@@ -20,7 +20,7 @@ describe Xezat::Detector::Autoconf do
     topdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(topdir, 'xezat.cygport')))
     detector = Xezat::Detector::Autoconf.new
-    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_truthy
+    expect(detector.detect?(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_truthy
   end
   it 'contains no configure.{ac,in}' do
     srcdir = Dir.mktmpdir
@@ -28,7 +28,7 @@ describe Xezat::Detector::Autoconf do
     topdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(topdir, 'xezat.cygport')))
     detector = Xezat::Detector::Autoconf.new
-    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_falsey
+    expect(detector.detect?(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_falsey
   end
   it 'contains unused configure.{ac}' do
     srcdir = Dir.mktmpdir
@@ -38,6 +38,6 @@ describe Xezat::Detector::Autoconf do
       f.puts('src_compile')
     end
     detector = Xezat::Detector::Autoconf.new
-    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_falsey
+    expect(detector.detect?(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_falsey
   end
 end

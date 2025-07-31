@@ -5,7 +5,7 @@ require 'find'
 module Xezat
   module Detector
     class Ninja
-      def detect(variables)
+      def detect?(variables)
         return true if variables.key?(:_meson_CYGCLASS_)
 
         Find.find(variables[:B]) do |file|

@@ -5,7 +5,7 @@ require 'find'
 module Xezat
   module Detector
     class Make
-      def detect(variables)
+      def detect?(variables)
         Find.find(variables[:B]) do |file|
           return true if file.end_with?("#{File::SEPARATOR}Makefile", "#{File::SEPARATOR}makefile")
         end

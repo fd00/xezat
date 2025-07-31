@@ -7,17 +7,17 @@ require 'xezat/detector/ninja'
 describe Xezat::Detector::Ninja do
   it 'inherits meson' do
     detector = Xezat::Detector::Ninja.new
-    expect(detector.detect(_meson_CYGCLASS_: '1')).to be_truthy
+    expect(detector.detect?(_meson_CYGCLASS_: '1')).to be_truthy
   end
   it 'contains build.ninja' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'build.ninja')))
     detector = Xezat::Detector::Ninja.new
-    expect(detector.detect(B: tmpdir)).to be_truthy
+    expect(detector.detect?(B: tmpdir)).to be_truthy
   end
   it 'does not inherit meson & does not contains build.ninja' do
     tmpdir = Dir.mktmpdir
     detector = Xezat::Detector::Ninja.new
-    expect(detector.detect(B: tmpdir)).to be_falsey
+    expect(detector.detect?(B: tmpdir)).to be_falsey
   end
 end

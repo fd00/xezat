@@ -13,13 +13,13 @@ describe Xezat::Detector::Python39Docutils do
       f.puts('AC_CHECK_PROG([RST2MAN], [rst2man])')
     end
     detector = Xezat::Detector::Python39Docutils.new
-    expect(detector.detect(S: tmpdir)).to be_truthy
+    expect(detector.detect?(S: tmpdir)).to be_truthy
   end
   it 'contains no rst2man in configure.ac' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'configure.ac')))
     detector = Xezat::Detector::Python39Docutils.new
-    expect(detector.detect(S: tmpdir)).to be_falsey
+    expect(detector.detect?(S: tmpdir)).to be_falsey
   end
   it 'contains rst2man in meson.build' do
     tmpdir = Dir.mktmpdir
@@ -27,12 +27,12 @@ describe Xezat::Detector::Python39Docutils do
       f.puts("find_program('rst2man', required: with_man_pages == 'true')")
     end
     detector = Xezat::Detector::Python39Docutils.new
-    expect(detector.detect(S: tmpdir, _meson_CYGCLASS_: true)).to be_truthy
+    expect(detector.detect?(S: tmpdir, _meson_CYGCLASS_: true)).to be_truthy
   end
   it 'contains no rst2man in meson.build' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'meson.build')))
     detector = Xezat::Detector::Python39Docutils.new
-    expect(detector.detect(S: tmpdir, _meson_CYGCLASS_: true)).to be_falsey
+    expect(detector.detect?(S: tmpdir, _meson_CYGCLASS_: true)).to be_falsey
   end
 end

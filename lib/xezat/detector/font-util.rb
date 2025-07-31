@@ -5,7 +5,7 @@ require 'find'
 module Xezat
   module Detector
     class FontUtil
-      def detect(variables)
+      def detect?(variables)
         Find.find(variables[:S]) do |file|
           next unless file.end_with?("#{File::SEPARATOR}configure.ac", "#{File::SEPARATOR}configure.in")
 

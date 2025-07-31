@@ -5,7 +5,7 @@ require 'find'
 module Xezat
   module Detector
     class Python36
-      def detect(variables)
+      def detect?(variables)
         return true if File.directory?(File.join(variables[:D], 'usr', 'lib', 'python3.6'))
 
         Find.find(variables[:D]) do |file|

@@ -12,7 +12,7 @@ describe Xezat::Detector::Automake do
     topdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(topdir, 'xezat.cygport')))
     detector = Xezat::Detector::Automake.new
-    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_truthy
+    expect(detector.detect?(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_truthy
   end
   it 'contains no Makefile.am' do
     srcdir = Dir.mktmpdir
@@ -20,6 +20,6 @@ describe Xezat::Detector::Automake do
     topdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(topdir, 'xezat.cygport')))
     detector = Xezat::Detector::Automake.new
-    expect(detector.detect(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_falsey
+    expect(detector.detect?(top: topdir, S: srcdir, cygportfile: 'xezat.cygport')).to be_falsey
   end
 end
