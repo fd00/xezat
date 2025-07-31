@@ -56,7 +56,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '>= 3.13.1'
   spec.add_development_dependency 'rubocop', '>= 1.79.1'
   spec.add_development_dependency 'rubocop-performance', '>= 1.25.0'
-  spec.add_development_dependency 'simplecov-cobertura', '>= 2.1.0'
+  spec.add_development_dependency 'simplecov-cobertura', '>= 3.0.0'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 end
