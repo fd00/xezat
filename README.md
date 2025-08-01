@@ -1,39 +1,59 @@
 # Xezat
 
 [![Actions](https://github.com/fd00/xezat/actions/workflows/ruby.yml/badge.svg)](https://github.com/fd00/xezat/)
+[![Gem Version](https://badge.fury.io/rb/xezat.svg)](https://badge.fury.io/rb/xezat)
 
-xezat helps you win at cygport.
+Xezat is a helper tool for your daily packaging tasks with [Cygport](httpss://cygwin.com/cygport/).
+
+## Features
+
+Xezat provides the following subcommands through the `xezat` command:
+
+*   `init`: Interactively generates a new `cygport` file.
+*   `bump`: Bumps the package version and updates the `README` file.
+*   `validate`: Validates that the `cygport` file and related files adhere to conventions.
+*   `port`: Copies the `cygport` to a Git repository.
+*   `announce`: Generates a template for ITP (Intent to Package) or `cygport` update announcements.
+*   `doctor`: Checks your system for potential problems.
+*   `generate`: Generates development files used by `cygport`.
+*   `debug`: Assists in debugging `cygport` files.
+
+You can check the details of each command with `xezat <command> --help`.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install the gem:
 
-```ruby
-gem 'xezat'
+```bash
+gem install xezat
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install xezat
 
 ## Usage
 
-TODO: Write usage instructions here
+### 1. Creating a new package
 
-## Development
+```bash
+xezat init foo.cygport
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+### 2. Bumping the version
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```bash
+xezat bump foo.cygport
+```
+
+### 3. Validating the package
+
+```bash
+xezat validate foo.cygport
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/fd00/xezat.
+Bug reports and pull requests are welcome on GitHub at [https://github.com/fd00/xezat](https://github.com/fd00/xezat).
+
+This project utilizes Google Gemini for development assistance.
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
