@@ -3,14 +3,12 @@
 require 'English'
 require 'etc'
 require 'facets/file/atomic_write'
-require 'facets/string/word_wrap'
-require 'open3'
-require 'uri'
 require 'yaml'
 require 'xezat'
+require 'xezat/bashvar'
 
 module Xezat
-  def variables(cygport, var2yaml_fetcher: nil)
+  def variables(cygport)
     cygport_dir = File.dirname(File.absolute_path(cygport))
     cache_file = File.expand_path(File.join(cygport_dir, "#{File.basename(cygport, '.cygport')}.#{Etc.uname[:machine]}.yml"))
 
@@ -23,48 +21,13 @@ module Xezat
       end
     end
 
-    result = if var2yaml_fetcher
-               var2yaml_fetcher.call(cygport)
-             else
-               execute_var2yaml(cygport)
-             end
-
-    result.gsub!(/^.*\*\*\*.*$/, '')
-
-    begin
-      variables = YAML.safe_load(result, symbolize_names: true, permitted_classes: [Symbol]).each_value do |v|
-        v.strip! if v.respond_to?(:strip)
-      end
-    rescue Psych::SyntaxError => e
-      print_yaml(result)
-      raise e
-    end
-
-    variables[:DESCRIPTION].word_wrap!(79)
+    vars = bashvar(cygport)
 
     File.atomic_write(cache_file) do |f|
       Xezat.logger.debug('    Write cache for variables')
-      f.write(YAML.dump(variables))
+      f.write(YAML.dump(vars))
     end
 
-    variables
-  end
-
-  def print_yaml(result)
-    lineno = 1
-    result.split($INPUT_RECORD_SEPARATOR).each do |line|
-      printf '%<lineno>5d | %<line>s%<ls>s', lineno:, line:, ls: $INPUT_RECORD_SEPARATOR
-      lineno += 1
-    end
-  end
-
-  private
-
-  def execute_var2yaml(cygport)
-    command = ['bash', File.expand_path(File.join(DATA_DIR, 'var2yaml.sh')), cygport]
-    result, error, status = Open3.capture3(command.join(' '))
-    raise CygportProcessError, error unless status.success?
-
-    result
+    vars
   end
 end

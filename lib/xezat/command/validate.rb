@@ -58,8 +58,10 @@ module Xezat
 
       def validate_category(category)
         categories_file = File.expand_path(File.join(DATA_DIR, 'categories.yaml'))
-        Xezat.logger.error("    Category is invalid : #{category}") unless
-          YAML.safe_load(File.open(categories_file), symbolize_names: true, permitted_classes: [Symbol]).include?(category.downcase)
+        valid_categories = YAML.safe_load(File.open(categories_file), symbolize_names: true, permitted_classes: [Symbol])
+        category.split.each do |cat|
+          Xezat.logger.error("    Category is invalid : #{cat}") unless valid_categories.include?(cat.downcase)
+        end
       end
 
       def validate_homepage(homepage)

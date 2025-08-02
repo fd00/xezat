@@ -42,6 +42,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 3.2.2'
 
+  spec.add_dependency 'bashvar', '>= 0.1.1'
   spec.add_dependency 'colorize', '>= 1.1.0'
   spec.add_dependency 'facets', '>= 3.1.0'
   spec.add_dependency 'github-linguist', '>= 9.1.0'

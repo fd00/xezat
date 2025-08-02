@@ -50,4 +50,28 @@ describe Xezat::Command::Validate do
     expect(Xezat.logger).to have_received(:error).exactly(1).times
     Xezat.logger = Logger.new(File::NULL)
   end
+
+  it 'contains multiple valid categories' do
+    command = Xezat::Command::Validate.new(nil, nil)
+    Xezat.logger = spy
+    command.validate_category('Devel Text')
+    expect(Xezat.logger).to have_received(:error).exactly(0).times
+    Xezat.logger = Logger.new(File::NULL)
+  end
+
+  it 'contains a mix of valid and invalid categories' do
+    command = Xezat::Command::Validate.new(nil, nil)
+    Xezat.logger = spy
+    command.validate_category('Devel invalid_category')
+    expect(Xezat.logger).to have_received(:error).with('    Category is invalid : invalid_category').exactly(1).times
+    Xezat.logger = Logger.new(File::NULL)
+  end
+
+  it 'contains multiple valid categories separated by newlines' do
+    command = Xezat::Command::Validate.new(nil, nil)
+    Xezat.logger = spy
+    command.validate_category("Devel\nText")
+    expect(Xezat.logger).to have_received(:error).exactly(0).times
+    Xezat.logger = Logger.new(File::NULL)
+  end
 end
