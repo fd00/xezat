@@ -46,7 +46,7 @@ describe Xezat::Command::Validate do
   it 'contains invalid category' do
     command = Xezat::Command::Validate.new(nil, nil)
     Xezat.logger = spy
-    command.validate_category('invalid_category')
+    command.validate_category('Emulators')
     expect(Xezat.logger).to have_received(:error).exactly(1).times
     Xezat.logger = Logger.new(File::NULL)
   end
@@ -62,8 +62,8 @@ describe Xezat::Command::Validate do
   it 'contains a mix of valid and invalid categories' do
     command = Xezat::Command::Validate.new(nil, nil)
     Xezat.logger = spy
-    command.validate_category('Devel invalid_category')
-    expect(Xezat.logger).to have_received(:error).with('    Category is invalid : invalid_category').exactly(1).times
+    command.validate_category('Devel Emulators')
+    expect(Xezat.logger).to have_received(:error).with('    Category is invalid : Emulators').exactly(1).times
     Xezat.logger = Logger.new(File::NULL)
   end
 
