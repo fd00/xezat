@@ -31,6 +31,10 @@ module Xezat
         Xezat.logger.debug('    Remove python27 because of detecting python3x')
         tools.delete(:python27)
       end
+      if tools.include?(:libtool) && tools.include?(:cmake)
+        Xezat.logger.debug('    Remove libtool because of detecting cmake')
+        tools.delete(:libtool)
+      end
       tools
     end
   end
