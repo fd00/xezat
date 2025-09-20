@@ -1,3 +1,3 @@
 [submodule "spec/cygport"]
 	path = spec/cygport
-	url = https://github.com/cygwinports/cygport.git
+	url = https://github.com/cygwin/cygport.git
