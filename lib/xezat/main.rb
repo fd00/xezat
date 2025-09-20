@@ -62,6 +62,15 @@ module Xezat
       Command::Port.new(options, cygport).execute
     end
 
+    desc 'dist cygport', 'Copy dist directory to release directory'
+    option :noop, type: :boolean, aliases: '-n', desc: 'dry run'
+    option :distdir, type: :string, aliases: '-d', desc: 'specify dist directory'
+
+    def dist(cygport)
+      require 'xezat/command/dist'
+      Command::Dist.new(options, cygport).execute
+    end
+
     desc 'validate cygport', 'Validate files'
     option :ignore, type: :boolean, aliases: '-i', desc: 'ignore error'
 
