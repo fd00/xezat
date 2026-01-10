@@ -28,9 +28,9 @@ module Xezat
         case pkg
         when 'python3'
           pkgs[:python39]
-        when 'perl5_036'
+        when /^perl5_0\d{2}$/
           pkgs[:perl_base]
-        when 'ruby_32'
+        when /^ruby_\d{2}$/
           pkgs[:ruby]
         else
           pkg

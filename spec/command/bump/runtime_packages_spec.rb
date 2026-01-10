@@ -42,19 +42,19 @@ LIST
     command = Xezat::Command::Bump.new(nil, nil)
     allow(command).to receive(:invoke_cygport_dep).and_return(<<LIST)
   cygwin-3-1
-  perl5_036
+  perl5_040
 LIST
-    actual = command.get_runtime_packages({}, { perl_base: 'perl-5.36.1-1' }, nil)
-    expect(actual).to contain_exactly('cygwin-3-1', 'perl-5.36.1-1')
+    actual = command.get_runtime_packages({}, { perl_base: 'perl-5.40.1-1' }, nil)
+    expect(actual).to contain_exactly('cygwin-3-1', 'perl-5.40.1-1')
   end
 
   it 'contains ruby' do
     command = Xezat::Command::Bump.new(nil, nil)
     allow(command).to receive(:invoke_cygport_dep).and_return(<<LIST)
   cygwin-3-1
-  ruby_32
+  ruby_34
 LIST
-    actual = command.get_runtime_packages({}, { ruby: 'ruby-3.2.2-2' }, nil)
-    expect(actual).to contain_exactly('cygwin-3-1', 'ruby-3.2.2-2')
+    actual = command.get_runtime_packages({}, { ruby: 'ruby-3.4.7-2' }, nil)
+    expect(actual).to contain_exactly('cygwin-3-1', 'ruby-3.4.7-2')
   end
 end
