@@ -26,7 +26,7 @@ module Xezat
 
       def resolve_pseudo(pkg, pkgs)
         case pkg
-        when 'python3'
+        when /^python3\s*/
           pkgs[:python39]
         when /^perl5_0\d{2}$/
           pkgs[:perl_base]
