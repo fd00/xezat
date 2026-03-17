@@ -15,7 +15,7 @@ module Xezat
           File.dirname(file)
         end.sort.uniq.join(':')
         Xezat.logger.debug("    Additional PATH = #{additional_path.gsub(Regexp.new(variables[:D]), '')}")
-        command = ['bash', File.expand_path(File.join(DATA_DIR, 'cygport_dep.sh')), cygport]
+        command = ['bash', File.expand_path(File.join(DATA_DIR, 'cygport.sh')), cygport, 'dep']
         result, error, status = Open3.capture3({ 'PATH' => "#{additional_path}:#{ENV.fetch('PATH')}" }, command.join(' '))
         Xezat.logger.warn("    Stderr = #{error}") unless error.empty?
         raise CygportProcessError, error unless status.success?
