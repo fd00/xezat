@@ -85,5 +85,12 @@ module Xezat
       require 'xezat/command/announce'
       Command::Announce.new(nil, cygport).execute
     end
+
+    desc 'prep cygport', 'Fetch and prepare sources'
+
+    def prep(cygport)
+      require 'xezat/command/prep'
+      Command::Prep.new(options, cygport).execute
+    end
   end
 end
