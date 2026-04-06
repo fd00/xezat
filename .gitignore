@@ -1,4 +1,5 @@
 .bundle/
+.claude/
 Gemfile.lock
 pkg/
 tmp/
