@@ -32,8 +32,21 @@ module Xezat
 
       private
 
+      EXECUTABLE_TIMEOUT = 5
+
       def executable?(config)
-        Open3.capture3(config.to_s)
+        Open3.popen3(config.to_s) do |stdin, stdout, stderr, wait_thr|
+          stdin.close
+          out_reader = Thread.new { stdout.read }
+          err_reader = Thread.new { stderr.read }
+          unless wait_thr.join(EXECUTABLE_TIMEOUT)
+            Process.kill(:KILL, wait_thr.pid)
+            wait_thr.join
+            raise "#{config} timed out after #{EXECUTABLE_TIMEOUT}s"
+          end
+          out_reader.join
+          err_reader.join
+        end
       rescue StandardError => e
         Xezat.logger.warn("       #{config} not executable: #{e}")
         raise e
