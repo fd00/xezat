@@ -30,9 +30,9 @@ module Xezat
         end
       end
 
-      private
-
       EXECUTABLE_TIMEOUT = 5
+
+      private
 
       def executable?(config)
         Open3.popen3(config.to_s) do |stdin, stdout, stderr, wait_thr|
