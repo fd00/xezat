@@ -36,7 +36,7 @@ jobs:
     - name: Run tests
       run: bundle exec rspec
     - name: Formatting coverage results
-      uses: 5monkeys/cobertura-action@master
+      uses: happyhourgames/cobertura-action@master
       with:
         path: tmp/coverage/coverage.xml
         minimum_coverage: 75
