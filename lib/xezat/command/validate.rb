@@ -2,6 +2,7 @@
 
 require 'net/http'
 require 'uri'
+require 'xezat/command/validate/appstream'
 require 'xezat/command/validate/config'
 require 'xezat/command/validate/license'
 require 'xezat/command/validate/pkgconfig'
@@ -46,6 +47,9 @@ module Xezat
 
         Xezat.logger.debug('  Validate *-config')
         validate_config(vars, gcc_version)
+
+        Xezat.logger.debug('  Validate AppStream path')
+        validate_appstream_path(vars)
 
         Xezat.logger.debug('End validating')
       end
