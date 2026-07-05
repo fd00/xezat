@@ -40,12 +40,13 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
-  spec.required_ruby_version = '>= 3.4.7'
+  spec.required_ruby_version = '>= 4.0.5'
 
   spec.add_dependency 'bashvar', '>= 0.1.1'
   spec.add_dependency 'colorize', '>= 1.1.0'
   spec.add_dependency 'facets', '>= 3.1.0'
   spec.add_dependency 'github-linguist', '>= 9.1.0'
+  spec.add_dependency 'logger', '>= 1.6.0'
   spec.add_dependency 'pkg-config', '>= 1.6.1'
   spec.add_dependency 'spdx', '>= 4.1.5'
   spec.add_dependency 'thor', '>= 1.2.2'

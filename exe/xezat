@@ -5,7 +5,6 @@ Encoding.default_external = 'UTF-8'
 
 self_file =
   if File.symlink?(__FILE__)
-    require 'pathname'
     Pathname.new(__FILE__).realpath
   else
     __FILE__
