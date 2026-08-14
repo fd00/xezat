@@ -34,8 +34,8 @@ Lua:
 #  dependencies:
 #  - binutils
 #  - gcc-core
-Protocol Buffer:
-  package: libprotobuf-devel
+#Protocol Buffer:
+#  package: libprotobuf-devel
 Ragel:
   package: ragel
 Vala:
