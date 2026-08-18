@@ -36,8 +36,8 @@ Lua:
 #  - gcc-core
 #Protocol Buffer:
 #  package: libprotobuf-devel
-Ragel:
-  package: ragel
+#Ragel:
+#  package: ragel
 Vala:
   package: vala
 Yacc:
