@@ -38,7 +38,7 @@ Lua:
 #  package: libprotobuf-devel
 #Ragel:
 #  package: ragel
-Vala:
-  package: vala
+#Vala:
+#  package: vala
 Yacc:
   package: bison
