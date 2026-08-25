@@ -22,8 +22,8 @@ Fortran Free Form:
   - gcc-core
 Lex:
   package: flex
-Lua:
-  package: lua
+#Lua:
+#  package: lua
 #Objective-C:
 #  package: gcc-objc
 #  dependencies:
