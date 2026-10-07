@@ -34,8 +34,8 @@ LIST
   cygwin-3-1
   python3
 LIST
-    actual = command.get_runtime_packages({}, { python39: 'python39-3.9.16-1' }, nil)
-    expect(actual).to contain_exactly('cygwin-3-1', 'python39-3.9.16-1')
+    actual = command.get_runtime_packages({}, { python3: 'python3-3.12.12-1' }, nil)
+    expect(actual).to contain_exactly('cygwin-3-1', 'python3-3.12.12-1')
   end
 
   it 'contains perl' do
