@@ -1,6 +1,6 @@
 ---
-Bison:
-  package: bison
+#Bison:
+#  package: bison
 C:
   package: gcc-core
   dependencies:
@@ -40,5 +40,5 @@ Lex:
 #  package: ragel
 #Vala:
 #  package: vala
-Yacc:
-  package: bison
+#Yacc:
+#  package: bison
