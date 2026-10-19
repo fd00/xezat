@@ -3,6 +3,7 @@
 require 'English'
 require 'etc'
 require 'facets/file/atomic_write'
+require 'facets/string/word_wrap'
 require 'yaml'
 require 'xezat'
 require 'xezat/bashvar'
@@ -22,6 +23,7 @@ module Xezat
     end
 
     vars = bashvar(cygport)
+    vars[:DESCRIPTION] = vars[:DESCRIPTION].split.join(' ').word_wrap(79) if vars[:DESCRIPTION]
 
     File.atomic_write(cache_file) do |f|
       Xezat.logger.debug('    Write cache for variables')
