@@ -16,4 +16,9 @@ describe Xezat::Cygversion do
     expect(cygversion[1]).to eq 20_191_001
     expect(cygversion[2]).to eq '4'
   end
+  it 'compares releases numerically' do
+    expect(Xezat::Cygversion.new('0.6.2-1bl10') <=> Xezat::Cygversion.new('0.6.2-1bl9')).to eq 1
+    expect(Xezat::Cygversion.new('0.6.2-1bl2') <=> Xezat::Cygversion.new('0.6.2-1bl10')).to eq(-1)
+    expect(Xezat::Cygversion.new('0.6.2-10') <=> Xezat::Cygversion.new('0.6.2-9')).to eq 1
+  end
 end

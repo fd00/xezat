@@ -16,9 +16,9 @@ module Xezat
     end
 
     def to_v
-      [Gem::Version.new(@version), @revision, @release]
+      [Gem::Version.new(@version), @revision, release_key]
     rescue ArgumentError
-      to_a
+      [@version, @revision, release_key]
     end
 
     def to_a
@@ -30,6 +30,13 @@ module Xezat
       return result unless result.nil?
 
       (to_a <=> other.to_a)
+    end
+
+    private
+
+    # Compare releases naturally so that 1bl10 comes after 1bl9
+    def release_key
+      @release.scan(/\d+|\D+/).map { |token| token.match?(/\A\d+\z/) ? [0, token.to_i] : [1, token] }
     end
   end
 end
