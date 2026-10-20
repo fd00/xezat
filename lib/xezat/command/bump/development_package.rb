@@ -10,7 +10,11 @@ module Xezat
     class Bump
       def get_development_packages(variables, packages, runtimes, pkg2files)
         Xezat.logger.debug('  Collect development packages')
-        compilers = get_compilers(get_languages(variables[:S]), variables)
+        compilers = if compiler_detection?
+                      get_compilers(get_languages(variables[:S]), variables)
+                    else
+                      get_compilers_from_files(runtimes, pkg2files)
+                    end
         tools = get_tools(variables)
         build_requires = variables[:BUILD_REQUIRES].nil? ? [] : variables[:BUILD_REQUIRES].split.map(&:to_sym)
         development_packages = (compilers + tools + build_requires + [:cygport]).uniq
@@ -34,6 +38,10 @@ module Xezat
 
           pkg
         end
+      end
+
+      def compiler_detection?
+        @options.nil? || @options['compiler_detection'] != false
       end
 
       def resolve_development_package(development_packages)

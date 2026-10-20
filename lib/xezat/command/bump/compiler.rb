@@ -23,6 +23,15 @@ module Xezat
         end
         compilers.uniq
       end
+
+      # Infers compilers from the built packages instead of source file extensions
+      def get_compilers_from_files(runtimes, pkg2files)
+        files = pkg2files.values.flatten
+        languages = []
+        languages << :C if files.any? { |file| file.end_with?('.exe', '.dll', '.a', '.so') }
+        languages << :Fortran unless runtimes.grep(/^libgfortran/).empty? && files.grep(/\.mod$/).empty?
+        get_compilers(languages, nil)
+      end
     end
   end
 end

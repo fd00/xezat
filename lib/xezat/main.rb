@@ -32,6 +32,7 @@ module Xezat
 
     desc 'bump cygport', 'Bump version (rewrite README)'
     option :message, type: :string, aliases: '-m', desc: 'specify message'
+    option :compiler_detection, type: :boolean, default: true, desc: 'detect compilers from source file extensions'
 
     def bump(cygport)
       require 'xezat/command/bump'
