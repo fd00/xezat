@@ -7,9 +7,9 @@ require 'xezat/command/bump/compiler'
 describe Xezat::Command::Bump do
   include Xezat
 
-  it 'contains c++' do
+  it 'contains c' do
     command = Xezat::Command::Bump.new(nil, nil)
-    actual = command.get_compilers(%i[C++], nil)
-    expect(actual).to include(:binutils, :'gcc-core', :'gcc-g++')
+    actual = command.get_compilers(%i[C], nil)
+    expect(actual).to include(:binutils, :'gcc-core')
   end
 end

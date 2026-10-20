@@ -5,11 +5,11 @@ C:
   package: gcc-core
   dependencies:
   - binutils
-C++:
-  package: gcc-g++
-  dependencies:
-  - binutils
-  - gcc-core
+#C++:
+#  package: gcc-g++
+#  dependencies:
+#  - binutils
+#  - gcc-core
 Fortran:
   package: gcc-fortran
   dependencies:
