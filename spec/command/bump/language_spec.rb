@@ -44,15 +44,19 @@ FORTRAN
     expect(languages).to contain_exactly(:'Fortran Free Form')
   end
 
-  it 'contains Protocol Buffer' do
+  it 'contains Lex' do
     tmpdir = Dir.mktmpdir
-    File.atomic_write(File.expand_path(File.join(tmpdir, 'test.proto'))) do |f|
-      f.write(<<PROTO)
-        message Hello {}
-PROTO
-    end
+    FileUtils.touch(File.expand_path(File.join(tmpdir, 'test.l')))
     command = Xezat::Command::Bump.new(nil, nil)
     languages = command.get_languages(tmpdir)
-    expect(languages).to contain_exactly(:'Protocol Buffer')
+    expect(languages).to contain_exactly(:Lex)
+  end
+
+  it 'ignores unknown extensions' do
+    tmpdir = Dir.mktmpdir
+    FileUtils.touch(File.expand_path(File.join(tmpdir, 'test.proto')))
+    command = Xezat::Command::Bump.new(nil, nil)
+    languages = command.get_languages(tmpdir)
+    expect(languages).to be_empty
   end
 end

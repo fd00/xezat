@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'xezat'
-require 'xezat/ext/linguist/file_blob'
 
 module Xezat
   module Command
@@ -18,13 +17,8 @@ module Xezat
           next if extname == '.inc' # ambiguous
 
           name = languages_candidates[extname.to_sym]
-          if name.nil?
+          next if name.nil?
 
-            language = Xezat::Linguist::FileBlob.new(path).language
-            next if language.nil?
-
-            name = language.name
-          end
           languages << name.to_sym
         end
         languages.uniq

@@ -1,11 +1,22 @@
 ---
 ".C": C++
 ".CXX": C++
+".F": Fortran
+".F90": Fortran Free Form
 ".H": C++
 ".HXX": C++
 ".c": C
 ".cpp": C++
 ".cxx": C++
+".f": Fortran
+".f03": Fortran Free Form
+".f08": Fortran Free Form
+".f77": Fortran
+".f90": Fortran Free Form
+".f95": Fortran Free Form
+".for": Fortran
 ".h": C
 ".hpp": C++
 ".hxx": C++
+".l": Lex
+".lex": Lex
