@@ -20,8 +20,8 @@ Fortran Free Form:
   dependencies:
   - binutils
   - gcc-core
-Lex:
-  package: flex
+#Lex:
+#  package: flex
 #Lua:
 #  package: lua
 #Objective-C:
