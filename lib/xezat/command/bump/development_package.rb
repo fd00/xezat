@@ -10,10 +10,12 @@ module Xezat
     class Bump
       def get_development_packages(variables, packages, runtimes, pkg2files)
         Xezat.logger.debug('  Collect development packages')
+        # C++ sources are left out: detection by extension also counts ones the
+        # build never compiles (e.g. md4c's test/embedded/smoke.cpp)
         compilers = if compiler_detection?
-                      get_compilers(get_languages(variables[:S]), variables)
+                      get_compilers(get_languages(variables[:S]) - %i[C++], variables)
                     else
-                      get_compilers_from_files(runtimes, pkg2files)
+                      get_compilers_from_files(variables, runtimes, pkg2files)
                     end
         tools = get_tools(variables)
         build_requires = variables[:BUILD_REQUIRES].nil? ? [] : variables[:BUILD_REQUIRES].split.map(&:to_sym)
