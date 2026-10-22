@@ -15,6 +15,14 @@ describe Xezat::Detector::Asciidoc do
     detector = Xezat::Detector::Asciidoc.new
     expect(detector.detect?(S: tmpdir)).to be_truthy
   end
+  it 'contains only asciidoctor' do
+    tmpdir = Dir.mktmpdir
+    File.atomic_write(File.expand_path(File.join(tmpdir, 'configure.ac'))) do |f|
+      f.puts('AC_PATH_PROG([ASCIIDOCTOR], [asciidoctor])')
+    end
+    detector = Xezat::Detector::Asciidoc.new
+    expect(detector.detect?(S: tmpdir)).to be_falsey
+  end
   it 'contains no asciidoc' do
     tmpdir = Dir.mktmpdir
     FileUtils.touch(File.expand_path(File.join(tmpdir, 'configure.ac')))

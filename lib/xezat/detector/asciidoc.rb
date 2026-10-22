@@ -10,7 +10,7 @@ module Xezat
           next unless file.end_with?("#{File::SEPARATOR}configure.ac", "#{File::SEPARATOR}configure.in")
 
           File.foreach(file) do |line|
-            return true if line.include?('asciidoc')
+            return true if /\basciidoc\b/.match?(line.scrub)
           end
         end
         false
