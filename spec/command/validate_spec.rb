@@ -74,4 +74,14 @@ describe Xezat::Command::Validate do
     expect(Xezat.logger).to have_received(:error).exactly(0).times
     Xezat.logger = Logger.new(File::NULL)
   end
+
+  it 'warns when homepage times out' do
+    command = Xezat::Command::Validate.new(nil, nil)
+    allow(Net::HTTP).to receive(:get_response).and_raise(Net::OpenTimeout)
+    Xezat.logger = spy
+    command.validate_homepage('https://example.com/')
+    expect(Xezat.logger).to have_received(:warn).exactly(1).times
+    expect(Xezat.logger).to have_received(:error).exactly(0).times
+    Xezat.logger = Logger.new(File::NULL)
+  end
 end

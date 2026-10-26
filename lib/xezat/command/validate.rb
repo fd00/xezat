@@ -125,6 +125,8 @@ module Xezat
         raise e unless @options[:ignore]
 
         Xezat.logger.warn('      Ignore SSLError')
+      rescue Net::OpenTimeout, Net::ReadTimeout, IO::TimeoutError, SocketError, SystemCallError => e
+        Xezat.logger.warn("      Cannot reach #{url} : #{e.class}")
       end
     end
   end
