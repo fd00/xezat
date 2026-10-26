@@ -12,7 +12,8 @@ module Xezat
       @release = matched[2]
       split = version.split('+')
       @version = split[0].tr('_', '.')
-      @revision = split.length >= 2 ? split[1].match(/(\d+)/)[0].to_i : Time.at(0).strftime('%Y%m%d').to_i
+      # A snapshot (1.11+svn58, 1.0+git20251223) comes after its base version
+      @revision = split.length >= 2 ? split[1].match(/(\d+)/)[0].to_i : -1
     end
 
     def to_v
